@@ -1,0 +1,18 @@
+# Roo Code Integration
+
+## Overview
+
+Roo Code integration adds diff-based editing capabilities to EscapeKit MCP.
+
+## Features
+
+- Apply unified diffs programmatically
+- Generate diffs between code versions
+- Validate diff format
+- Fuzzy matching for robust application
+
+## CLI Usage
+
+```bash
+qwen-escapekit diff apply <file> <diff> [--fuzzy <n>] [--backup]
+qwen-escapekit diff generate <original> <modified> [

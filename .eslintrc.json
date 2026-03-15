@@ -1,0 +1,111 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-non-null-assertion": "warn"
+  },
+  "ignorePatterns": ["dist", "node_modules", "*.js"],
+  "overrides": [
+    {
+      "files": ["src/models/**/*.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["../resolvers/*", "../../resolvers/*"],
+                "message": "Camada 1 (models) must not import from resolvers (Camada 2)."
+              },
+              {
+                "group": ["../transformers/*", "../../transformers/*"],
+                "message": "Camada 1 (models) must not import from transformers (Camada 3)."
+              },
+              {
+                "group": ["../generators/*", "../../generators/*"],
+                "message": "Camada 1 (models) must not import from generators (Camada 4)."
+              },
+              {
+                "group": ["../validators/*", "../../validators/*"],
+                "message": "Camada 1 (models) must not import from validators (Camada 5)."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/resolvers/**/*.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["../transformers/*", "../../transformers/*"],
+                "message": "Camada 2 (resolvers) must not import from transformers (Camada 3)."
+              },
+              {
+                "group": ["../generators/*", "../../generators/*"],
+                "message": "Camada 2 (resolvers) must not import from generators (Camada 4)."
+              },
+              {
+                "group": ["../validators/*", "../../validators/*"],
+                "message": "Camada 2 (resolvers) must not import from validators (Camada 5)."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/transformers/**/*.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["../generators/*", "../../generators/*"],
+                "message": "Camada 3 (transformers) must not import from generators (Camada 4)."
+              },
+              {
+                "group": ["../validators/*", "../../validators/*"],
+                "message": "Camada 3 (transformers) must not import from validators (Camada 5)."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/generators/**/*.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["../validators/*", "../../validators/*"],
+                "message": "Camada 4 (generators) must not import from validators (Camada 5)."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

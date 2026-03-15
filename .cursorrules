@@ -1,0 +1,71 @@
+# Projeto: EscapeKit MCP — Agent Rules
+
+## 1. Filosofia Central
+- **Missão:** Quebrar o "Ralph Loop Inverso". Todo código gerado deve ser portável e seguro.
+- **Princípio:** Código que não pode ser migrado não é propriedade do usuário.
+- **Manifesto:** Ler `MANIFESTO.md` para os 7 princípios imutáveis do projeto.
+
+## 2. Arquitetura Técnica
+- **Linguagem:** TypeScript (strict mode). Zero `any` sem justificativa.
+- **Parsing:** Use Tree-sitter para análise estática. Prefira AST a regex — SEMPRE.
+- **Transformação AST:** Babel + recast para preservação de formatação.
+- **Templates:** Handlebars para geração de projetos.
+- **Segurança:** Qualquer detecção de script malicioso (postinstall, curl pipes, typosquatting) é prioridade máxima (P0).
+- **Padrões de Código:** KISS, DRY, SOLID. Código simples e legível > código engenhoso.
+- **Erros:** Use as classes de erro de `src/errors.ts` (EscapeKitError, ParseError, NetworkError, etc.).
+- **Logging:** Use o logger estruturado de `src/logger.ts`.
+
+## 3. Estrutura de Diretórios
+```
+src/
+├── analyzers/       # Motores de análise de código
+├── detectors/       # Detectores individuais (MockAPI, WebGL, Import, Sandbox)
+├── transformers/    # Transformação AST (ImportReplacer, ASTTransformer)
+├── resolvers/       # Mapeamento ghost import → pacote real
+├── generators/      # Geração de projetos (Handlebars)
+├── security/        # Detectores de segurança (PostInstall, DeepDependency, etc.)
+├── services/        # Clientes externos (NPMRegistry com cache + retry)
+├── validators/      # Validação runtime
+├── models/          # Interfaces TypeScript e data models
+├── tools/           # Definições de ferramentas MCP
+├── cache/           # Sistema de cache
+├── ratelimit/       # Rate limiting para APIs
+├── mirrors/         # Mirrors (Chinese sovereignty support)
+├── lockfile/        # Parsers de lockfile
+├── audit/           # Auditoria e logging
+├── utils/           # Utilitários (ConfidenceCalculator, etc.)
+├── config.ts        # Configuração centralizada
+├── errors.ts        # Hierarquia de erros
+├── logger.ts        # Sistema de logging
+└── server.ts        # Entry point do MCP server
+```
+
+## 4. Fluxo de Priorização (Backlog Atual)
+1. **Fase 4 (Validação):** RuntimeValidator, Playwright E2E, Docker validation — próxima milestone.
+2. **Segurança:** PostInstallDetector, supply-chain protection, UnicodeAnalyzer — sempre P0.
+3. **Testes:** Cobertura >70% para todo código novo. Vitest + mocks.
+4. **Otimizações:** Cache persistente para NPM queries, paralelismo.
+5. **Documentação:** ONBOARDING.md e CONTRIBUTING.md são documentos vivos.
+
+## 5. Regras de Ouro (NUNCA violar)
+1. **Falha Graciosa:** Chamadas de rede nunca causam `process.exit(1)` ou Unhandled Promise Rejection. Use warns amigáveis.
+2. **Timeout Explícito:** Todo `fetch` tem timeout (max 5s) + Exponential Backoff.
+3. **AST Defeituosa:** Se Tree-sitter falhar ao parsear, pule o arquivo com log; nunca crash.
+4. **Testes Obrigatórios:** 100% de novas funcionalidades exigem testes no Vitest.
+5. **Sem Secrets:** Nunca logar ou expor código-fonte do usuário externamente.
+
+## 6. Knowledge Base
+- Mapeamentos ghost → real estão em `knowledge-base.json`
+- Ao adicionar novos mapeamentos, incluir: `realPackage`, `version`, `strategy`, `confidence`, `reason`
+- Estratégias válidas: `DIRECT_REPLACEMENT`, `API_REPLACEMENT`, `POLYFILL`
+
+## 7. Estilo de Comunicação
+- Seja direto e técnico.
+- Ao sugerir código, explique o *porquê* da escolha, referenciando o backlog ou o PRD.
+- Use português brasileiro para comentários e docs; inglês para código e nomes de variáveis.
+- Referencie arquivos sempre pelo caminho relativo ao root do projeto.
+
+## 8. Templates Disponíveis
+- `.ai-templates/new-detector.md` — Para criar novos detectores de segurança
+- `.ai-templates/new-transformer.md` — Para criar novos transformadores AST
+- `.ai-templates/integration-test.md` — Para criar testes de integração E2E

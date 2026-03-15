@@ -1,0 +1,7 @@
+{
+  "name": "postmark-project",
+  "version": "1.0.0",
+  "dependencies": {
+    "postmark": "^3.0.0"
+  }
+}

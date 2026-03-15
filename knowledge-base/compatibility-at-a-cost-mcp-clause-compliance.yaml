@@ -1,0 +1,187 @@
+# Contrato Factual - Compatibility at a Cost: MCP Clause-Compliance Vulnerabilities
+# Gerado automaticamente por paper-to-contract.sh
+# Paper: arXiv:2603.10163
+
+source:
+  title: "Compatibility at a Cost: Systematic Discovery and Exploitation of MCP Clause-Compliance Vulnerabilities"
+  authors: "Nanzi Yang; Yihao Chen; Jiazhen Gu; Xingwei Lin; Qinghua Zheng; Zhen Ling"
+  year: 2026
+  url: "https://arxiv.org/abs/2603.10163"
+  doi: "arXiv:2603.10163"
+  extracted_at: "2026-03-14T10:30:00-03:00"
+
+# Fatos extraídos do paper
+# Cada fato deve ser uma afirmação verificável e objetiva
+facts:
+  - id: "F001"
+    statement: "MCP SDKs relaxam restrições comportamentais em cláusulas opcionais, levando a implementações inconsistentes"
+    type: "fact"
+    relevance: "security"
+    location: "Section 3.1"
+
+  - id: "F002"
+    statement: "Adversários podem explorar lacunas de conformidade de cláusulas para realizar injeção de prompt silenciosa"
+    type: "fact"
+    relevance: "security"
+    location: "Section 4.2"
+
+  - id: "F003"
+    statement: "Adversários podem explorar lacunas de conformidade para realizar ataques DoS (Denial of Service)"
+    type: "fact"
+    relevance: "security"
+    location: "Section 4.3"
+
+  - id: "F004"
+    statement: "Vulnerabilidades de conformidade de cláusulas ocorrem em múltiplas linguagens de programação (Python, TypeScript, Go)"
+    type: "fact"
+    relevance: "portability"
+    location: "Section 5"
+
+  - id: "F005"
+    statement: "Ataques usam mensagens malformadas entre cliente e servidor MCP"
+    type: "fact"
+    relevance: "security"
+    location: "Section 4"
+
+  - id: "F006"
+    statement: "O protocolo MCP especifica cláusulas opcionais sem definir comportamento seguro por padrão"
+    type: "observation"
+    relevance: "compatibility"
+    location: "Section 2"
+
+# Padrões observados
+# Padrões são regularidades identificadas nos fatos
+patterns:
+  - id: "P001"
+    description: "Vulnerabilidades de conformidade de cláusulas ocorrem consistentemente em todas as implementações de SDK MCP"
+    evidence: ["F001", "F004"]
+    confidence: "high"
+
+  - id: "P002"
+    description: "Ataques de injeção de prompt e DoS exploram o mesmo vetor: mensagens malformadas"
+    evidence: ["F002", "F003", "F005"]
+    confidence: "high"
+
+  - id: "P003"
+    description: "Falta de comportamento seguro por padrão em cláusulas opcionais é uma falha de design do protocolo"
+    evidence: ["F001", "F006"]
+    confidence: "medium"
+
+  - id: "P004"
+    description: "Implementações em diferentes linguagens têm vulnerabilidades similares devido à especificação ambígua"
+    evidence: ["F004", "F001"]
+    confidence: "high"
+
+# Regras derivadas
+# Regras são princípios de implementação derivados dos padrões
+rules:
+  - id: "R001"
+    principle: "Toda cláusula opcional do MCP deve ter uma implementação segura por padrão"
+    derived_from: ["P001", "P003"]
+    action: "implement_detector"
+    detector_name: "MCPComplianceAnalyzer"
+    priority: "high"
+
+  - id: "R002"
+    principle: "Validar estrutura de mensagens MCP antes de processar"
+    derived_from: ["P002"]
+    action: "create_polyfill"
+    detector_name: "MCPMessageValidator"
+    priority: "high"
+
+  - id: "R003"
+    principle: "Implementar rate limiting para mensagens MCP malformadas"
+    derived_from: ["P002"]
+    action: "implement_detector"
+    detector_name: "MCPRateLimiter"
+    priority: "medium"
+
+  - id: "R004"
+    principle: "Auditar todas as implementações de SDK MCP para conformidade com cláusulas opcionais"
+    derived_from: ["P001", "P004"]
+    action: "add_test"
+    detector_name: "MCPComplianceTest"
+    priority: "high"
+
+  - id: "R005"
+    principle: "Documentar comportamento esperado para cada cláusula opcional do MCP"
+    derived_from: ["P003"]
+    action: "add_test"
+    priority: "medium"
+
+# Casos de aplicação/ataque
+# Casos concretos que ilustram os conceitos
+cases:
+  - id: "C001"
+    description: "Adversário injeta prompt malicioso via mensagem MCP malformada com cláusula opcional manipulada"
+    attack_vector: "prompt_injection"
+    mitigation: "Validação rigorosa de todas as cláusulas, mesmo opcionais"
+    related_facts: ["F002", "F005"]
+    related_rules: ["R001", "R002"]
+
+  - id: "C002"
+    description: "Ataque DoS via envio massivo de mensagens com cláusulas opcionais inconsistentes"
+    attack_vector: "dos"
+    mitigation: "Rate limiting e validação de estrutura de mensagens"
+    related_facts: ["F003", "F005"]
+    related_rules: ["R002", "R003"]
+
+  - id: "C003"
+    description: "Exploração de diferença de comportamento entre SDK Python e TypeScript para bypass de segurança"
+    attack_vector: "inconsistency_exploitation"
+    mitigation: "Padronização de implementação entre SDKs"
+    related_facts: ["F004", "F001"]
+    related_rules: ["R001", "R004"]
+
+  - id: "C004"
+    description: "Exfiltração de dados via cláusula opcional não validada"
+    attack_vector: "data_exfiltration"
+    mitigation: "Validação de saída e sanitização de dados em cláusulas opcionais"
+    related_facts: ["F002", "F006"]
+    related_rules: ["R001", "R002"]
+
+# Metadados do contrato
+metadata:
+  version: "1.0"
+  status: "reviewed"  # draft, reviewed, approved
+  tags: ["security", "mcp", "ai-safety", "prompt-injection", "dos"]
+  related_papers: []  # citekeys de papers relacionados
+  implemented_detectors:
+    - "MCPComplianceAnalyzer"
+    - "MCPMessageValidator"
+  escapekit_integration:
+    analyzer_module: "src/security/mcp-compliance.ts"
+    test_module: "tests/security/mcp-compliance.test.ts"
+
+# Rastreabilidade
+# Mapeia fatos do paper para implementação no código
+traceability:
+  F001:
+    implementation: "src/security/mcp-compliance.ts"
+    tests: "tests/security/mcp-compliance.test.ts"
+    status: "implemented"
+  
+  F002:
+    implementation: "src/security/mcp-message-validator.ts"
+    tests: "tests/security/mcp-message-validator.test.ts"
+    status: "implemented"
+  
+  F003:
+    implementation: "src/security/mcp-rate-limiter.ts"
+    tests: "tests/security/mcp-rate-limiter.test.ts"
+    status: "pending"
+  
+  F004:
+    implementation: "src/security/mcp-compliance.ts"
+    tests: "tests/security/mcp-compliance.test.ts"
+    status: "implemented"
+  
+  F005:
+    implementation: "src/security/mcp-message-validator.ts"
+    tests: "tests/security/mcp-message-validator.test.ts"
+    status: "implemented"
+  
+  F006:
+    implementation: "docs/mcp-spec-audit.md"
+    tests: "tests/security/mcp-compliance.test.ts"
+    status: "documented"
