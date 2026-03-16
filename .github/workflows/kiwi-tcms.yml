@@ -1,0 +1,56 @@
+name: Upload Test Results to Kiwi TCMS
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  upload-test-results:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Upload results to Kiwi TCMS
+        env:
+          KIWI_URL: ${{ secrets.KIWI_URL }}
+          KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
+          KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD }}
+          KIWI_PRODUCT_ID: ${{ secrets.KIWI_PRODUCT_ID }}
+          KIWI_TEST_PLAN_ID: ${{ secrets.KIWI_TEST_PLAN_ID }}
+        run: |
+          # Vitest results
+          if [ -f "vitest-results.json" ]; then
+            npx ts-node scripts/kiwi-upload.ts \
+              --file vitest-results.json \
+              --framework vitest \
+              --product-id $KIWI_PRODUCT_ID \
+              --test-plan-id $KIWI_TEST_PLAN_ID \
+              --verbose
+          fi
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            vitest-results.json
+            coverage/
+          retention-days: 30

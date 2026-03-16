@@ -1,0 +1,104 @@
+# GitLab CI/CD pipeline for uploading test results to Kiwi TCMS
+
+stages:
+  - test
+  - upload
+
+variables:
+  NODE_VERSION: "18"
+  TEST_RESULTS_FILE: "vitest-results.json"
+
+# Run tests and generate results
+test:
+  stage: test
+  image: node:${NODE_VERSION}
+  script:
+    - npm ci
+    - npm test -- --reporter=json --outputFile=${TEST_RESULTS_FILE}
+  artifacts:
+    when: always
+    paths:
+      - ${TEST_RESULTS_FILE}
+      - coverage/
+    expire_in: 30 days
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
+  only:
+    - main
+    - develop
+    - merge_requests
+
+# Upload results to Kiwi TCMS
+upload-to-kiwi-tcms:
+  stage: upload
+  image: node:${NODE_VERSION}
+  script:
+    - npm ci
+    - |
+      if [ -f "${TEST_RESULTS_FILE}" ]; then
+        echo "Uploading test results to Kiwi TCMS..."
+        npx ts-node scripts/kiwi-upload.ts \
+          --file ${TEST_RESULTS_FILE} \
+          --framework vitest \
+          --product-id ${KIWI_PRODUCT_ID} \
+          --test-plan-id ${KIWI_TEST_PLAN_ID} \
+          --verbose
+      else
+        echo "No test results file found at ${TEST_RESULTS_FILE}"
+        exit 1
+      fi
+  needs:
+    - test
+  dependencies:
+    - test
+  only:
+    - main
+    - develop
+  when: on_success
+
+# Manual upload to Kiwi TCMS (for debugging)
+upload-manual:
+  stage: upload
+  image: node:${NODE_VERSION}
+  script:
+    - npm ci
+    - |
+      if [ -f "${TEST_RESULTS_FILE}" ]; then
+        echo "Manual upload of test results to Kiwi TCMS..."
+        npx ts-node scripts/kiwi-upload.ts \
+          --file ${TEST_RESULTS_FILE} \
+          --framework vitest \
+          --product-id ${KIWI_PRODUCT_ID} \
+          --test-plan-id ${KIWI_TEST_PLAN_ID} \
+          --verbose
+      fi
+  dependencies:
+    - test
+  only:
+    - main
+    - develop
+  when: manual
+
+# Report test results summary
+test-report:
+  stage: upload
+  image: node:${NODE_VERSION}
+  script:
+    - npm ci
+    - |
+      if [ -f "${TEST_RESULTS_FILE}" ]; then
+        echo "Test Results Summary:"
+        echo "====================="
+        npx ts-node scripts/kiwi-upload.ts \
+          --file ${TEST_RESULTS_FILE} \
+          --framework vitest \
+          --dry-run
+      fi
+  needs:
+    - test
+  dependencies:
+    - test
+  only:
+    - main
+    - develop
+    - merge_requests
+  when: on_success

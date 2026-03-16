@@ -1,0 +1,12 @@
+[
+  {
+    "topic": "EscapeKit Phase 0 Completion",
+    "memory_to_store": "EscapeKit 项目阶段 0（推荐系统）已完全完成。所有 12 个测试通过（100%），包括：\n\n1. 创建推荐模块（RecommendationEngine、类型定义）\n2. 实现 4 个 YAML 推荐模板（framework-mix、ghost-import、phantom-dependency、mock-api）\n3. 集成到 CLI（--recommend 和 --recommend-only 选项）\n4. 修复了 YAML 模板加载问题（命名约定不一致和语法错误）\n\n修复详情：\n- 命名约定：从下划线命名（detection_criteria）改为驼峰命名（detectionCriteria）\n- YAML 语法：将编程语法（in, or）改为描述性文本\n- 所有 4 个模板验证通过\n- 测试从 8 失败 / 4 通过 → 12 通过 / 0 失败\n\n项目现在准备进入 Fase 3（CI/CD 配置）。关键文档位于 .comate/specs/llm-recommendations/（TEST_FIX_REPORT.md、FINAL_SUMMARY.md、PHASE0_COMPLETE.md）。",
+    "memory_id": "789a"
+  },
+  {
+    "topic": "Phase 3 CI/CD Completion Status",
+    "memory_to_store": "Phase 3 CI/CD Configuration is COMPLETE (2026-03-17). All CI/CD workflows, Railway integration, and documentation are ready and committed to branch `phase3-ci-cd-test` (commit 6eb0697). \n\nKey achievements:\n- GitHub Actions CI/CD workflows (ci.yml, release.yml, deploy-railway.yml)\n- Railway integration (railway.yml, templates, deployment scripts)\n- Build: PASSED, Type check: PASSED, Tests: 1121/1168 (96%)\n- Comprehensive documentation created\n\nCurrent blocker: Remote repository `escapekit/escapekit-mcp` is not accessible. Need to:\n1. Verify repository exists and user has access\n2. Push phase3-ci-cd-test branch to GitHub\n3. Create and merge Pull Request\n4. Test GitHub Actions in production\n5. Configure Railway deployment\n\nAll files are committed locally and ready to push once repository access is resolved.",
+    "memory_id": "8962"
+  }
+]

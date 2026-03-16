@@ -1,0 +1,4447 @@
+{
+  "execution": {
+    "uuid": "2e83962c-d978-4aa3-8e16-4849240bcbb5",
+    "timestamp": "2026-03-15T17:36:39.012530Z",
+    "branch": "master",
+    "commit": "29c8fcf981127eaf23fb070fc76f76a692fbc6f8",
+    "environment": "development"
+  },
+  "summary": {
+    "total": 700,
+    "passed": 696,
+    "failed": 0,
+    "skipped": 4,
+    "duration": 28092
+  },
+  "test_files": [
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/refactoring-validation.test.ts",
+      "duration": 34,
+      "tests": [
+        {
+          "name": "should produce consistent results for ES6 imports",
+          "status": "passed",
+          "duration": 9,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should produce consistent results for CommonJS requires",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should produce consistent results for Mock API calls",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should produce consistent results for WebGL usage",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should produce consistent results for Mixed code",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle empty string consistently",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle code with no detectable patterns",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should parse large code within acceptable time (<100ms)",
+          "status": "passed",
+          "duration": 10,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect AI Studio pattern consistently",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect Replit pattern consistently",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect No sandbox consistently",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should calculate confidence score for no issues within expected range",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should calculate confidence score for mock APIs within expected range",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should produce consistent confidence scores for identical code",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should maintain JavaScriptAnalyzer public API",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should maintain CodeAnalyzer public API",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should produce valid AnalysisResult structure",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/schemas.test.ts",
+      "duration": 6,
+      "tests": [
+        {
+          "name": "should generate unique IDs with prefix",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle different prefixes",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should create error response with default severity",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should create error response with custom code",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should create error response with custom severity",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have no data in error response",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should create success response with data",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have no errors in success response",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle complex data types",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/qwen-escapekit/tests/boilerplate-generator.test.ts",
+      "duration": 29,
+      "tests": [
+        {
+          "name": "deve gerar boilerplate de c\u00f3digo com contrato v\u00e1lido",
+          "status": "skipped",
+          "duration": 0,
+          "verdict": "SKIP"
+        },
+        {
+          "name": "deve gerar c\u00f3digo de testes quando solicitado",
+          "status": "passed",
+          "duration": 7,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve extrair nome do detector das regras do contrato",
+          "status": "skipped",
+          "duration": 0,
+          "verdict": "SKIP"
+        },
+        {
+          "name": "deve gerar nome padr\u00e3o se detector_name n\u00e3o existir",
+          "status": "skipped",
+          "duration": 0,
+          "verdict": "SKIP"
+        },
+        {
+          "name": "deve extrair nome da primeira regra com implement_detector",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve gerar nome baseado no t\u00edtulo se n\u00e3o houver detector_name",
+          "status": "skipped",
+          "duration": 0,
+          "verdict": "SKIP"
+        },
+        {
+          "name": "deve lidar com t\u00edtulo vazio",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve gerar c\u00f3digo TypeScript v\u00e1lido",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve incluir instru\u00e7\u00f5es para regras do contrato",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve incluir casos para cobrir",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve gerar testes usando Vitest",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve incluir testes unit\u00e1rios e de integra\u00e7\u00e3o",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve extrair c\u00f3digo de bloco typescript",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve extrair c\u00f3digo de bloco ts",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve extrair c\u00f3digo de bloco gen\u00e9rico",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve retornar resposta direta se n\u00e3o houver blocos",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve trimar espa\u00e7os em branco",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve chamar API do Ollama com par\u00e2metros corretos",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve usar temperatura baixa para c\u00f3digo",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve usar timeout de 3 minutos",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/qwen-escapekit/tests/contract-generator.test.ts",
+      "duration": 19,
+      "tests": [
+        {
+          "name": "deve verificar se Ollama est\u00e1 rodando",
+          "status": "passed",
+          "duration": 5,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve lan\u00e7ar erro se Ollama n\u00e3o estiver rodando",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve gerar contrato YAML v\u00e1lido com metadados",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve usar modelo configurado",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve extrair YAML de bloco de c\u00f3digo markdown",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve lan\u00e7ar erro se IA retornar formato inesperado",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve lan\u00e7ar erro se resposta estiver vazia",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve incluir metadados no prompt",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve usar temperatura configurada",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve construir prompt estruturado com todos os metadados",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve lidar com metadados ausentes",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve extrair YAML de bloco ```yaml",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve extrair YAML de bloco ``` gen\u00e9rico",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve retornar null se n\u00e3o encontrar YAML",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve retornar resposta direta se parecer YAML",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/qwen-escapekit/tests/contract-validator.test.ts",
+      "duration": 31,
+      "tests": [
+        {
+          "name": "deve validar contrato bem formado e completo",
+          "status": "passed",
+          "duration": 16,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve apontar erros para YAML com campos faltando",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve lan\u00e7ar exce\u00e7\u00e3o tratada para YAML mal formatado",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve validar estrutura de facts",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve validar tipos de fact",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve validar relev\u00e2ncia de fact",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve validar estrutura de patterns",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve validar estrutura de rules",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve validar a\u00e7\u00e3o de rule",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve validar prioridade de rule",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve validar estrutura de cases",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve validar consist\u00eancia de refer\u00eancias cruzadas (patterns)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve validar consist\u00eancia de refer\u00eancias cruzadas (facts)",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve validar m\u00faltiplos erros simultaneamente",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve retornar warnings para campos opcionais faltando",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve validar contrato do exemplo do README",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/qwen-escapekit/tests/source-resolver.test.ts",
+      "duration": 513,
+      "tests": [
+        {
+          "name": "deve retornar metadados corretos para DOI v\u00e1lido",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve lan\u00e7ar erro para DOI inv\u00e1lido",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve delegar para arXiv quando DOI come\u00e7ar com arXiv:",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve lidar com erro quando arXiv n\u00e3o retorna dados",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve extrair t\u00edtulo de URL gen\u00e9rica",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve detectar DOI em URL doi.org",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve lan\u00e7ar erro para URL inacess\u00edvel",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve lidar com erro quando PDF n\u00e3o existe",
+          "status": "passed",
+          "duration": 501,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve detectar DOI puro (10.xxxx/yyyy)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve detectar URL do DOI.org",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve detectar URL gen\u00e9rica",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve fornecer mensagem de erro amig\u00e1vel para API indispon\u00edvel",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "deve lidar com resposta vazia da API",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/analyzers/CodeAnalyzer.integration.test.ts",
+      "duration": 62,
+      "tests": [
+        {
+          "name": "should analyze code with imports and detect ghost imports",
+          "status": "passed",
+          "duration": 8,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect mock API calls",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect WebGL usage",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect sandbox type",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should calculate confidence score",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle empty code",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should use provided sandbox type",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should perform security analysis when enabled",
+          "status": "passed",
+          "duration": 45,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should skip security analysis when disabled",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should default to security analysis disabled",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should clear NPM registry cache",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/analyzers/JavaScriptAnalyzer.test.ts",
+      "duration": 13,
+      "tests": [
+        {
+          "name": "should parse valid JavaScript code with imports",
+          "status": "passed",
+          "duration": 5,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should parse code with mock API calls",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should parse code with WebGL usage",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle empty code",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should include error context when ParseError is thrown",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should extract package names from imports",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle scoped packages",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return correct language name",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/detectors/ImportDetector.test.ts",
+      "duration": 42,
+      "tests": [
+        {
+          "name": "should detect ES6 named imports",
+          "status": "passed",
+          "duration": 11,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect ES6 default imports",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect ES6 wildcard imports",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect ES6 imports without from clause",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect CommonJS requires",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect relative imports",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect scoped packages",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect multiple imports",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should capture line and column positions",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should extract package names from imports",
+          "status": "passed",
+          "duration": 6,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle scoped packages",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should extract main package from scoped package with subpath",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return unique package names",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return empty array when no imports",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should filter ES6 imports",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should filter relative imports",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should filter external imports",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should identify relative imports starting with ./",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should identify relative imports starting with ../",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should identify absolute imports starting with /",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should identify external imports",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should extract package name from simple import",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should extract package name with subpath",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should extract scoped package name",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should extract scoped package with subpath",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle multiple slashes",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return correct statistics",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle empty imports",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should add custom pattern",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should clear all patterns",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return all patterns",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/detectors/MockApiDetector.test.ts",
+      "duration": 11,
+      "tests": [
+        {
+          "name": "should detect mockapi.io calls",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect jsonplaceholder calls",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect localhost URLs",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect 127.0.0.1 URLs",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return empty array when no mock APIs are found",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect multiple mock API calls",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should capture line and column positions",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should add custom pattern",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should clear all patterns",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return all patterns",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return true for mock API URLs",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return false for real API URLs",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return correct mock API type",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return null for non-mock APIs",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/detectors/SandboxDetector.test.ts",
+      "duration": 21,
+      "tests": [
+        {
+          "name": "should detect AI Studio from @google/generative-ai import",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect AI Studio from @google/ai-protos import",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect AI Studio from gemini references",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect AI Studio from google.ai.generativelanguage API",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect Bolt.new",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect Replit from @replit packages",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect Replit from internal packages",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect CodeSandbox",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect StackBlitz",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return unknown when no pattern matches",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect all sandbox types in mixed code",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return [unknown] when no patterns match",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return detailed detection results",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return multiple detailed results",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return empty array when no patterns match",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return true for matching sandbox",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return false for unknown code",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return high confidence for single sandbox",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return 0 for non-matching sandbox",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return 0.5 for unknown with no patterns",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle mixed code correctly",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return patterns for AI Studio",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return empty array for unknown type",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return patterns for Bolt.new",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return patterns for Replit",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should add custom pattern",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should clear all patterns",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return all patterns",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should include patterns for all sandboxes",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/detectors/WebGLDetector.test.ts",
+      "duration": 22,
+      "tests": [
+        {
+          "name": "should detect Three.js imports",
+          "status": "passed",
+          "duration": 9,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect Three.js object creation",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect React Three Fiber imports",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect WebGLRenderingContext",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect canvas getContext calls",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect canvas element creation",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return empty array when no WebGL is found",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect multiple WebGL usages",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should capture line and column positions",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return true for Three.js imports",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return true for React Three Fiber",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return true for React Three Drei",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return false for non-Three.js code",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return true for WebGL context",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return true for WebGL2",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return true for WebGLRenderingContext",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return false for non-WebGL code",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return unique WebGL types",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return empty array when no WebGL is found",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should provide Three.js recommendations",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should provide WebGL recommendations",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should provide canvas recommendations",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return empty array when no WebGL is found",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should add custom pattern",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should clear all patterns",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return all patterns",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/generators/EscapeContractWriter.test.ts",
+      "duration": 17,
+      "tests": [
+        {
+          "name": "returns a sha256: prefixed hash",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns consistent hash for same input",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns different hashes for different inputs",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "handles empty string",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns true for a valid contract",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns false for null",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns false for missing contractId",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns false for missing analysisId",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns false for missing origin",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "creates a contract with correct analysisId",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "sets validationStatus to PENDING",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "calculates code hash when originalCode provided",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "adds low-confidence assumption",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "sets sandboxType from analysisResult",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "round-trips a contract through JSON",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "throws FileSystemError when write path is invalid",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "throws FileSystemError when read path does not exist",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "throws on invalid JSON content",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/generators/TemplateEngine.test.ts",
+      "duration": 87,
+      "tests": [
+        {
+          "name": "replaces a simple variable",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "replaces multiple variables",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "resolves nested dot-notation paths",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns empty string for undefined variables",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns empty string for null variables",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "renders numeric values",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "renders boolean values",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "leaves non-template text unchanged",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "renders block when condition is true",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "hides block when condition is false",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "hides block when condition is undefined",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "hides block when condition is empty array",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "shows block when condition is non-empty array",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "renders else branch when condition is false",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "renders if branch when condition is true (with else)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "evaluates nested dot-notation condition",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "renders block when condition is false",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "hides block when condition is true",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "renders block when condition is undefined",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "iterates over an array",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "provides @index for array items",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "iterates over object properties",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "spreads object item properties into context",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns empty string for empty array",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns empty string for null/undefined value",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "converts kebab-case to camelCase",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "converts space-separated to camelCase",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "converts snake_case to camelCase",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "lowercases the first character",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "converts camelCase to kebab-case",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "converts spaces to hyphens",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "lowercases the result",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "converts camelCase to UPPER_CASE",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "converts spaces to underscores and uppercases",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "converts hyphens to underscores and uppercases",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "serializes an object to JSON",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "serializes an array to JSON",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "serializes a string to JSON",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "registers and uses a custom helper",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "custom helper overrides built-in with same name",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns a function that renders the template",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns the same function for the same template (cache hit)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns different functions for different templates",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "clearCache() removes cached templates",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "loads a template file successfully",
+          "status": "passed",
+          "duration": 57,
+          "verdict": "PASS"
+        },
+        {
+          "name": "throws FileSystemError when file does not exist",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "FileSystemError has correct code",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "renders package.json.hbs template",
+          "status": "passed",
+          "duration": 12,
+          "verdict": "PASS"
+        },
+        {
+          "name": "renders tsconfig.json.hbs template",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "renders README.md.hbs template",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/generators/TransformationPipeline.test.ts",
+      "duration": 10,
+      "tests": [
+        {
+          "name": "extracts ghost import issues",
+          "status": "passed",
+          "duration": 5,
+          "verdict": "PASS"
+        },
+        {
+          "name": "ignores non-ghost-import issues",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "skips non-autoFixable issues by default",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "includes non-autoFixable issues when force=true",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "sets requiresManualReview=true when confidenceScore < 0.5",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "sets requiresManualReview=false when confidenceScore >= 0.5",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "preserves analysisId from input",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns empty ghostImports for no ghost import issues",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "adds warning for skipped non-autoFixable issues",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/integration/roo-code-integration.test.ts",
+      "duration": 2755,
+      "tests": [
+        {
+          "name": "should validate and apply diff successfully",
+          "status": "passed",
+          "duration": 211,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle multiple hunks correctly",
+          "status": "passed",
+          "duration": 23,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should generate diff between files",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should reject invalid diffs",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should process analysis with diff options",
+          "status": "passed",
+          "duration": 8,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should support applyDiffToFile method",
+          "status": "passed",
+          "duration": 732,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should support generateDiff method",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should support validateDiff method",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should apply diff with minor content variations",
+          "status": "passed",
+          "duration": 187,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should reject diff with low similarity threshold",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle non-existent file gracefully",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should preserve file encoding correctly",
+          "status": "passed",
+          "duration": 565,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle empty diff gracefully",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle diff with no changes",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should apply multiple diffs in sequence",
+          "status": "passed",
+          "duration": 1004,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/ratelimit/RateLimiter.pbt.test.ts",
+      "duration": 10869,
+      "tests": [
+        {
+          "name": "getRequestCount() equals N after N sequential throttle() calls within one window",
+          "status": "passed",
+          "duration": 13,
+          "verdict": "PASS"
+        },
+        {
+          "name": "no more than R calls resolve within any W-ms interval without waiting",
+          "status": "passed",
+          "duration": 8044,
+          "verdict": "PASS"
+        },
+        {
+          "name": "active in-flight count never exceeds maxConcurrent",
+          "status": "passed",
+          "duration": 2778,
+          "verdict": "PASS"
+        },
+        {
+          "name": "getRequestCount() returns 0 immediately after reset() regardless of prior state",
+          "status": "passed",
+          "duration": 6,
+          "verdict": "PASS"
+        },
+        {
+          "name": "after execute(throwingFn), a subsequent execute(successFn) completes successfully",
+          "status": "passed",
+          "duration": 28,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/resolvers/DependencyResolver.integration.test.ts",
+      "duration": 422,
+      "tests": [
+        {
+          "name": "should mark resolution as VERIFIED when package exists",
+          "status": "passed",
+          "duration": 8,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should mark resolution as UNVERIFIED when package does not exist",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should work in offline mode with cached data",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should track NPM query statistics",
+          "status": "passed",
+          "duration": 203,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should track cache hits and misses",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should apply rate limiting between requests",
+          "status": "passed",
+          "duration": 101,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should work without rate limiting when disabled",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should resolve multiple packages and track statistics",
+          "status": "passed",
+          "duration": 101,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should include UNVERIFIED status in reasoning text",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should not include UNVERIFIED in reasoning for verified packages",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/resolvers/KnowledgeBase.integration.test.ts",
+      "duration": 196,
+      "tests": [
+        {
+          "name": "should load at least 10 mappings from knowledge-base.json",
+          "status": "passed",
+          "duration": 166,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have mapping for three.js",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have mapping for mockapi.io",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have mapping for fake-api-client",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have mapping for mock-database",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have mapping for sandbox-canvas",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have mapping for test-utils",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have mapping for fake-fetch",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have mapping for mock-websocket",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have mapping for sandbox-crypto",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have mapping for fake-storage",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have mapping for mock-auth",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have mapping for sandbox-dom",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have mapping for fake-router",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have mapping for mock-logger",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "all mappings should have confidence between 0.0 and 1.0",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "all mappings should have at least one real package",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/resolvers/KnowledgeBase.test.ts",
+      "duration": 50,
+      "tests": [
+        {
+          "name": "should return null for non-existent ghost package",
+          "status": "passed",
+          "duration": 5,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return mapping for existing ghost package",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should add a new mapping",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should overwrite existing mapping with same ghost package",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should load mappings from valid JSON file",
+          "status": "passed",
+          "duration": 8,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should throw error for invalid JSON",
+          "status": "passed",
+          "duration": 13,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should throw error for missing mappings field",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should throw error for non-existent file",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should export mappings to JSON file",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should export empty knowledge base",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return 0 for empty knowledge base",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return correct count after adding mappings",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should remove all mappings",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should preserve data through export and load",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/resolvers/SemanticMatcher.integration.test.ts",
+      "duration": 6952,
+      "tests": [
+        {
+          "name": "should find \"three\" as alternative for \"three-js\"",
+          "status": "passed",
+          "duration": 1160,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should find \"axios\" as alternative for \"axios-client\"",
+          "status": "passed",
+          "duration": 1469,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should respect minimum similarity threshold",
+          "status": "passed",
+          "duration": 854,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should limit results to maxResults",
+          "status": "passed",
+          "duration": 1507,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should rank results by confidence (descending)",
+          "status": "passed",
+          "duration": 1124,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should cache package metadata for performance",
+          "status": "passed",
+          "duration": 99,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle non-existent packages gracefully",
+          "status": "passed",
+          "duration": 636,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should calculate similarity with real package metadata",
+          "status": "passed",
+          "duration": 103,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/resolvers/SemanticMatcher.test.ts",
+      "duration": 65,
+      "tests": [
+        {
+          "name": "should find similar packages with confidence scores",
+          "status": "passed",
+          "duration": 6,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should rank results by confidence score (descending)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should apply minimum similarity threshold",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should limit results to maxResults",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should exclude deprecated packages by default",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return empty array when no packages meet threshold",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle errors gracefully and continue",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return 1.0 for identical names with full metadata",
+          "status": "passed",
+          "duration": 28,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return high similarity for substring matches",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return low similarity for very different names",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should weight name similarity at 40%",
+          "status": "passed",
+          "duration": 5,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should consider keyword overlap",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should consider download count",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should consider maintenance status",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return score between 0.0 and 1.0",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should fetch and cache package metadata",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should extract keywords from package name",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle errors gracefully",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should mark package as not deprecated by default",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should calculate correct distance for identical strings",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should calculate correct distance for single character difference",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should calculate correct distance for completely different strings",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle empty strings",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should be case-insensitive",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle special characters",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should generate candidates by removing suffixes",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should generate candidates by removing hyphens",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should clear metadata cache",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle very long package names",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle package names with special characters",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle package names with numbers",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle concurrent findSimilar calls",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should apply correct weights to similarity components",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should combine all factors for total score",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/security/DeepDependencyScanner.regression.test.ts",
+      "duration": 86,
+      "tests": [
+        {
+          "name": "detects evil-pkg at depth=2 with severity error",
+          "status": "passed",
+          "duration": 76,
+          "verdict": "PASS"
+        },
+        {
+          "name": "includes depth=2 in the issue description for evil-pkg",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "detects deep-evil at depth=3 with severity error",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "includes depth=3 in the issue description for deep-evil",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "does NOT flag postmark itself (no suspicious scripts)",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "does NOT detect evil-pkg in shallow mode",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/security/MaliciousPatterns.test.ts",
+      "duration": 22,
+      "tests": [
+        {
+          "name": "detects network_request pattern (Requirement 2.1)",
+          "status": "passed",
+          "duration": 6,
+          "verdict": "PASS"
+        },
+        {
+          "name": "detects env_access pattern (Requirement 2.4)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "matches the curl command in the script",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "scores above 70 (Requirement 3.8)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "assigns severity \"error\" or \"warning\" (score >= 70)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "generates a remediation suggestion for network requests (Requirement 8.1)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "creates an issue with type postinstall_risk",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "issue message includes the risk score",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "issue is not auto-fixable (Requirement 6.7)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "detects code_execution pattern (Requirement 2.7)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "detects obfuscation pattern (Requirement 2.9)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "detects env_access pattern (Requirement 2.4)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "detects all three expected pattern types",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "scores above 70 (Requirement 3.8)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "assigns severity \"error\" (Requirement 3.8)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "generates remediation suggestion for code execution (Requirement 8.3)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "generates remediation suggestion for obfuscation (Requirement 8.4)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "generates remediation suggestion for environment access (Requirement 8.2)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "creates an issue with type postinstall_risk",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "issue message includes the risk score",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "issue is not auto-fixable (Requirement 6.7)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "detects code_execution pattern (Requirement 2.8)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "detects env_access pattern for AWS credentials (Requirement 2.4)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "detects both expected pattern types",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "matches child_process.exec in the script",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "matches AWS_SECRET_ACCESS_KEY in the script",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "scores above 70 (Requirement 3.8)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "assigns severity \"error\" (Requirement 3.8)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "generates remediation suggestion for code execution (Requirement 8.3)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "generates remediation suggestion for environment access (Requirement 8.2)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "creates an issue with type postinstall_risk",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "issue message includes the risk score",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "issue is not auto-fixable (Requirement 6.7)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "Shai-Hulud: riskScore >= 70 (high risk)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "Shai-Hulud: severity is \"warning\" or \"error\"",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "postmark-mcp: riskScore > 70",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "postmark-mcp: severity is \"error\"",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "GlassWorm: riskScore > 70",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "GlassWorm: severity is \"error\"",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/security/Performance.test.ts",
+      "duration": 508,
+      "tests": [
+        {
+          "name": "analyzes 50 dependencies in < 5000ms",
+          "status": "passed",
+          "duration": 13,
+          "verdict": "PASS"
+        },
+        {
+          "name": "PostInstallDetector.analyzeDependencies completes in < 5000ms for 50 deps",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "all 50 package queries are initiated concurrently (not sequentially)",
+          "status": "passed",
+          "duration": 424,
+          "verdict": "PASS"
+        },
+        {
+          "name": "checkPackages resolves faster with parallel execution than sequential would",
+          "status": "passed",
+          "duration": 21,
+          "verdict": "PASS"
+        },
+        {
+          "name": "second checkPackages call is faster due to cache hits",
+          "status": "passed",
+          "duration": 38,
+          "verdict": "PASS"
+        },
+        {
+          "name": "NPMRegistry internal cache stores results after first query",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "analyzes 10 dependencies and logs timing",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "analyzes 25 dependencies and logs timing",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "analyzes 50 dependencies and logs timing",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "50-dep analysis is within 5s budget (Requirement 4.6)",
+          "status": "passed",
+          "duration": 8,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/security/PopularPackages.test.ts",
+      "duration": 30,
+      "tests": [
+        {
+          "name": "axios: installation scripts produce no false-positive issues (score < 40 or no patterns)",
+          "status": "passed",
+          "duration": 10,
+          "verdict": "PASS"
+        },
+        {
+          "name": "react: installation scripts produce no false-positive issues (score < 40 or no patterns)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "lodash: installation scripts produce no false-positive issues (score < 40 or no patterns)",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "express: installation scripts produce no false-positive issues (score < 40 or no patterns)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "axios: no suspicious patterns detected in installation scripts",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "react: no suspicious patterns detected in installation scripts",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "lodash: no suspicious patterns detected in installation scripts",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "express: no suspicious patterns detected in installation scripts",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "plain tsc command scores below 40",
+          "status": "passed",
+          "duration": 9,
+          "verdict": "PASS"
+        },
+        {
+          "name": "tsc with project flag scores below 40",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "tsc && tsc --project tsconfig.esm.json scores below 40",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "tsc -p tsconfig.build.json scores below 40",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "node -e \"require('tsc')\" style compile scores below 40",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "node-gyp rebuild scores below 40",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "node-gyp configure && node-gyp build scores below 40",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "node-gyp rebuild with flags scores below 40",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "prebuild-install fallback to node-gyp scores below 40",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "webpack scores below 40",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "webpack --config webpack.config.js scores below 40",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "webpack --mode production scores below 40",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "node_modules/.bin/webpack scores below 40",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "husky install scores below 40",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "npm run build scores below 40",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "yarn build scores below 40",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "isLegitimatePattern returns true for tsc",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "isLegitimatePattern returns true for node-gyp rebuild",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "isLegitimatePattern returns true for webpack",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "isLegitimatePattern returns true for husky install",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "isLegitimatePattern returns false for curl command",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "legitimate pattern reduces score compared to suspicious-only script",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/security/SlopsquatDetector.test.ts",
+      "duration": 12,
+      "tests": [
+        {
+          "name": "detects 1-character typos of popular packages",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "ignores exact matches of popular packages",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "ignores legitimate prefixed/suffixed packages",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "detects extreme compound hallucinated names",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "detects generic hallucinated specific formats",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "passes legitimate non-hallucinated names",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "flags highly random strings with high entropy",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "gives lower entropy to normal package names",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns null for safe packages",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "flags typosquatting as an error",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "flags extreme hallucination patterns as a warning",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "considers recency metadata as amplifying factor",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/security/UnicodeAnalyzer.test.ts",
+      "duration": 11,
+      "tests": [
+        {
+          "name": "returns empty array for clean ASCII package names",
+          "status": "passed",
+          "duration": 5,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns empty array for clean ASCII scripts",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "detects invisible characters (zero-width joiner)",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "detects Bidi control characters (Trojan Source)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "detects mixed-script homoglyph attacks (Cyrillic mixed with Latin)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "flags multiple issues if multiple attack types are combined",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/services/NPMRegistry.test.ts",
+      "duration": 3076,
+      "tests": [
+        {
+          "name": "should return true for existing packages",
+          "status": "passed",
+          "duration": 13,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return false for non-existing packages",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle Node.js built-in modules",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return false when network error occurs after retries",
+          "status": "passed",
+          "duration": 301,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle timeout errors gracefully",
+          "status": "passed",
+          "duration": 305,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should cache results",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return version for existing packages",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return \"unknown\" when network error occurs after retries",
+          "status": "passed",
+          "duration": 301,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle timeout errors gracefully",
+          "status": "passed",
+          "duration": 303,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle 404 responses gracefully",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return \"builtin\" for Node.js built-in modules",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should cache version results",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should check multiple packages and return PackageInfo with status",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle network errors and mark packages as UNVERIFIED_NETWORK_ERROR",
+          "status": "passed",
+          "duration": 304,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle Node.js built-ins correctly",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle HTTP 500 errors and retry with exponential backoff",
+          "status": "passed",
+          "duration": 305,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle HTTP 500 errors and mark as UNVERIFIED_NETWORK_ERROR after retries",
+          "status": "passed",
+          "duration": 303,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle mixed HTTP 500 and network errors",
+          "status": "passed",
+          "duration": 301,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should implement exponential backoff delay",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should not retry when enableRetry is false",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return scripts object when scripts field is present",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return {} when scripts field is absent",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return null on 404",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should cache null on 404 and not re-fetch",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should cache successful result and not re-fetch",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return null on network error after retries (no caching)",
+          "status": "passed",
+          "duration": 302,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return null on timeout (no caching)",
+          "status": "passed",
+          "duration": 302,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should use separate cache from PackageInfo cache",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should clear cache when clearCache is called",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should respect cache TTL",
+          "status": "passed",
+          "duration": 21,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/sovereignty/sovereignty.integration.test.ts",
+      "duration": 202,
+      "tests": [
+        {
+          "name": "validates packages from cache without network, logging all operations",
+          "status": "passed",
+          "duration": 14,
+          "verdict": "PASS"
+        },
+        {
+          "name": "reflects correct counts after validating safe and unsafe packages",
+          "status": "passed",
+          "duration": 5,
+          "verdict": "PASS"
+        },
+        {
+          "name": "logs a failed audit entry when offline mode blocks network fetch",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "generates a valid lock file from cached packages with integrity hashes",
+          "status": "passed",
+          "duration": 14,
+          "verdict": "PASS"
+        },
+        {
+          "name": "throttles requests and audit statistics reflect correct counts and timing",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "waits when window is exhausted before allowing more requests",
+          "status": "passed",
+          "duration": 153,
+          "verdict": "PASS"
+        },
+        {
+          "name": "resolves, validates, audits, and locks packages entirely offline",
+          "status": "passed",
+          "duration": 13,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/sovereignty/sovereignty.test.ts",
+      "duration": 89,
+      "tests": [
+        {
+          "name": "should return safe=true for a clean package",
+          "status": "passed",
+          "duration": 5,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect known CVE vulnerabilities",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should mark deprecated packages as unsafe",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should check license compatibility",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should check maintenance status",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should warn on stale packages",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should check maintainer count",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should use isSafe() helper",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should respect custom allowed licenses",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should log requests and retrieve entries",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should calculate statistics correctly",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return zero stats when empty",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should export logs to file",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should clear entries",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should include Chinese mirrors by default",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should prioritize Chinese mirrors (lower priority number = higher priority)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should exclude Chinese mirrors when disabled",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should throw in offline mode",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should include custom mirrors",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have correct timeouts: 5s for Chinese, 10s for global",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "DEFAULT_MIRRORS should have 3 entries",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return null for uncached packages",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should populate and retrieve packages",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should export cache to file",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should clear memory cache",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should load from disk after populate",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should generate a lock file with correct structure",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should include resolved URLs for each package",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should calculate integrity hashes",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should write and validate lock file",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should detect invalid lock file",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle empty dependencies",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should allow requests within limit",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should enforce minimum delay between requests",
+          "status": "passed",
+          "duration": 52,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should reset state",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should track request count in window",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should work with no minDelay",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/transformers/ASTTransformer.test.ts",
+      "duration": 80,
+      "tests": [
+        {
+          "name": "should parse ES6 import statements",
+          "status": "passed",
+          "duration": 15,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should parse TypeScript code",
+          "status": "passed",
+          "duration": 7,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should parse JSX code",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should parse CommonJS require",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should parse dynamic imports",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should generate code from AST",
+          "status": "passed",
+          "duration": 10,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should preserve formatting by default",
+          "status": "passed",
+          "duration": 8,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should respect quote style option",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should traverse AST with visitor pattern",
+          "status": "passed",
+          "duration": 6,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should visit multiple node types",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should find ES6 import statements",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should find CommonJS require calls",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should find dynamic import calls",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should find mixed import types",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should find TypeScript type imports",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should not find non-import function calls",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should replace ES6 import source",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should replace CommonJS require source",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should replace dynamic import source",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should preserve import specifiers when replacing",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should preserve default imports when replacing",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should preserve namespace imports when replacing",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should parse code with recast for formatting preservation",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should preserve formatting when using recast",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle complete transformation workflow",
+          "status": "passed",
+          "duration": 9,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/transformers/DiffApplyTransformer.test.ts",
+      "duration": 36,
+      "tests": [
+        {
+          "name": "returns true for valid unified diff",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns false for empty diff",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns false for diff without --- header",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns false for diff without +++ header",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns false for diff without hunk",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns false for diff with invalid hunk header",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns true for diff with multiple hunks",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "handles empty lines between hunks",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "rejects invalid line prefixes in hunk",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "applies simple line replacement",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "throws for invalid diff format",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "throws for non-existent file",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "creates backup when requested",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "does not create backup when not requested",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "handles empty file content with addition",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "applies diff with multiple hunks",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "handles diff with only additions",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "handles diff with only deletions",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "handles diff with no changes (idempotent)",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "reports partial success when some hunks fail to apply",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "handles large files (>1000 lines)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "handles UTF-8 characters",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "generates diff for simple change",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns empty string for identical content",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "generates diff for multiple changes",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "handles empty strings",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "applies with high threshold when content matches",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "applies with fuzzy matching for slight differences",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "may apply with fuzzy matching despite content differences",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "clamps threshold to valid range [0.0, 1.0]",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "uses default threshold of 0.8",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "handles complex multi-file diff scenario",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "recovers from backup if write fails",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/transformers/ImportReplacer.test.ts",
+      "duration": 125,
+      "tests": [
+        {
+          "name": "replaces a default ES6 import",
+          "status": "passed",
+          "duration": 35,
+          "verdict": "PASS"
+        },
+        {
+          "name": "replaces named ES6 imports",
+          "status": "passed",
+          "duration": 5,
+          "verdict": "PASS"
+        },
+        {
+          "name": "replaces namespace ES6 imports",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "replaces TypeScript type imports",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "preserves import specifiers after replacement",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "replaces a CommonJS require call",
+          "status": "passed",
+          "duration": 8,
+          "verdict": "PASS"
+        },
+        {
+          "name": "preserves the variable binding after require replacement",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "replaces a dynamic import()",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "replaces dynamic import inside async function",
+          "status": "passed",
+          "duration": 8,
+          "verdict": "PASS"
+        },
+        {
+          "name": "replaces multiple imports in one pass",
+          "status": "passed",
+          "duration": 5,
+          "verdict": "PASS"
+        },
+        {
+          "name": "records one applied rule per replaced import",
+          "status": "passed",
+          "duration": 4,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns a valid CodeTransformation object",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "leaves imports not in resolutions list unchanged",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns empty appliedRules when no imports match",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "preserves inline comments on import lines",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "preserves block comments above imports",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "preserves blank lines between import groups",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "preserves indentation (spaces) in function body",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns true for valid JavaScript",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns true for valid TypeScript",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns true for empty string",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns false for invalid syntax",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns false for unclosed brackets",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns true for CommonJS code",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns empty string when code is identical",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "returns a non-empty diff when code differs",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "diff contains --- and +++ headers",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "diff contains @@ hunk header",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "diff shows removed lines with - prefix",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "diff shows added lines with + prefix",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "metadata.diff is populated on replaceImports result",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "throws TransformationError for completely invalid source code",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "TransformationError has operation context",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "handles empty resolutions array without error",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "handles empty source code without error",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "preserves single quotes",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "preserves quote style for unchanged code",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "preserves semicolons",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "preserves trailing commas in named imports",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "preserves JSDoc comments",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "transformed code is syntactically valid",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/utils/ConfidenceCalculator.test.ts",
+      "duration": 16,
+      "tests": [
+        {
+          "name": "should return perfect score for no issues",
+          "status": "passed",
+          "duration": 3,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle single ghost import (critical issue)",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle single mock API (warning)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle single WebGL usage (warning)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should handle security risk (critical)",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should calculate score decreasing with more issues",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should have higher penalty for errors than warnings",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should correctly count issues by type",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should calculate correct confidence levels",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should provide critical recommendations",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should provide low confidence recommendations",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should provide medium confidence recommendations",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should provide high confidence recommendations",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should provide excellent confidence recommendations",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return description for critical level",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return description for low level",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return description for medium level",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return description for high level",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "should return description for excellent level",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/validators/E2EValidator.test.ts",
+      "duration": 13,
+      "tests": [
+        {
+          "name": "validates a successful page load without errors",
+          "status": "passed",
+          "duration": 7,
+          "verdict": "PASS"
+        },
+        {
+          "name": "fails validation on HTTP error",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "fails validation if network times out",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        },
+        {
+          "name": "collects JS errors and fails validation if present",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "collects console errors but does not necessarily fail on them alone",
+          "status": "passed",
+          "duration": 2,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/validators/RuntimeValidator.test.ts",
+      "duration": 1552,
+      "tests": [
+        {
+          "name": "validates a successful install and boot",
+          "status": "passed",
+          "duration": 516,
+          "verdict": "PASS"
+        },
+        {
+          "name": "fails validation if npm install fails",
+          "status": "passed",
+          "duration": 12,
+          "verdict": "PASS"
+        },
+        {
+          "name": "fails validation if npm run dev exits prematurely",
+          "status": "passed",
+          "duration": 12,
+          "verdict": "PASS"
+        },
+        {
+          "name": "fails validation if dev server boot times out",
+          "status": "passed",
+          "duration": 1012,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "/home/vector/Transfer\u00eancias/RalphLoopInverso/tests/validators/ValidationScorer.test.ts",
+      "duration": 8,
+      "tests": [
+        {
+          "name": "calculates perfect score for thorough validation",
+          "status": "passed",
+          "duration": 5,
+          "verdict": "PASS"
+        },
+        {
+          "name": "calculates 0.8 score for standard validation with perfect dependencies and sets readyForProduction",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "calculates 0.4 score for basic validation and is not ready for production",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "penalizes score if npm install fails",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        },
+        {
+          "name": "penalizes score if dev server boot fails",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "recommends investigation of console errors from E2E validation",
+          "status": "passed",
+          "duration": 1,
+          "verdict": "PASS"
+        },
+        {
+          "name": "penalizes score for fatal E2E JS errors and marks unsafe",
+          "status": "passed",
+          "duration": 0,
+          "verdict": "PASS"
+        }
+      ]
+    }
+  ],
+  "verdict": "PASS"
+}

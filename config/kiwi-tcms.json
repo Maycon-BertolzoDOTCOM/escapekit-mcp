@@ -1,0 +1,10 @@
+{
+  "baseUrl": "https://kiwi.example.com",
+  "username": "api-user",
+  "password": "api-password",
+  "defaultProduct": "EscapeKit",
+  "defaultPlanId": 1,
+  "testRunTemplate": "AutoTest-{DATE}",
+  "timeout": 5000,
+  "retries": 3
+}

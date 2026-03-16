@@ -576,8 +576,8 @@ export class DiffApplyTransformer {
     // Precisamos verificar se o conteúdo atual corresponde ao que deve ser removido
     
     let lineOffset = 0;
-    let linesToRemove: number[] = [];  // índices das linhas para remover
-    let linesToAdd: string[] = [];     // linhas para adicionar
+    const linesToRemove: number[] = [];  // índices das linhas para remover
+    const linesToAdd: string[] = [];     // linhas para adicionar
 
     for (let i = 0; i < hunkLines.length; i++) {
       const hunkLine = hunkLines[i];

@@ -1,0 +1,5 @@
+
+> escapekit-mcp@2.0.0 cli
+> tsx cli/index.ts analyze /home/vector/Transferências/pisosrealview-pro --json --deep-scan --max-depth 3
+
+Error: EISDIR: illegal operation on a directory, read

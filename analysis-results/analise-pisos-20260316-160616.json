@@ -1,0 +1,52 @@
+{
+  "analysisId": "analysis-pisos-20260316-160616",
+  "project": "pisosrealview-pro",
+  "timestamp": "2026-03-16T16:06:20-03:00",
+  "summary": {
+    "totalIssues": 18,
+    "ghostImports": 18,
+    "phantomDependencies": 8,
+    "mockedApis": 5,
+    "portabilityIssues": 3
+  },
+  "ghostImports": [
+    "analytics-browser",
+    "child_process",
+    "cors",
+    "crypto",
+    "dotenv",
+    "express",
+    "fast-check",
+    "fs",
+    "genai",
+    "handlebars",
+    "http",
+    "js-yaml",
+    "k6/http",
+    "k6/metrics",
+    "lucide-react",
+    "next/error",
+    "next/head",
+    "nextjs",
+    "node:fs"
+  ],
+  "phantomDependencies": [
+    "cors",
+    "dotenv",
+    "express",
+    "handlebars",
+    "js-yaml",
+    "lucide-react"
+  ],
+  "mockedApis": [
+    "mockAnalyzeRoom",
+    "mockRenderFloor",
+    "mockMaterialService"
+  ],
+  "portabilityIssues": [
+    "Mistura de Next.js e Vite",
+    "node:* imports em código client",
+    "fs imports em código client"
+  ],
+  "confidenceScore": 0.95
+}

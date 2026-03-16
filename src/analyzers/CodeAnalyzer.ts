@@ -93,7 +93,7 @@ export class CodeAnalyzer {
       const webglIssues = this.detectWebGLIssues(parseResult.webglUsages);
 
       // Perform security analysis if enabled
-      let securityIssues: Issue[] = [];
+      const securityIssues: Issue[] = [];
       if (options.enableSecurityAnalysis) {
         try {
           this.logger.debug('Running security analysis');

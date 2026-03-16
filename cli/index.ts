@@ -21,6 +21,7 @@ import { PackageJsonParser } from '../src/security/PackageJsonParser.js';
 import { PostInstallDetector } from '../src/security/PostInstallDetector.js';
 import { DeepDependencyScanner } from '../src/security/DeepDependencyScanner.js';
 import { NPMRegistry } from '../src/services/NPMRegistry.js';
+import { RecommendationEngine } from '../src/recommendations/RecommendationEngine.js';
 
 const program = new Command();
 
@@ -42,6 +43,8 @@ program
   .option('--json', 'Output results as JSON')
   .option('--deep-scan', 'Enable transitive dependency analysis')
   .option('--max-depth <n>', 'Maximum dependency depth to analyze (default: 3)', '3')
+  .option('--recommend', 'Show recommendations for detected issues', true)
+  .option('--recommend-only', 'Show only recommendations, hide analysis')
   .action(async (file, options) => {
     try {
       let code: string;
