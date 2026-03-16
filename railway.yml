@@ -1,0 +1,29 @@
+version: "1.0"
+
+services:
+  # MCP Server Service
+  mcp-server:
+    buildCommand: npm install && npm run build
+    startCommand: node dist/server.js
+    env:
+      - NODE_ENV=production
+      - PORT=3000
+    healthcheckPath: /health
+    healthcheckTimeout: 100
+
+  # CLI Tool Service (optional - for testing)
+  cli-test:
+    buildCommand: npm install && npm run build
+    startCommand: npm run cli -- --help
+    env:
+      - NODE_ENV=test
+
+# CI/CD integration
+deployments:
+  test:
+    # Run tests before deploying
+    command: npm test
+    # Upload results to Kiwi TCMS (optional)
+    command: npx ts-node scripts/kiwi-upload.ts --file vitest-results.json --framework vitest
+    on:
+      branch: [main, develop, feature/*]

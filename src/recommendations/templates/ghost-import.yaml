@@ -1,0 +1,58 @@
+id: "ghost-import"
+title: "Ghost Import Detected"
+description: "Your code imports a package that doesn't exist or has incorrect name"
+severity: "error"
+
+summary: |
+  Ghost imports occur when AI-generated code uses incorrect package names
+  that work in sandbox environments but fail in production. These packages
+  need to be replaced with their real npm equivalents.
+
+detectionCriteria:
+  - Import statement with package name not found in npm registry
+  - Package name matches known AI sandbox patterns
+  - Package name is similar but not identical to real packages
+
+commonPatterns:
+  - original: "analytics-browser"
+    correct: "@amplitude/analytics-browser"
+    description: "Amplitude analytics package with correct scoped name"
+  
+  - original: "genai"
+    correct: "@google/genai"
+    description: "Google AI SDK with correct scoped name"
+  
+  - original: "react-awesome-charts"
+    correct: "recharts"
+    alternative: "victory"
+    description: "Alternative charting libraries with similar APIs"
+  
+  - original: "nextjs"
+    correct: "next"
+    description: "Next.js package name is 'next', not 'nextjs'"
+
+recommendedActions:
+  - id: "replace-ghost-import"
+    title: "Replace Ghost Import with Correct Package"
+    steps:
+      - "Identify the correct package name from npm registry"
+      - "Search for similar packages if exact match not found"
+      - "Update import statements in affected files"
+      - "Install the correct package: npm install <correct-package>"
+      - "Update code to match correct API if needed"
+      - "Run: escapekit validate to verify"
+    
+    commands:
+      - "npm search <package-name>"
+      - "npm install <correct-package>"
+      - "npm test"
+    
+    references:
+      - "https://www.npmjs.com/"
+      - "https://docs.npmjs.com/cli/search"
+
+prevention:
+  - "Run escapekit analyze during development"
+  - "Check package names on npm registry before using"
+  - "Use official SDK packages over generic wrappers"
+  - "Be suspicious of package names that seem too generic"

@@ -1,0 +1,41 @@
+{
+  "name": "escapekit-mcp",
+  "description": "EscapeKit: Transform AI sandbox code into production-ready projects with CI/CD integration",
+  "repository": "https://github.com/escapekit/escapekit-mcp",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "sandbox",
+    "code-generation",
+    "escape",
+    "portability"
+  ],
+  "envVars": [
+    {
+      "name": "NODE_ENV",
+      "value": "production"
+    },
+    {
+      "name": "PORT",
+      "value": "3000"
+    }
+  ],
+  "services": [
+    {
+      "name": "mcp-server",
+      "buildCommand": "npm install && npm run build",
+      "startCommand": "node dist/server.js",
+      "envVars": [
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "PORT",
+          "value": "3000"
+        }
+      ]
+    }
+  ]
+}

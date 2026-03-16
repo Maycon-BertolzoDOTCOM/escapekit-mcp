@@ -5,7 +5,22 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3.3-blue.svg)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E=18.0.0-green.svg)](https://nodejs.org/)
+[![Railway](https://img.shields.io/badge/Railway-deploy-blue)](https://railway.app/new/template?template=YOUR_TEMPLATE_ID)
+[![CI/CD](https://github.com/escapekit/escapekit-mcp/workflows/CI/badge.svg)](https://github.com/escapekit/escapekit-mcp/actions)
+[![codecov](https://codecov.io/gh/escapekit/escapekit-mcp/branch/main/graph/badge.svg)](https://codecov.io/gh/escapekit/escapekit-mcp)
 
+
+## 🚀 Quick Deploy to Railway
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=YOUR_TEMPLATE_ID)
+
+**Features**:
+- ✅ One-click Railway deployment
+- ✅ Automated CI/CD with GitHub Actions
+- ✅ Comprehensive test coverage
+- ✅ Kiwi TCMS integration for test tracking
+- ✅ Multi-environment support (dev, staging, prod)
+- ✅ Zero-configuration setup
 ## 🎯 What is EscapeKit?
 
 EscapeKit MCP is a Model Context Protocol (MCP) server that helps developers break free from AI sandbox dependencies. It analyzes, transforms, and validates code generated in AI sandboxes (Google AI Studio, Bolt.new, Replit) to work in real production environments.
@@ -331,6 +346,40 @@ npm run health-check
 | Phase 8: MVP Release | ⏳ Not Started | 0% |
 
 **Overall Progress**: ~75% (Phase 5 complete)
+
+## 🧠 Research
+
+The EscapeKit project is grounded in academic research on platform dependency in AI-assisted code generation.
+
+### Concept: The "Ralph Loop Inverso"
+
+The "Ralph Loop Inverso" is a phenomenon where developers become trapped in AI platforms, unable to port their generated code to production environments without the platform. This creates a cycle of dependency (vendor lock-in) that affects intellectual ownership, innovation, and developer autonomy.
+
+### Research Contributions
+
+- **Concept**: The "Ralph Loop Inverso" as a sociotechnical phenomenon
+- **Tool**: EscapeKit - An open-source tool for platform-independent code portability
+- **Empirical**: Ongoing studies on developer productivity and code quality
+
+### Publications
+
+- **Under Review**: Breaking the Ralph Loop Inverso: EscapeKit - A Tool for Platform-Independent Code Portability
+
+### Research Resources
+
+- [Research Strategy](RESEARCH_STRATEGY.md) - Comprehensive academic roadmap
+- [Research Abstract](RESEARCH_ABSTRACT.md) - 3-page research abstract for collaboration
+- [Related Work](RESEARCH_ABSTRACT.md#related-work) - Literature review and references
+
+### Collaborate
+
+We invite researchers to:
+- Use EscapeKit in their studies on AI-assisted programming
+- Contribute to empirical evaluations (contact us for study design)
+- Collaborate on theoretical work on platform dependency
+- Give talks and workshops on AI platform independence
+
+**Contact**: research@escapekit.dev
 
 ## 🤝 Contributing
 

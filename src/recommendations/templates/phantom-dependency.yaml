@@ -1,0 +1,47 @@
+id: "phantom-dependency"
+title: "Phantom Dependency Detected"
+description: "Your code uses a dependency that is not declared in package.json"
+severity: "error"
+
+summary: |
+  Phantom dependencies are packages that are used in code but not
+  listed in package.json, causing installation failures in production
+  environments where transitive dependencies are not available.
+
+detectionCriteria:
+  - Import statement with package name not in dependencies or devDependencies
+  - Package exists in npm registry
+  - Package is used in code but not declared
+
+commonPatterns:
+  - scenario: "Using lodash functions without installing lodash"
+    fix: "npm install lodash"
+  
+  - scenario: "Using express middleware without declaring it"
+    fix: "npm install <middleware-package>"
+
+recommendedActions:
+  - id: "add-missing-dependency"
+    title: "Add Missing Dependency to package.json"
+    steps:
+      - "Identify the missing package name from analysis output"
+      - "Determine if it's a runtime or development dependency"
+      - "Install the package: npm install <package-name>"
+      - "For devDependencies: npm install --save-dev <package-name>"
+      - "Verify installation: npm list <package-name>"
+      - "Run: escapekit validate to verify"
+    
+    commands:
+      - "npm install <package-name>"
+      - "npm install --save-dev <package-name>"
+      - "npm list <package-name>"
+    
+    references:
+      - "https://docs.npmjs.com/cli/install"
+      - "https://docs.npmjs.com/cli/list"
+
+prevention:
+  - "Run escapekit analyze during development"
+  - "Use package.json auto-save features in IDE"
+  - "Regularly audit dependencies: npm audit"
+  - "Review dependencies before committing changes"

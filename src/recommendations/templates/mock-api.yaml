@@ -1,0 +1,47 @@
+id: "mock-api"
+title: "Mock API Detected"
+description: "Your code uses mocked or sandbox-specific API calls"
+severity: "error"
+
+summary: |
+  Mock API calls work in AI sandbox environments but fail in
+  production. These need to be replaced with real API implementations
+  or removed entirely if not needed.
+
+detectionCriteria:
+  - Imports from mock-api or similar sandbox packages
+  - API calls to localhost/mock endpoints
+  - Usage of sandbox-specific libraries
+
+commonPatterns:
+  - scenario: "Using mock-api package"
+    fix: "Replace with real API client or remove if not needed"
+  
+  - scenario: "API calls to localhost:3000/mock"
+    fix: "Replace with production API endpoint"
+
+recommendedActions:
+  - id: "replace-mock-api"
+    title: "Replace Mock API with Real Implementation"
+    steps:
+      - "Identify all mock API calls in your code"
+      - "Determine if the API is actually needed in production"
+      - "If needed: Replace with real API client"
+      - "If not needed: Remove the API calls and related code"
+      - "Update imports to use real packages"
+      - "Test with real API endpoints"
+      - "Run: escapekit validate to verify"
+    
+    commands:
+      - "npm install <real-api-package>"
+      - "npm uninstall mock-api"
+    
+    references:
+      - "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API"
+      - "https://axios-http.com/"
+
+prevention:
+  - "Avoid using sandbox-specific libraries in production code"
+  - "Use real API clients from the start"
+  - "Test with production endpoints early"
+  - "Run escapekit analyze before deployment"

@@ -1,0 +1,72 @@
+id: "framework-mix"
+title: "Framework Mixing Detected"
+description: "Your project uses multiple incompatible frameworks"
+severity: "error"
+
+summary: |
+  Mixing frameworks like Next.js and Vite causes build failures,
+  performance issues, and deployment problems. Choose one framework
+  and stick with it for consistency and stability.
+
+detectionCriteria:
+  - 'Check for "@sentry/nextjs" in package.json'
+  - 'Look for "vite" in dependencies or devDependencies'
+  - 'Find "next/error" or "next/head" imports in code'
+  - 'Detect both "@vercel/postgres" and "vite" present'
+
+
+commonPatterns:
+  - original: "@sentry/nextjs"
+    correct: "@sentry/react"
+    description: "Use React-specific Sentry for Vite projects"
+  
+  - original: "@vercel/postgres"
+    correct: '"postgres" (or use "pg")'
+    description: "Use generic PostgreSQL client for non-Vercel deployments"
+
+recommendedActions:
+  - id: "migrate-to-vite"
+    title: "Migrate to Vite (Recommended for pure frontend)"
+    steps:
+      - "Remove Next.js dependencies: npm uninstall @sentry/nextjs @vercel/postgres"
+      - "Install Vite-compatible alternatives: npm install @sentry/react"
+      - "Remove Next.js specific imports (next/error, next/head) from code"
+      - "Delete next.config.ts if present"
+      - "Update package.json scripts to use Vite"
+      - "Create or update vite.config.ts"
+      - "Run: npm run build to verify"
+    
+    commands:
+      - "npm uninstall @sentry/nextjs @vercel/postgres"
+      - "npm install @sentry/react"
+      - "npm run build"
+    
+    references:
+      - "https://vitejs.dev/guide/migration.html"
+      - "https://docs.sentry.io/platforms/javascript/guides/react/"
+  
+  - id: "migrate-to-nextjs"
+    title: "Migrate to Next.js (Recommended for SSR/backend)"
+    steps:
+      - "Remove Vite dependencies: npm uninstall vite @vitejs/plugin-react"
+      - "Install Next.js: npm install next@latest"
+      - "Create next.config.js"
+      - "Move code to pages/ or app/ directory (Next.js structure)"
+      - "Update package.json scripts for Next.js"
+      - "Remove vite.config.ts"
+      - "Run: npm run dev to verify"
+    
+    commands:
+      - "npm uninstall vite @vitejs/plugin-react"
+      - "npm install next@latest"
+      - "npm run dev"
+    
+    references:
+      - "https://nextjs.org/docs/migration"
+      - "https://docs.sentry.io/platforms/javascript/guides/nextjs/"
+
+prevention:
+  - "Choose one framework before starting the project"
+  - "Use framework-specific package managers and generators"
+  - "Run escapekit analyze during development to detect issues early"
+  - "Review dependencies before installing"

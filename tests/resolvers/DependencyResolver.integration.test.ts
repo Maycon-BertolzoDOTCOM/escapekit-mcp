@@ -20,8 +20,8 @@ const { REAL_PACKAGES } = vi.hoisted(() => ({
   REAL_PACKAGES: new Set(['axios', 'lodash', 'react', 'express', 'typescript']),
 }));
 
-vi.mock('../../src/services/NPMRegistry.js', () => ({
-  NPMRegistry: vi.fn().mockImplementation(() => ({
+vi.mock('../../src/services/NPMRegistry.js', () => {
+  const mockNPMRegistry = {
     packageExists: vi.fn().mockImplementation(async (name: string) =>
       REAL_PACKAGES.has(name)
     ),
@@ -30,8 +30,11 @@ vi.mock('../../src/services/NPMRegistry.js', () => ({
     ),
     getCacheStats: vi.fn().mockReturnValue({ size: 3, entries: [] }),
     clearCache: vi.fn(),
-  })),
-}));
+  };
+  return {
+    NPMRegistry: vi.fn().mockImplementation(() => mockNPMRegistry),
+  };
+});
 
 vi.mock('../../src/resolvers/SemanticMatcher.js', () => ({
   SemanticMatcher: vi.fn().mockImplementation(() => ({

@@ -1,0 +1,262 @@
+/**
+ * Custom Test Parser
+ * Parses custom JSON test result formats and converts to Kiwi TCMS format
+ */
+
+import { TestAdapter, TestResult, AdapterConfig } from './index';
+
+export interface CustomTestSchema {
+  version: string;
+  framework: string;
+  tests: CustomTestCase[];
+  metadata?: Record<string, any>;
+}
+
+export interface CustomTestCase {
+  id?: string;
+  name: string;
+  suite?: string;
+  status: 'passed' | 'failed' | 'skipped' | 'pending';
+  duration?: number;
+  error?: string;
+  errorType?: string;
+  stackTrace?: string;
+  timestamp?: string;
+}
+
+export interface CustomParserConfig extends AdapterConfig {
+  schema?: CustomTestSchema;
+  transform?: (test: CustomTestCase, suite?: string) => TestResult;
+  validateSchema?: boolean;
+}
+
+export class CustomTestParser implements TestAdapter {
+  private config: CustomParserConfig;
+  private customSchema: CustomTestSchema | null = null;
+
+  constructor(config: CustomParserConfig = {}) {
+    this.config = {
+      includeSkipped: true,
+      includeTodo: true,
+      stripAnsiColors: true,
+      maxDuration: 60000,
+      validateSchema: true,
+      ...config,
+    };
+
+    if (this.config.schema) {
+      this.customSchema = this.config.schema;
+    }
+  }
+
+  getFrameworkName(): string {
+    return this.customSchema?.framework || 'custom';
+  }
+
+  canHandle(source: string): boolean {
+    try {
+      if (typeof source === 'string') {
+        if (source.endsWith('.json')) {
+          const data = require(source);
+          return this.validateCustomSchema(data);
+        } else {
+          const data = JSON.parse(source);
+          return this.validateCustomSchema(data);
+        }
+      }
+    } catch {
+      return false;
+    }
+    return false;
+  }
+
+  async load(source: string): Promise<TestResult[]> {
+    let data: any;
+
+    try {
+      if (source.endsWith('.json')) {
+        data = require(source);
+      } else {
+        data = JSON.parse(source);
+      }
+    } catch (error) {
+      throw new Error(`Failed to parse custom JSON: ${error instanceof Error ? error.message : String(error)}`);
+    }
+
+    if (this.config.validateSchema !== false) {
+      if (!this.validateCustomSchema(data)) {
+        throw new Error('Invalid custom test schema');
+      }
+    }
+
+    return this.parseCustomResults(data);
+  }
+
+  private validateCustomSchema(data: any): boolean {
+    // Basic validation - must have required fields
+    if (!data || typeof data !== 'object') {
+      return false;
+    }
+
+    if (!Array.isArray(data.tests)) {
+      return false;
+    }
+
+    // Check if each test has required fields
+    return data.tests.every((test: any) => {
+      return typeof test.name === 'string' && typeof test.status === 'string';
+    });
+  }
+
+  private parseCustomResults(data: CustomTestSchema): TestResult[] {
+    const framework = data.framework || this.getFrameworkName();
+    const metadata = data.metadata || {};
+
+    const results = data.tests.map(test => {
+      const transformed = this.config.transform
+        ? this.config.transform(test, test.suite)
+        : this.defaultTransform(test, framework, metadata);
+
+      return this.applyConfig(transformed);
+    });
+
+    return results.filter(result => {
+      if (result.outcome === 'skipped' && !this.config.includeSkipped) {
+        return false;
+      }
+      if (result.metadata?.isTodo && !this.config.includeTodo) {
+        return false;
+      }
+      return true;
+    });
+  }
+
+  private defaultTransform(
+    test: CustomTestCase,
+    framework: string,
+    metadata: Record<string, any>
+  ): TestResult {
+    const duration = test.duration || 0;
+    const maxDuration = this.config.maxDuration || 60000;
+    const outcome = duration > maxDuration ? 'failed' : this.mapStatus(test.status);
+
+    const result: TestResult = {
+      testCase: this.normalizeTestCaseName(test.name, test.suite || framework),
+      outcome,
+      duration: Math.round(duration),
+      metadata: {
+        framework,
+        suite: test.suite || framework,
+        customId: test.id,
+        isSkipped: test.status === 'skipped',
+        customMetadata: metadata,
+      },
+    };
+
+    if (outcome === 'failed') {
+      let error = test.error || test.errorType || 'Test failed';
+      if (test.stackTrace) {
+        error += `\n\n${test.stackTrace}`;
+      }
+      if (this.config.stripAnsiColors) {
+        error = this.stripAnsiColors(error);
+      }
+      result.error = error;
+    }
+
+    return result;
+  }
+
+  private applyConfig(result: TestResult): TestResult {
+    const maxDuration = this.config.maxDuration || 60000;
+
+    if (result.duration > maxDuration) {
+      return {
+        ...result,
+        outcome: 'failed' as TestResult['outcome'],
+      };
+    }
+
+    return result;
+  }
+
+  private mapStatus(status: string): TestResult['outcome'] {
+    switch (status.toLowerCase()) {
+      case 'passed':
+      case 'success':
+      case 'ok':
+        return 'passed';
+      case 'failed':
+      case 'error':
+      case 'fail':
+        return 'failed';
+      case 'skipped':
+      case 'pending':
+      case 'todo':
+        return 'skipped';
+      default:
+        return 'failed';
+    }
+  }
+
+  private normalizeTestCaseName(name: string, suite: string): string {
+    const normalized = name
+      .replace(/[\s\(\)\[\]]+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '')
+      .toLowerCase();
+
+    const suitePrefix = suite
+      .replace(/\s+/g, '-')
+      .replace(/[\(\)\[\]]+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '')
+      .toLowerCase();
+
+    return `${suitePrefix}-${normalized}`;
+  }
+
+  private stripAnsiColors(text: string): string {
+    return text.replace(/\x1b\[[0-9;]*m/g, '');
+  }
+}
+
+/**
+ * Helper function to create a custom test result object
+ */
+export function createCustomTestResult(
+  framework: string,
+  tests: CustomTestCase[],
+  metadata?: Record<string, any>
+): CustomTestSchema {
+  return {
+    version: '1.0',
+    framework,
+    tests,
+    metadata,
+  };
+}
+
+/**
+ * Example custom transform function
+ */
+export function exampleTransform(
+  test: CustomTestCase,
+  suite?: string
+): TestResult {
+  const duration = test.duration || 0;
+  const outcome = test.status === 'passed' ? 'passed' : 
+                 test.status === 'skipped' ? 'skipped' : 'failed';
+
+  return {
+    testCase: `${suite ? suite + '-' : ''}${test.name.toLowerCase().replace(/\s+/g, '-')}`,
+    outcome,
+    duration: Math.round(duration),
+    metadata: {
+      framework: suite || 'custom',
+      suite: suite || 'unknown',
+      customId: test.id,
+      timestamp: test.timestamp,
+    },
+  };
+}
