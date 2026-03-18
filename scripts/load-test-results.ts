@@ -1,8 +1,8 @@
 #!/usr/bin/env tsx
-import { VitestAdapter } from '../src/adapters/vitest-adapter';
-import { MochaAdapter } from '../src/adapters/mocha-adapter';
-import { CustomTestParser } from '../src/adapters/custom-parser';
-import { TestResult } from '../src/adapters/index';
+import { VitestAdapter } from '../src/adapters/vitest-adapter.js';
+import { MochaAdapter } from '../src/adapters/mocha-adapter.js';
+import { CustomTestParser } from '../src/adapters/custom-parser.js';
+import { TestResult } from '../src/adapters/index.js';
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
