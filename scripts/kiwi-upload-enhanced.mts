@@ -40,10 +40,10 @@ class KiwiTCMSUploader {
    * Inicializar status map
    */
   async initializeStatusMap(): Promise<void> {
-    const passedStatus = await this.client.findTestRunStatusByName('PASSED');
-    const failedStatus = await this.client.findTestRunStatusByName('FAILED');
-    const idleStatus = await this.client.findTestRunStatusByName('IDLE');
-    const waivedStatus = await this.client.findTestRunStatusByName('WAIVED');
+    const passedStatus = await this.client.findTestExecutionStatusByName('PASSED');
+    const failedStatus = await this.client.findTestExecutionStatusByName('FAILED');
+    const idleStatus = await this.client.findTestExecutionStatusByName('IDLE');
+    const waivedStatus = await this.client.findTestExecutionStatusByName('WAIVED');
 
     if (passedStatus) this.statusMap['passed'] = passedStatus.id;
     if (failedStatus) this.statusMap['failed'] = failedStatus.id;
@@ -265,9 +265,8 @@ export async function uploadResults(options: UploadOptions): Promise<void> {
   // Create uploader instance
   const uploader = new KiwiTCMSUploader(config, buildMetadata);
 
-  // Authenticate
-  console.log('\nAuthenticating...');
-  await uploader.client.authenticate();
+  // Note: Authentication is handled via HTTP Basic Auth in the client constructor
+  console.log('\nConnecting to Kiwi TCMS via HTTP Basic Auth...');
 
   // Get Product
   console.log('Looking up product...');
