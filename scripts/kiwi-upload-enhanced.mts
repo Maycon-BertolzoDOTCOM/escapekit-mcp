@@ -4,7 +4,18 @@ import { join } from 'path';
 import { readFileSync } from 'fs';
 import { TestResult } from '../src/adapters/index';
 import { loadTestResults } from './load-test-results';
-import { KiwiXmlRpcClient, KiwiConfig } from '../src/lib/kiwi-xmlrpc-client.cjs';
+import { KiwiXmlRpcClient } from '../src/lib/kiwi-xmlrpc-http-client.ts';
+
+interface KiwiConfig {
+  baseUrl: string;
+  username: string;
+  password: string;
+  defaultProduct?: string;
+  defaultPlanId?: number;
+  testRunTemplate?: string;
+  timeout?: number;
+  retries?: number;
+}
 
 interface UploadOptions {
   file: string;
@@ -241,7 +252,16 @@ export async function uploadResults(options: UploadOptions): Promise<void> {
     const configPath = join(process.cwd(), 'config', 'kiwi-tcms.json');
     const configFile = readFileSync(configPath, 'utf-8');
     config = JSON.parse(configFile);
+
+    // Substitute environment variables in config values
+    const resolvedConfig = JSON.stringify(config).replace(
+      /\$\{(\w+)\}/g,
+      (_, key) => process.env[key] || ''
+    );
+    config = JSON.parse(resolvedConfig);
+
     console.log(`✓ Loaded configuration from ${configPath}`);
+    console.log(`  baseUrl: ${config.baseUrl}`);
   } catch (error: any) {
     console.error('✗ Failed to load configuration:', error.message);
     console.log('Using environment variables...');
