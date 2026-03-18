@@ -1,9 +1,9 @@
 #!/usr/bin/env ts-node
 
-import { join } from "path";
+import { join } from 'path';
 import { readFileSync } from 'fs';
 import { TestResult } from '../src/adapters/index';
-import { loadTestResults } from './load-test-results.js';
+import { loadTestResults } from './load-test-results';
 import { KiwiXmlRpcClient, KiwiConfig } from '../src/lib/kiwi-xmlrpc-client.cjs';
 
 interface UploadOptions {
@@ -32,7 +32,10 @@ class KiwiTCMSUploader {
   private config: KiwiConfig;
   private statusMap: Record<string, number> = {};
 
-  constructor(config: KiwiConfig, private buildMetadata?: BuildMetadata) {
+  constructor(
+    config: KiwiConfig,
+    private buildMetadata?: BuildMetadata
+  ) {
     this.config = config;
     this.client = new KiwiXmlRpcClient(config);
   }
@@ -59,7 +62,7 @@ class KiwiTCMSUploader {
    */
   async getOrCreateBuild(productId: number, planId: number): Promise<number> {
     const builds = await this.client.listBuilds(productId);
-    
+
     if (builds.length > 0) {
       console.log(`✓ Using existing build: ${builds[0].name} (ID: ${builds[0].id})`);
       return builds[0].id;
@@ -68,22 +71,28 @@ class KiwiTCMSUploader {
     // Criar novo build com metadados
     console.log('Creating new build with metadata...');
     const buildName = `Auto-${this.buildMetadata?.runNumber || new Date().toISOString().split('T')[0]}`;
-    
+
     return new Promise<number>((resolve, reject) => {
       const xmlrpcClient = (this.client as any).client;
-      xmlrpcClient.methodCall('Build.create', [{
-        name: buildName,
-        product: productId,
-        description: this.generateBuildDescription(),
-      }], (err: any, result: any) => {
-        if (err) {
-          console.error('✗ Failed to create build:', err);
-          reject(err);
-          return;
+      xmlrpcClient.methodCall(
+        'Build.create',
+        [
+          {
+            name: buildName,
+            product: productId,
+            description: this.generateBuildDescription(),
+          },
+        ],
+        (err: any, result: any) => {
+          if (err) {
+            console.error('✗ Failed to create build:', err);
+            reject(err);
+            return;
+          }
+          console.log(`✓ Build created: ${result.name} (ID: ${result.id})`);
+          resolve(result.id);
         }
-        console.log(`✓ Build created: ${result.name} (ID: ${result.id})`);
-        resolve(result.id);
-      });
+      );
     });
   }
 
@@ -96,7 +105,7 @@ class KiwiTCMSUploader {
     }
 
     const lines: string[] = ['Build Information:'];
-    
+
     if (this.buildMetadata.runNumber) {
       lines.push(`Run #${this.buildMetadata.runNumber}`);
     }
@@ -141,25 +150,35 @@ class KiwiTCMSUploader {
     }
     return new Promise<number>((resolve, reject) => {
       const xmlrpcClient = (this.client as any).client;
-      xmlrpcClient.methodCall('TestCase.create', [{
-        name: testName,
-        product: productId,
-        category: 1,
-      }], (err: any, result: any) => {
-        if (err) {
-          console.error(`  ✗ Failed to create test case ${testName}:`, err);
-          reject(err);
-          return;
+      xmlrpcClient.methodCall(
+        'TestCase.create',
+        [
+          {
+            name: testName,
+            product: productId,
+            category: 1,
+          },
+        ],
+        (err: any, result: any) => {
+          if (err) {
+            console.error(`  ✗ Failed to create test case ${testName}:`, err);
+            reject(err);
+            return;
+          }
+          resolve(result.id);
         }
-        resolve(result.id);
-      });
+      );
     });
   }
 
   /**
    * Upload resultado de teste
    */
-  async uploadTestResult(testResult: TestResult, testRunId: number, productId: number): Promise<void> {
+  async uploadTestResult(
+    testResult: TestResult,
+    testRunId: number,
+    productId: number
+  ): Promise<void> {
     try {
       const caseId = await this.getOrCreateTestCase(testResult.testCase, productId);
       const statusId = this.statusMap[testResult.outcome] || this.statusMap['skipped'];
@@ -183,7 +202,11 @@ class KiwiTCMSUploader {
   /**
    * Upload resultados em lote
    */
-  async uploadTestResults(testResults: TestResult[], testRunId: number, productId: number): Promise<void> {
+  async uploadTestResults(
+    testResults: TestResult[],
+    testRunId: number,
+    productId: number
+  ): Promise<void> {
     let successCount = 0;
     let failCount = 0;
 
@@ -196,7 +219,9 @@ class KiwiTCMSUploader {
         successCount++;
 
         if (i % 50 === 0) {
-          console.log(`  Progress: ${i}/${testResults.length} (${((i / testResults.length) * 100).toFixed(1)}%)`);
+          console.log(
+            `  Progress: ${i}/${testResults.length} (${((i / testResults.length) * 100).toFixed(1)}%)`
+          );
         }
       } catch (error) {
         failCount++;
@@ -272,13 +297,13 @@ export async function uploadResults(options: UploadOptions): Promise<void> {
   // Get Product - FIXED: Support both productId and productName
   console.log('Looking up product...');
   let product: any;
-  
+
   if (options.productId) {
     // Use productId directly if provided
     try {
       const products = await uploader.client.listProducts();
       product = products.find((p: any) => p.id === options.productId);
-      
+
       if (!product) {
         console.error(`✗ Product not found with ID: ${options.productId}`);
         console.log('Available products:');
@@ -287,7 +312,7 @@ export async function uploadResults(options: UploadOptions): Promise<void> {
         }
         process.exit(1);
       }
-      
+
       console.log(`✓ Found product by ID: ${product.name} (ID: ${product.id})`);
     } catch (error: any) {
       console.error('✗ Error looking up product by ID:', error.message);
@@ -298,7 +323,7 @@ export async function uploadResults(options: UploadOptions): Promise<void> {
     const productName = options.productName || config.defaultProduct;
     try {
       product = await uploader.client.findProductByName(productName);
-      
+
       if (!product) {
         console.error(`✗ Product not found: ${productName}`);
         console.log('Available products:');
@@ -308,7 +333,7 @@ export async function uploadResults(options: UploadOptions): Promise<void> {
         }
         process.exit(1);
       }
-      
+
       console.log(`✓ Found product by name: ${product.name} (ID: ${product.id})`);
     } catch (error: any) {
       console.error('✗ Error looking up product:', error.message);
@@ -350,22 +375,23 @@ export async function uploadResults(options: UploadOptions): Promise<void> {
 // Check if this module is being executed directly
 if (import.meta.url === `file://${process.argv[1]}`) {
   const args = process.argv.slice(2);
-  
+
   const fileFlagIndex = args.indexOf('--file');
   const file = fileFlagIndex !== -1 ? args[fileFlagIndex + 1] : args[0] || 'vitest-results.json';
-  
+
   const frameworkFlagIndex = args.indexOf('--framework');
-  const framework = frameworkFlagIndex !== -1 ? args[frameworkFlagIndex + 1] as any : undefined;
-  
+  const framework = frameworkFlagIndex !== -1 ? (args[frameworkFlagIndex + 1] as any) : undefined;
+
   const productIdFlagIndex = args.indexOf('--product-id');
   const productId = productIdFlagIndex !== -1 ? parseInt(args[productIdFlagIndex + 1]) : undefined;
-  
+
   const productNameFlagIndex = args.indexOf('--product-name');
   const productName = productNameFlagIndex !== -1 ? args[productNameFlagIndex + 1] : undefined;
-  
+
   const testPlanIdFlagIndex = args.indexOf('--test-plan-id');
-  const testPlanId = testPlanIdFlagIndex !== -1 ? parseInt(args[testPlanIdFlagIndex + 1]) : undefined;
-  
+  const testPlanId =
+    testPlanIdFlagIndex !== -1 ? parseInt(args[testPlanIdFlagIndex + 1]) : undefined;
+
   const verbose = args.includes('--verbose');
 
   uploadResults({ file, framework, productId, productName, testPlanId, verbose })

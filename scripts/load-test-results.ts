@@ -1,8 +1,8 @@
 #!/usr/bin/env tsx
-import { VitestAdapter } from '../src/adapters/vitest-adapter.js';
-import { MochaAdapter } from '../src/adapters/mocha-adapter.js';
-import { CustomTestParser } from '../src/adapters/custom-parser.js';
-import { TestResult } from '../src/adapters/index.js';
+import { VitestAdapter } from '../src/adapters/vitest-adapter';
+import { MochaAdapter } from '../src/adapters/mocha-adapter';
+import { CustomTestParser } from '../src/adapters/custom-parser';
+import { TestResult } from '../src/adapters/index';
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
@@ -54,15 +54,15 @@ function detectFramework(source: string): 'vitest' | 'mocha' | 'custom' {
     // Read file and check for framework-specific patterns
     try {
       const content = readFileSync(source, 'utf-8');
-      
+
       // Debug logging
       console.log(`\n🔍 File analysis:`);
       console.log(`   File: ${source}`);
       console.log(`   Size: ${content.length} bytes`);
       console.log(`   First 100 chars: ${content.substring(0, 100)}`);
-      
+
       const data = JSON.parse(content);
-      
+
       console.log(`   Parsed JSON keys: ${Object.keys(data).join(', ')}`);
       console.log(`   Has testResults? ${!!data.testResults}`);
       console.log(`   Has numTotalTests? ${!!data.numTotalTests}`);
@@ -79,14 +79,16 @@ function detectFramework(source: string): 'vitest' | 'mocha' | 'custom' {
         console.log(`   ✓ Detected: Mocha`);
         return 'mocha';
       }
-      
+
       console.log(`   ⚠ Falling back to: custom`);
     } catch (error: any) {
       // Detailed error logging
       console.error(`\n✗ Error parsing JSON from ${source}:`);
       console.error(`   Message: ${error.message}`);
       if (error instanceof SyntaxError) {
-        console.error(`   Position: line ${error.message.match(/line (\d+)/)?.[1]}, column ${error.message.match(/column (\d+)/)?.[1]}`);
+        console.error(
+          `   Position: line ${error.message.match(/line (\d+)/)?.[1]}, column ${error.message.match(/column (\d+)/)?.[1]}`
+        );
         const content = readFileSync(source, 'utf-8');
         const lines = content.split('\n');
         if (error.message.match(/line (\d+)/)) {
@@ -125,13 +127,15 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const args = process.argv.slice(2);
 
   if (args.length === 0) {
-    console.log('Usage: tsx scripts/load-test-results.ts <source> [--framework vitest|mocha|custom]');
+    console.log(
+      'Usage: tsx scripts/load-test-results.ts <source> [--framework vitest|mocha|custom]'
+    );
     process.exit(1);
   }
 
   const source = args[0];
   const frameworkFlag = args.indexOf('--framework');
-  const framework = frameworkFlag !== -1 ? args[frameworkFlag + 1] as any : undefined;
+  const framework = frameworkFlag !== -1 ? (args[frameworkFlag + 1] as any) : undefined;
 
   loadTestResults({ source, framework })
     .then(results => {
