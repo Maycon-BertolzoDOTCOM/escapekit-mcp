@@ -10,6 +10,7 @@ interface UploadOptions {
   file: string;
   framework?: 'vitest' | 'mocha' | 'custom';
   productId?: number;
+  productName?: string;
   testPlanId?: number;
   verbose?: boolean;
   buildMetadata?: BuildMetadata;
@@ -268,15 +269,52 @@ export async function uploadResults(options: UploadOptions): Promise<void> {
   console.log('\nAuthenticating to Kiwi TCMS...');
   await uploader.client.authenticate();
 
-  // Get Product
+  // Get Product - FIXED: Support both productId and productName
   console.log('Looking up product...');
-  const product = await uploader.client.findProductByName(config.defaultProduct);
-  if (!product) {
-    console.error(`✗ Product not found: ${config.defaultProduct}`);
-    console.log('Available products: (list skipped)');
-    process.exit(1);
+  let product: any;
+  
+  if (options.productId) {
+    // Use productId directly if provided
+    try {
+      const products = await uploader.client.listProducts();
+      product = products.find((p: any) => p.id === options.productId);
+      
+      if (!product) {
+        console.error(`✗ Product not found with ID: ${options.productId}`);
+        console.log('Available products:');
+        for (const p of products) {
+          console.log(`  - ${p.name} (ID: ${p.id})`);
+        }
+        process.exit(1);
+      }
+      
+      console.log(`✓ Found product by ID: ${product.name} (ID: ${product.id})`);
+    } catch (error: any) {
+      console.error('✗ Error looking up product by ID:', error.message);
+      process.exit(1);
+    }
+  } else {
+    // Use product name if productId not provided
+    const productName = options.productName || config.defaultProduct;
+    try {
+      product = await uploader.client.findProductByName(productName);
+      
+      if (!product) {
+        console.error(`✗ Product not found: ${productName}`);
+        console.log('Available products:');
+        const products = await uploader.client.listProducts();
+        for (const p of products) {
+          console.log(`  - ${p.name} (ID: ${p.id})`);
+        }
+        process.exit(1);
+      }
+      
+      console.log(`✓ Found product by name: ${product.name} (ID: ${product.id})`);
+    } catch (error: any) {
+      console.error('✗ Error looking up product:', error.message);
+      process.exit(1);
+    }
   }
-  console.log(`✓ Found product: ${product.name} (ID: ${product.id})`);
 
   // Get TestPlan
   const testPlanId = options.testPlanId || config.defaultPlanId;
@@ -319,12 +357,18 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const frameworkFlagIndex = args.indexOf('--framework');
   const framework = frameworkFlagIndex !== -1 ? args[frameworkFlagIndex + 1] as any : undefined;
   
+  const productIdFlagIndex = args.indexOf('--product-id');
+  const productId = productIdFlagIndex !== -1 ? parseInt(args[productIdFlagIndex + 1]) : undefined;
+  
+  const productNameFlagIndex = args.indexOf('--product-name');
+  const productName = productNameFlagIndex !== -1 ? args[productNameFlagIndex + 1] : undefined;
+  
   const testPlanIdFlagIndex = args.indexOf('--test-plan-id');
   const testPlanId = testPlanIdFlagIndex !== -1 ? parseInt(args[testPlanIdFlagIndex + 1]) : undefined;
   
   const verbose = args.includes('--verbose');
 
-  uploadResults({ file, framework, testPlanId, verbose })
+  uploadResults({ file, framework, productId, productName, testPlanId, verbose })
     .then(() => process.exit(0))
     .catch((err: any) => {
       console.error('Error:', err.message);
