@@ -4,7 +4,7 @@ import { join } from "path";
 import { readFileSync } from 'fs';
 import { TestResult } from '../src/adapters/index';
 import { loadTestResults } from './load-test-results.js';
-import { KiwiXmlRpcClient, KiwiConfig } from '../src/lib/kiwi-xmlrpc-client.mjs';
+import { KiwiXmlRpcClient, KiwiConfig } from '../src/lib/kiwi-xmlrpc-client.cjs';
 
 interface UploadOptions {
   file: string;
