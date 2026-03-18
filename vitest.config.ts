@@ -4,6 +4,10 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
+    reporter: ['text', 'json', 'html'],
+    outputFile: {
+      json: 'vitest-results.json',
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],

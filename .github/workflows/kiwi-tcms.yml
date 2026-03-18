@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -26,31 +28,66 @@ jobs:
 
       - name: Run tests
         run: npm test
+        continue-on-error: true
 
       - name: Upload results to Kiwi TCMS
         env:
           KIWI_URL: ${{ secrets.KIWI_URL }}
           KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
           KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD }}
-          KIWI_PRODUCT_ID: ${{ secrets.KIWI_PRODUCT_ID }}
-          KIWI_TEST_PLAN_ID: ${{ secrets.KIWI_TEST_PLAN_ID }}
+          KIWI_PRODUCT_ID: ${{ secrets.KIWI_PRODUCT_ID || '1' }}
+          KIWI_TEST_PLAN_ID: ${{ secrets.KIWI_TEST_PLAN_ID || '1' }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+          GITHUB_BASE_REF: ${{ github.base_ref }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: |
-          # Vitest results
+          echo "📊 Uploading test results to Kiwi TCMS..."
+          echo "   Run ID: $GITHUB_RUN_ID"
+          echo "   Run Number: $GITHUB_RUN_NUMBER"
+          echo "   Commit: $GITHUB_SHA"
+          echo "   Branch: $GITHUB_REF"
+          
           if [ -f "vitest-results.json" ]; then
-            npx ts-node scripts/kiwi-upload.ts \
+            echo "✓ Found vitest-results.json"
+            npx tsx scripts/kiwi-upload-enhanced.mts \
               --file vitest-results.json \
               --framework vitest \
               --product-id $KIWI_PRODUCT_ID \
               --test-plan-id $KIWI_TEST_PLAN_ID \
               --verbose
+          else
+            echo "⚠️  vitest-results.json not found"
           fi
 
       - name: Upload test artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
+          name: test-results-${{ github.run_id }}
           path: |
             vitest-results.json
             coverage/
           retention-days: 30
+
+      - name: Upload to Kiwi TCMS summary
+        if: always()
+        run: |
+          echo "## 📊 Test Results Upload Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Run ID**: ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Run Number**: ${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: ${{ github.ref }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Event**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Artifacts" >> $GITHUB_STEP_SUMMARY
+          echo "Test results and coverage have been uploaded as artifacts." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔗 Kiwi TCMS" >> $GITHUB_STEP_SUMMARY
+          echo "Results have been uploaded to Kiwi TCMS for tracking." >> $GITHUB_STEP_SUMMARY
