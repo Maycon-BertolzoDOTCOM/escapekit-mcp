@@ -1,0 +1,561 @@
+import axios from 'axios';
+import xml2js from 'xml2js';
+import { logger } from '../logger';
+import * as toughCookie from 'tough-cookie';
+
+export interface KiwiConfig {
+  baseUrl: string;
+  username: string;
+  password: string;
+  defaultProduct?: string;
+  defaultPlanId?: number;
+  testRunTemplate?: string;
+  timeout?: number;
+  retries?: number;
+}
+
+export interface Product {
+  id: number;
+  name: string;
+  description?: string;
+}
+
+export interface TestPlan {
+  id: number;
+  name: string;
+  product_id: number;
+}
+
+export interface Build {
+  id: number;
+  name: string;
+  product_id: number;
+}
+
+export interface TestCase {
+  id: number;
+  name: string;
+  summary?: string;
+  product_id: number;
+}
+
+export interface TestRun {
+  id: number;
+  summary: string;
+  plan?: number;
+  build?: number;
+  manager?: number;
+}
+
+export interface TestExecutionStatus {
+  id: number;
+  name: string;
+  weight: number;
+}
+
+export class KiwiXmlRpcClient {
+  private baseUrl: string;
+  private config: KiwiConfig;
+  private axiosClient: any;
+  private sessionCookie: string | null = null;
+
+  constructor(config: KiwiConfig) {
+    this.config = config;
+    this.baseUrl = config.baseUrl.replace(/\/$/, '');
+
+    // Create cookie jar
+    const cookieJar = new toughCookie.CookieJar();
+
+    // Create axios instance
+    this.axiosClient = axios.create({
+      baseURL: `${this.baseUrl}/xml-rpc/`,
+      timeout: config.timeout || 30000,
+      jar: cookieJar,
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'text/xml',
+        Accept: 'text/xml',
+      },
+    });
+
+    // Store cookie jar reference for later use
+    (this.axiosClient as any).cookieJar = cookieJar;
+  }
+
+  /**
+   * Login to Kiwi TCMS and store session cookie
+   */
+  private async login(): Promise<void> {
+    const loginXml = `<methodCall>
+  <methodName>Auth.login</methodName>
+  <params>
+    <param><value><string>${this.config.username}</string></value></param>
+    <param><value><string>${this.config.password}</string></value></param>
+  </params>
+</methodCall>`;
+
+    try {
+      const response = await this.axiosClient.post('', loginXml);
+
+      // Try to extract session from Set-Cookie header first
+      const setCookie = response.headers['set-cookie'];
+      if (setCookie && Array.isArray(setCookie)) {
+        const sessionCookie = setCookie.find((c: string) => c.startsWith('sessionid='));
+        if (sessionCookie) {
+          this.sessionCookie = sessionCookie.split(';')[0]; // Get just the cookie name=value
+          logger.info('Successfully authenticated with Kiwi TCMS (via cookie)');
+          return;
+        }
+      }
+
+      // Fallback: extract from XML response
+      const parser = new xml2js.Parser({ explicitArray: false });
+      const parsedResponse = await parser.parseStringPromise(response.data);
+      const params = parsedResponse?.methodResponse?.params?.param;
+      if (params && params.value && params.value.string) {
+        this.sessionCookie = `sessionid=${params.value.string}`;
+        logger.info('Successfully authenticated with Kiwi TCMS');
+      } else {
+        throw new Error('Failed to extract session token from login response');
+      }
+    } catch (error: any) {
+      logger.error('Failed to login to Kiwi TCMS', { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Execute an XML-RPC method call
+   */
+  private async methodCall(methodName: string, params: any[] = []): Promise<any> {
+    const maxRetries = this.config.retries || 3;
+    let lastError: any;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        // Login if not already authenticated
+        if (!this.sessionCookie) {
+          await this.login();
+        }
+
+        const xmlRequest = this.buildXmlRpcRequest(methodName, params);
+
+        // Debug: log the XML request
+        if (attempt === 1) {
+          console.log('XML-RPC Request:');
+          console.log(xmlRequest);
+        }
+
+        const response = await this.axiosClient.post('', xmlRequest);
+
+        // Debug: log the XML response
+        if (attempt === 1) {
+          console.log('XML-RPC Response Status:', response.status);
+          console.log('XML-RPC Response Data:', response.data);
+        }
+
+        // Parse XML response
+        const parser = new xml2js.Parser({ explicitArray: false });
+        const parsedResponse = await parser.parseStringPromise(response.data);
+
+        // Check for XML-RPC fault
+        const fault = this.extractFault(parsedResponse);
+        if (fault) {
+          throw new Error(`XML-RPC Fault ${fault.faultCode}: ${fault.faultString}`);
+        }
+
+        // Extract method response
+        return this.extractResponse(parsedResponse);
+      } catch (error: any) {
+        lastError = error;
+        logger.warn(`XML-RPC call failed (attempt ${attempt}/${maxRetries}): ${methodName}`, {
+          error: error.message,
+        });
+
+        // If authentication fails, try to login again
+        if (error.message && error.message.includes('Authentication failed')) {
+          this.sessionCookie = null;
+        }
+
+        if (attempt < maxRetries) {
+          await this.sleep(Math.pow(2, attempt) * 1000);
+        }
+      }
+    }
+
+    throw lastError;
+  }
+
+  /**
+   * Build XML-RPC request
+   */
+  private buildXmlRpcRequest(methodName: string, params: any[]): string {
+    // Each parameter must be wrapped in <param> tags
+    const paramsXml = params.map(param => `<param>${this.buildParam(param)}</param>`).join('');
+
+    return `<methodCall>
+  <methodName>${methodName}</methodName>
+  <params>${paramsXml}</params>
+</methodCall>`;
+  }
+
+  /**
+   * Build XML-RPC parameter value (without <param> wrapper)
+   */
+  private buildParam(param: any): string {
+    if (param === null || param === undefined) {
+      return '<value><nil/></value>';
+    }
+
+    const type = typeof param;
+
+    if (type === 'string') {
+      return `<value><string>${this.escapeXml(param)}</string></value>`;
+    }
+
+    if (type === 'number') {
+      return Number.isInteger(param)
+        ? `<value><int>${param}</int></value>`
+        : `<value><double>${param}</double></value>`;
+    }
+
+    if (type === 'boolean') {
+      return `<value><boolean>${param ? 1 : 0}</boolean></value>`;
+    }
+
+    if (type === 'object') {
+      if (Array.isArray(param)) {
+        const arrayData = param.map(p => this.buildParam(p)).join('');
+        return `<value><array><data>${arrayData}</data></array></value>`;
+      } else {
+        const structData = Object.keys(param)
+          .map(key => {
+            return `<member><name>${key}</name>${this.buildParam(param[key])}</member>`;
+          })
+          .join('');
+        return `<value><struct>${structData}</struct></value>`;
+      }
+    }
+
+    return `<value><string>${this.escapeXml(String(param))}</string></value>`;
+  }
+
+  /**
+   * Escape XML special characters
+   */
+  private escapeXml(str: string): string {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+  }
+
+  /**
+   * Extract fault from XML-RPC response
+   */
+  private extractFault(parsed: any): any {
+    if (parsed?.methodResponse?.fault) {
+      const fault = parsed.methodResponse.fault;
+      return {
+        faultCode: fault.value.struct.member.find((m: any) => m.name === 'faultCode').value.int,
+        faultString: fault.value.struct.member.find((m: any) => m.name === 'faultString').value
+          .string,
+      };
+    }
+    return null;
+  }
+
+  /**
+   * Extract response from XML-RPC response
+   */
+  private extractResponse(parsed: any): any {
+    const params = parsed?.methodResponse?.params?.param;
+    if (!params) {
+      return null;
+    }
+
+    const value = params.value;
+    return this.parseValue(value);
+  }
+
+  /**
+   * Parse XML-RPC value
+   */
+  private parseValue(value: any): any {
+    if (!value) return null;
+
+    if (value.string !== undefined) return value.string;
+    if (value.int !== undefined) return parseInt(value.int);
+    if (value.double !== undefined) return parseFloat(value.double);
+    if (value.boolean !== undefined) return value.boolean === '1' || value.boolean === 1;
+    if (value.nil !== undefined) return null;
+    if (value.array !== undefined) {
+      const data = value.array.data?.value;
+      if (!data) return [];
+      const values = Array.isArray(data) ? data : [data];
+      return values.map(v => this.parseValue(v));
+    }
+    if (value.struct !== undefined) {
+      const members = Array.isArray(value.struct.member)
+        ? value.struct.member
+        : [value.struct.member];
+      const result: any = {};
+      members.forEach((m: any) => {
+        result[m.name] = this.parseValue(m.value);
+      });
+      return result;
+    }
+
+    return value;
+  }
+
+  /**
+   * Sleep utility
+   */
+  private sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  /**
+   * Test connectivity
+   */
+  async testConnection(): Promise<boolean> {
+    try {
+      await this.methodCall('User.filter', [{ username: this.config.username }]);
+      logger.info('Kiwi TCMS connection successful');
+      return true;
+    } catch (error: any) {
+      logger.error('Kiwi TCMS connection failed', { error: error.message });
+      return false;
+    }
+  }
+
+  /**
+   * Get current authenticated user
+   */
+  async getCurrentUser(): Promise<any | null> {
+    try {
+      const users = await this.methodCall('User.filter', [{ username: this.config.username }]);
+      return Array.isArray(users) && users.length > 0 ? users[0] : null;
+    } catch (error: any) {
+      logger.error('Failed to get current user', { error: error.message });
+      return null;
+    }
+  }
+
+  /**
+   * Find product by name
+   */
+  async findProductByName(name: string): Promise<Product | null> {
+    try {
+      const products = await this.methodCall('Product.filter', [{ name }]);
+      return Array.isArray(products) && products.length > 0 ? products[0] : null;
+    } catch (error: any) {
+      logger.error(`Failed to find product ${name}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * List all products
+   */
+  async listProducts(): Promise<Product[]> {
+    try {
+      const products = await this.methodCall('Product.filter', []);
+      return Array.isArray(products) ? products : [];
+    } catch (error: any) {
+      logger.error('Failed to list products', { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Find test plan by ID
+   */
+  async findTestPlanById(id: number): Promise<TestPlan | null> {
+    try {
+      const plans = await this.methodCall('TestPlan.filter', [{ plan_id: id }]);
+      return Array.isArray(plans) && plans.length > 0 ? plans[0] : null;
+    } catch (error: any) {
+      logger.error(`Failed to find test plan ${id}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * List builds for a product
+   */
+  async listBuilds(productId: number): Promise<Build[]> {
+    try {
+      // Note: Build model uses 'version' field, not 'product'
+      const builds = await this.methodCall('Build.filter', [{ version: productId }]);
+      return Array.isArray(builds) ? builds : [];
+    } catch (error: any) {
+      logger.error(`Failed to list builds for product ${productId}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Create a new build
+   */
+  async createBuild(name: string, productId: number): Promise<Build> {
+    try {
+      // Note: Build.create uses 'version' field, not 'product'
+      return await this.methodCall('Build.create', [{ name, version: productId }]);
+    } catch (error: any) {
+      logger.error(`Failed to create build ${name}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Create a test run
+   */
+  async createTestRun(options: {
+    build: number;
+    plan?: number;
+    summary: string;
+    manager?: number;
+    default_tester?: number;
+  }): Promise<TestRun> {
+    try {
+      return await this.methodCall('TestRun.create', [options]);
+    } catch (error: any) {
+      logger.error('Failed to create test run', { error: error.message, options });
+      throw error;
+    }
+  }
+
+  /**
+   * Find test case by name (using summary field)
+   */
+  async findTestCaseByName(name: string): Promise<TestCase | null> {
+    try {
+      // Note: TestCase model uses 'summary' field, not 'name'
+      const cases = await this.methodCall('TestCase.filter', [{ summary: name }]);
+      return Array.isArray(cases) && cases.length > 0 ? cases[0] : null;
+    } catch (error: any) {
+      logger.error(`Failed to find test case ${name}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Create a test case
+   */
+  async createTestCase(options: {
+    name: string;
+    product: number;
+    category?: number;
+    summary?: string;
+    is_automated?: boolean;
+  }): Promise<TestCase> {
+    try {
+      const defaults = {
+        is_automated: true,
+        category: 1,
+        summary: options.name,
+        case_status: 1, // CONFIRMED status
+        priority: 1, // P1 priority
+      };
+      return await this.methodCall('TestCase.create', [{ ...defaults, ...options }]);
+    } catch (error: any) {
+      logger.error(`Failed to create test case ${options.name}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Find test execution status by name
+   */
+  async findTestRunStatusByName(name: string): Promise<TestExecutionStatus | null> {
+    try {
+      const statuses = await this.methodCall('TestExecutionStatus.filter', [{ name }]);
+      return Array.isArray(statuses) && statuses.length > 0 ? statuses[0] : null;
+    } catch (error: any) {
+      logger.error(`Failed to find test execution status ${name}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Add a test execution to a test run
+   */
+  async addTestExecution(options: {
+    case: number;
+    run: number;
+    build: number;
+    status: number;
+    case_text_version: number;
+    comment?: string;
+    assignee?: number;
+    tested_by?: number;
+  }): Promise<any> {
+    try {
+      return await this.methodCall('TestExecution.create', [options]);
+    } catch (error: any) {
+      logger.error('Failed to add test execution', { error: error.message, options });
+      throw error;
+    }
+  }
+
+  /**
+   * Update test execution
+   */
+  async updateTestExecution(
+    executionId: number,
+    options: {
+      status?: number;
+      comment?: string;
+      tested_by?: number;
+    }
+  ): Promise<any> {
+    try {
+      return await this.methodCall('TestExecution.update', [executionId, options]);
+    } catch (error: any) {
+      logger.error(`Failed to update test execution ${executionId}`, {
+        error: error.message,
+        options,
+      });
+      throw error;
+    }
+  }
+
+  /**
+   * List test executions for a test run
+   */
+  async listTestExecutions(testRunId: number): Promise<any[]> {
+    try {
+      const executions = await this.methodCall('TestExecution.filter', [{ run: testRunId }]);
+      return Array.isArray(executions) ? executions : [];
+    } catch (error: any) {
+      logger.error(`Failed to list test executions for run ${testRunId}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Find test run by ID
+   */
+  async findTestRunById(runId: number): Promise<any | null> {
+    try {
+      const runs = await this.methodCall('TestRun.filter', [{ id: runId }]);
+      return Array.isArray(runs) && runs.length > 0 ? runs[0] : null;
+    } catch (error: any) {
+      logger.error(`Failed to find test run ${runId}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Generic method call - exposes methodCall for external use
+   */
+  async callMethod(methodName: string, params: any[] = []): Promise<any> {
+    return await this.methodCall(methodName, params);
+  }
+}
+
+export { KiwiXmlRpcClient as KiwiXmlRpcHttpClient };
