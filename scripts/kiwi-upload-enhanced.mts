@@ -4,7 +4,7 @@ import { join } from 'path';
 import { readFileSync } from 'fs';
 import { TestResult } from '../src/adapters/index';
 import { loadTestResults } from './load-test-results';
-import { KiwiXmlRpcClient } from '../src/lib/kiwi-xmlrpc-http-client.ts';
+import { KiwiXmlRpcClient } from '../src/lib/kiwi-xmlrpc-client.cjs';
 
 interface KiwiConfig {
   baseUrl: string;
