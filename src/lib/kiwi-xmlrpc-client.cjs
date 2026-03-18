@@ -1,6 +1,6 @@
 /**
  * Cliente XML-RPC para Kiwi TCMS
- * Usa HTTP Basic Auth para autenticação (não Auth.login)
+ * Usa Auth.login para autenticação com token
  */
 
 const xmlrpc = require('xmlrpc');
@@ -8,6 +8,7 @@ const xmlrpc = require('xmlrpc');
 class KiwiXmlRpcClient {
   constructor(config) {
     this.config = config;
+    this.authToken = null;
     
     // Parsear baseUrl
     const url = new URL(config.baseUrl);
@@ -23,17 +24,24 @@ class KiwiXmlRpcClient {
       clientOptions.rejectUnauthorized = false; // Aceitar certificado autoassinado
     }
     
-    // Adicionar HTTP Basic Auth
-    clientOptions.basic_auth = {
-      user: config.username,
-      pass: config.password
-    };
-    
     if (useHttps) {
       this.client = xmlrpc.createSecureClient(clientOptions);
     } else {
       this.client = xmlrpc.createClient(clientOptions);
     }
+  }
+  
+  /**
+   * Autenticar usando Auth.login
+   */
+  async authenticate() {
+    const result = await this.call('Auth.login', [
+      this.config.username,
+      this.config.password
+    ]);
+    this.authToken = result;
+    console.log('✓ Authenticated successfully');
+    return result;
   }
 
   /**
@@ -41,7 +49,13 @@ class KiwiXmlRpcClient {
    */
   async call(methodName, params) {
     return new Promise((resolve, reject) => {
-      this.client.methodCall(methodName, params || [], (err, result) => {
+      // Adicionar token de autenticação aos parâmetros
+      const authParams = params || [];
+      if (this.authToken) {
+        authParams.unshift(this.authToken);
+      }
+      
+      this.client.methodCall(methodName, authParams, (err, result) => {
         if (err) {
           reject(err);
           return;

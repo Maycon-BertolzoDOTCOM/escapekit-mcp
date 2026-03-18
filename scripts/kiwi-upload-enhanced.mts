@@ -261,12 +261,12 @@ export async function uploadResults(options: UploadOptions): Promise<void> {
   console.log(`   Passed: ${passed} (${passRate}%)`);
   console.log(`   Failed: ${failed}`);
   console.log(`   Skipped: ${skipped}`);
-
   // Create uploader instance
   const uploader = new KiwiTCMSUploader(config, buildMetadata);
 
-  // Note: Authentication is handled via HTTP Basic Auth in the client constructor
-  console.log('\nConnecting to Kiwi TCMS via HTTP Basic Auth...');
+  // Authenticate with Kiwi TCMS
+  console.log('\nAuthenticating to Kiwi TCMS...');
+  await uploader.client.authenticate();
 
   // Get Product
   console.log('Looking up product...');
