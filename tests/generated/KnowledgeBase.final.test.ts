@@ -1,46 +1,132 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { KnowledgeBase } from '../../src/resolvers/KnowledgeBase';
+import { MappingStrategy } from '../../src/models/transformation.js';
 
 describe('KnowledgeBase (Final Tests)', () => {
-  describe('pattern matching', () => {
-    it('should match patterns with wildcards', () => {
+  describe('mapping management', () => {
+    it('should retrieve exact matches from knowledge base', () => {
       const kb = new KnowledgeBase();
-      expect(kb.matchPattern('api.*.com', 'api.example.com')).toBe(true);
-      expect(kb.matchPattern('*.service.com', 'auth.service.com')).toBe(true);
-      expect(kb.matchPattern('internal-*', 'internal-database')).toBe(true);
+      kb.addMapping({
+        ghostPackage: 'three.js',
+        realPackages: ['three'],
+        confidence: 1.0,
+        mappingStrategy: MappingStrategy.EXACT_MATCH,
+      });
+
+      const mapping = kb.getMapping('three.js');
+      expect(mapping).toBeDefined();
+      expect(mapping?.realPackages).toEqual(['three']);
     });
 
-    it('should reject non-matching patterns', () => {
+    it('should return null for unknown packages', () => {
       const kb = new KnowledgeBase();
-      expect(kb.matchPattern('safe.*.com', 'malicious.com')).toBe(false);
-      expect(kb.matchPattern('*.trusted.org', 'evil.com')).toBe(false);
+      const mapping = kb.getMapping('unknown-ghost-package');
+      expect(mapping).toBeNull();
     });
 
-    it('should handle regex special characters', () => {
+    it('should add multiple mappings to knowledge base', () => {
       const kb = new KnowledgeBase();
-      expect(kb.matchPattern('service[0-9]', 'service1')).toBe(true);
-      expect(kb.matchPattern('service[0-9]', 'serviceA')).toBe(false);
+      kb.addMapping({
+        ghostPackage: 'three.js',
+        realPackages: ['three'],
+        confidence: 1.0,
+        mappingStrategy: MappingStrategy.EXACT_MATCH,
+      });
+      kb.addMapping({
+        ghostPackage: 'fake-api',
+        realPackages: ['axios'],
+        confidence: 0.95,
+        mappingStrategy: MappingStrategy.EXACT_MATCH,
+      });
+
+      expect(kb.size()).toBe(2);
+      expect(kb.getMapping('three.js')).toBeDefined();
+      expect(kb.getMapping('fake-api')).toBeDefined();
+    });
+
+    it('should handle multiple real packages in mapping', () => {
+      const kb = new KnowledgeBase();
+      kb.addMapping({
+        ghostPackage: 'react-router',
+        realPackages: ['react-router-dom', 'react-router-native'],
+        confidence: 1.0,
+        mappingStrategy: MappingStrategy.EXACT_MATCH,
+      });
+
+      const mapping = kb.getMapping('react-router');
+      expect(mapping?.realPackages).toEqual(['react-router-dom', 'react-router-native']);
     });
   });
 
-  describe('threat intelligence', () => {
-    it('should detect known malicious domains', () => {
+  describe('knowledge base size and clear', () => {
+    it('should return correct size', () => {
       const kb = new KnowledgeBase();
-      expect(kb.isMaliciousDomain('evil-tracker.com')).toBe(true);
-      expect(kb.isMaliciousDomain('legitimate-api.com')).toBe(false);
+      expect(kb.size()).toBe(0);
+
+      kb.addMapping({
+        ghostPackage: 'three.js',
+        realPackages: ['three'],
+        confidence: 1.0,
+        mappingStrategy: MappingStrategy.EXACT_MATCH,
+      });
+
+      expect(kb.size()).toBe(1);
     });
 
-    it('should identify crypto mining patterns', () => {
+    it('should clear all mappings', () => {
       const kb = new KnowledgeBase();
-      expect(kb.detectCryptoMining('coin-hive.com')).toBe(true);
-      expect(kb.detectCryptoMining('mining-pool.org')).toBe(true);
-      expect(kb.detectCryptoMining('normal-service.com')).toBe(false);
+      kb.addMapping({
+        ghostPackage: 'three.js',
+        realPackages: ['three'],
+        confidence: 1.0,
+        mappingStrategy: MappingStrategy.EXACT_MATCH,
+      });
+      kb.addMapping({
+        ghostPackage: 'fake-api',
+        realPackages: ['axios'],
+        confidence: 0.95,
+        mappingStrategy: MappingStrategy.EXACT_MATCH,
+      });
+
+      expect(kb.size()).toBe(2);
+
+      kb.clear();
+      expect(kb.size()).toBe(0);
+      expect(kb.getMapping('three.js')).toBeNull();
+    });
+  });
+
+  describe('metadata handling', () => {
+    it('should store metadata in mapping', () => {
+      const kb = new KnowledgeBase();
+      kb.addMapping({
+        ghostPackage: 'three.js',
+        realPackages: ['three'],
+        confidence: 0.95,
+        mappingStrategy: MappingStrategy.EXACT_MATCH,
+        metadata: {
+          reason: 'Common 3D library',
+          source: 'manual-entry',
+        },
+      });
+
+      const mapping = kb.getMapping('three.js');
+      expect(mapping?.metadata?.reason).toBe('Common 3D library');
+      expect(mapping?.metadata?.source).toBe('manual-entry');
     });
 
-    it('should flag data exfiltration domains', () => {
+    it('should handle mappings without metadata', () => {
       const kb = new KnowledgeBase();
-      expect(kb.detectDataExfiltration('exfil-server.net')).toBe(true);
-      expect(kb.detectDataExfiltration('api.legitimate.com')).toBe(false);
+      kb.addMapping({
+        ghostPackage: 'three.js',
+        realPackages: ['three'],
+        confidence: 1.0,
+        mappingStrategy: MappingStrategy.EXACT_MATCH,
+      });
+
+      const mapping = kb.getMapping('three.js');
+      expect(mapping).toBeDefined();
+      expect(mapping?.metadata).toBeUndefined();
     });
   });
 });

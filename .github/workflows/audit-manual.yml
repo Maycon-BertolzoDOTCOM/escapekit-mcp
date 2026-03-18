@@ -1,0 +1,109 @@
+name: Audit Report (Manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      format:
+        description: 'Report format'
+        required: true
+        default: 'html'
+        type: choice
+        options:
+          - html
+          - markdown
+          - terminal
+          - json
+      include_kiwi_details:
+        description: 'Include Kiwi TCMS details'
+        required: false
+        type: boolean
+        default: false
+      with_charts:
+        description: 'Include charts (HTML only)'
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  audit-manual:
+    name: Manual Audit Report
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Check for escape.json
+        id: check-escape
+        run: |
+          if [ -f "escape.json" ]; then
+            echo "found=true" >> $GITHUB_OUTPUT
+            echo "✅ escape.json found in repository"
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+            echo "❌ No escape.json found in repository"
+            exit 1
+          fi
+
+      - name: Build command arguments
+        id: build-args
+        run: |
+          ARGS="--format ${{ github.event.inputs.format }}"
+          
+          if [ "${{ github.event.inputs.include_kiwi_details }}" = "true" ]; then
+            ARGS="$ARGS --include-kiwi-details"
+          fi
+          
+          if [ "${{ github.event.inputs.format }}" = "html" ] && [ "${{ github.event.inputs.with_charts }}" = "true" ]; then
+            ARGS="$ARGS --with-charts"
+          fi
+          
+          echo "args=$ARGS" >> $GITHUB_OUTPUT
+          echo "Command: escapekit audit $ARGS"
+
+      - name: Generate audit report
+        run: |
+          node dist/cli/index.js audit ${{ steps.build-args.outputs.args }} --output /tmp/audit-report.${{ github.event.inputs.format }}
+
+      - name: Upload audit report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-report-${{ github.run_id }}
+          path: /tmp/audit-report.${{ github.event.inputs.format }}
+          retention-days: 90
+
+      - name: Generate summary
+        run: |
+          echo "## 📊 Audit Report Generated" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Format:** ${{ github.event.inputs.format }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Kiwi Details:** ${{ github.event.inputs.include_kiwi_details }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Charts:** ${{ github.event.inputs.with_charts }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Download" >> $GITHUB_STEP_SUMMARY
+          echo "📥 [Download Report](/home/vector/Documentos/RalphLoopInverso/-/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+
+      - name: Read and display report
+        if: github.event.inputs.format != 'html'
+        run: |
+          echo "## ?? Report Content" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          cat /tmp/audit-report.${{ github.event.inputs.format }} >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY

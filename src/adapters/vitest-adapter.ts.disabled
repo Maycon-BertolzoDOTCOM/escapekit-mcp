@@ -9,7 +9,7 @@ import { TestAdapter, TestResult, AdapterConfig } from './index';
 interface VitestTestFile {
   name: string;
   filepath: string;
-  result: {
+  result?: {
     state: 'pass' | 'fail' | 'skip' | 'todo' | 'run';
     duration?: number;
     error?: {
@@ -17,13 +17,14 @@ interface VitestTestFile {
       stack: string;
     };
   };
-  tests: VitestTestCase[];
+  tests?: VitestTestCase[];
+  assertionResults?: VitestAssertionResult[];
 }
 
 interface VitestTestCase {
   name: string;
   filepath: string;
-  result: {
+  result?: {
     state: 'pass' | 'fail' | 'skip' | 'todo' | 'run';
     duration?: number;
     error?: {
@@ -31,6 +32,17 @@ interface VitestTestCase {
       stack: string;
     };
   };
+}
+
+interface VitestAssertionResult {
+  ancestorTitles: string[];
+  fullName: string;
+  status: 'passed' | 'failed' | 'skipped' | 'pending' | 'todo';
+  title: string;
+  duration?: number;
+  failureMessages?: string[];
+  meta?: any;
+  tags?: string[];
 }
 
 interface VitestOutput {
@@ -81,20 +93,55 @@ export class VitestAdapter implements TestAdapter {
         ? readFileSync(source, 'utf-8')
         : source;
       
+      // Debug logging
+      console.log(`\n🔍 VitestAdapter debugging:`);
+      console.log(`   Source: ${source}`);
+      console.log(`   Content length: ${content.length}`);
+      
       data = JSON.parse(content);
-    } catch (error) {
+      
+      console.log(`   ✓ JSON parsed successfully`);
+      console.log(`   Keys: ${Object.keys(data).join(', ')}`);
+      console.log(`   Test results count: ${data.testResults?.length || 0}`);
+    } catch (error: any) {
+      console.error(`\n✗ VitestAdapter parsing error:`);
+      console.error(`   Error message: ${error.message}`);
+      
+      if (error instanceof SyntaxError) {
+        const match = error.message.match(/at position (\d+)/);
+        if (match) {
+          const pos = parseInt(match[1]);
+          console.error(`   Error position: ${pos}`);
+          console.error(`   Context: ${content.substring(Math.max(0, pos - 50), Math.min(content.length, pos + 50))}`);
+        }
+      }
+      
       throw new Error(`Failed to parse Vitest JSON: ${error instanceof Error ? error.message : String(error)}`);
     }
 
     const results: TestResult[] = [];
 
-    if (data.testResults) {
+    if (data.testResults && data.testResults.length > 0) {
+      console.log(`   Processing ${data.testResults.length} test files...`);
+      
       for (const testFile of data.testResults) {
-        if (testFile.result && testFile.result.state !== 'run') {
+        // Process assertionResults (newer Vitest format)
+        if (testFile.assertionResults && testFile.assertionResults.length > 0) {
+          for (const assertion of testFile.assertionResults) {
+            const result = this.parseAssertionResult(assertion, testFile.filepath);
+            if (result) {
+              results.push(result);
+            }
+          }
+        }
+        
+        // Process result (older Vitest format)
+        else if (testFile.result && testFile.result.state !== 'run') {
           results.push(this.parseTestResult(testFile.name, testFile.result, testFile.filepath));
         }
 
-        if (testFile.tests) {
+        // Process tests array (older Vitest format)
+        else if (testFile.tests && testFile.tests.length > 0) {
           for (const test of testFile.tests) {
             if (test.result && test.result.state !== 'run') {
               results.push(this.parseTestResult(test.name, test.result, test.filepath));
@@ -102,6 +149,8 @@ export class VitestAdapter implements TestAdapter {
           }
         }
       }
+      
+      console.log(`   ✓ Generated ${results.length} test results`);
     } else if ('numFailedTests' in data) {
       throw new Error('Vitest summary format not supported. Use --reporter=json for detailed results.');
     }
@@ -117,13 +166,47 @@ export class VitestAdapter implements TestAdapter {
     });
   }
 
+  private parseAssertionResult(
+    assertion: VitestAssertionResult,
+    filepath: string
+  ): TestResult | null {
+    const outcome = this.mapStatus(assertion.status);
+    const duration = assertion.duration || 0;
+
+    const maxDuration = this.config.maxDuration || 60000;
+    const finalOutcome = duration > maxDuration ? 'failed' : outcome;
+
+    const testResult: TestResult = {
+      testCase: this.normalizeTestCaseName(assertion.fullName || assertion.title, filepath),
+      outcome: finalOutcome,
+      duration: duration,
+      metadata: {
+        framework: 'vitest',
+        filepath: filepath,
+        originalStatus: assertion.status,
+        isTodo: assertion.status === 'todo',
+        ancestorTitles: assertion.ancestorTitles,
+      },
+    };
+
+    if (assertion.failureMessages && assertion.failureMessages.length > 0) {
+      let errorMessage = assertion.failureMessages.join('\n\n');
+      if (this.config.stripAnsiColors) {
+        errorMessage = this.stripAnsiColors(errorMessage);
+      }
+      testResult.error = errorMessage;
+    }
+
+    return testResult;
+  }
+
   private parseTestResult(
     name: string,
     result: VitestTestCase['result'],
     filepath: string
   ): TestResult {
-    const outcome = this.mapStatus(result.state);
-    const duration = result.duration || 0;
+    const outcome = this.mapStatus(result!.state);
+    const duration = result!.duration || 0;
 
     const maxDuration = this.config.maxDuration || 60000;
     const finalOutcome = duration > maxDuration ? 'failed' : outcome;
@@ -135,33 +218,36 @@ export class VitestAdapter implements TestAdapter {
       metadata: {
         framework: 'vitest',
         filepath: filepath,
-        originalStatus: result.state,
-        isTodo: result.state === 'todo',
+        originalStatus: result!.state,
+        isTodo: result!.state === 'todo',
       },
     };
 
-    if (result.error && (finalOutcome === 'failed' || outcome === 'failed')) {
-      let errorMessage = result.error.message;
+    if (result!.error && (finalOutcome === 'failed' || outcome === 'failed')) {
+      let errorMessage = result!.error.message;
       if (this.config.stripAnsiColors) {
         errorMessage = this.stripAnsiColors(errorMessage);
       }
 
-      testResult.error = `${errorMessage}\n\n${result.error.stack}`;
+      testResult.error = `${errorMessage}\n\n${result!.error.stack}`;
     }
 
     return testResult;
   }
 
-  private mapStatus(status: VitestTestCase['result']['state']): TestResult['outcome'] {
+  private mapStatus(status: VitestAssertionResult['status'] | VitestTestCase['result']['state']): TestResult['outcome'] {
     switch (status) {
+      case 'passed':
       case 'pass':
         return 'passed';
+      case 'failed':
       case 'fail':
         return 'failed';
+      case 'skipped':
       case 'skip':
+      case 'pending':
       case 'todo':
         return 'skipped';
-      case 'run':
       default:
         return 'skipped';
     }

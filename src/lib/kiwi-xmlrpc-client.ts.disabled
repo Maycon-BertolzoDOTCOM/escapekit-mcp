@@ -1,0 +1,309 @@
+import xmlrpc from 'xmlrpc';
+import { logger } from '../logger';
+
+export interface KiwiConfig {
+  baseUrl: string;
+  username: string;
+  password: string;
+  defaultProduct?: string;
+  defaultPlanId?: number;
+  testRunTemplate?: string;
+  timeout?: number;
+  retries?: number;
+}
+
+export interface Product {
+  id: number;
+  name: string;
+  description?: string;
+}
+
+export interface TestPlan {
+  id: number;
+  name: string;
+  product_id: number;
+}
+
+export interface Build {
+  id: number;
+  name: string;
+  product_id: number;
+}
+
+export interface TestCase {
+  id: number;
+  name: string;
+  summary?: string;
+  product_id: number;
+}
+
+export interface TestRun {
+  id: number;
+  summary: string;
+  plan?: number;
+  build?: number;
+  manager?: number;
+}
+
+export interface TestExecutionStatus {
+  id: number;
+  name: string;
+  weight: number;
+}
+
+export class KiwiXmlRpcClient {
+  private client: any;
+  private baseUrl: string;
+  private config: KiwiConfig;
+
+  constructor(config: KiwiConfig) {
+    this.config = config;
+    this.baseUrl = config.baseUrl.replace(/\/$/, '');
+    
+    // Parse URL to extract hostname
+    const url = new URL(this.baseUrl);
+    
+    // Create XML-RPC client with HTTPS and Basic Auth
+    // Note: rejectUnauthorized: false is required for self-signed certificates in development
+    this.client = xmlrpc.createSecureClient({
+      host: url.hostname,
+      port: parseInt(url.port) || 443,
+      path: '/xml-rpc/',
+      basic_auth: {
+        user: config.username,
+        pass: config.password
+      },
+      // Ignore SSL certificate errors in development
+      rejectUnauthorized: false
+    });
+  }
+
+  /**
+   * Execute an XML-RPC method call
+   */
+  private async methodCall(methodName: string, params: any[] = []): Promise<any> {
+    const maxRetries = this.config.retries || 3;
+    let lastError: any;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        return await new Promise((resolve, reject) => {
+          this.client.methodCall(methodName, params, (err: any, result: any) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
+        });
+      } catch (error: any) {
+        lastError = error;
+        logger.warn(`XML-RPC call failed (attempt ${attempt}/${maxRetries}): ${methodName}`, { error: error.message });
+        
+        if (attempt < maxRetries) {
+          // Wait before retry (exponential backoff)
+          await this.sleep(Math.pow(2, attempt) * 1000);
+        }
+      }
+    }
+
+    throw lastError;
+  }
+
+  /**
+   * Sleep utility for retry delays
+   */
+  private sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  /**
+   * Test connectivity and authentication
+   */
+  async testConnection(): Promise<boolean> {
+    try {
+      await this.methodCall('User.filter', [{ username: this.config.username }]);
+      logger.info('Kiwi TCMS connection successful');
+      return true;
+    } catch (error: any) {
+      logger.error('Kiwi TCMS connection failed', { error: error.message });
+      return false;
+    }
+  }
+
+  /**
+   * Find product by name
+   */
+  async findProductByName(name: string): Promise<Product | null> {
+    try {
+      const products = await this.methodCall('Product.filter', [{ name }]);
+      return products.length > 0 ? products[0] : null;
+    } catch (error: any) {
+      logger.error(`Failed to find product ${name}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * List all products
+   */
+  async listProducts(): Promise<Product[]> {
+    try {
+      return await this.methodCall('Product.filter', []);
+    } catch (error: any) {
+      logger.error('Failed to list products', { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Find test plan by ID
+   */
+  async findTestPlanById(id: number): Promise<TestPlan | null> {
+    try {
+      const plans = await this.methodCall('TestPlan.filter', [{ plan_id: id }]);
+      return plans.length > 0 ? plans[0] : null;
+    } catch (error: any) {
+      logger.error(`Failed to find test plan ${id}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * List builds for a product
+   */
+  async listBuilds(productId: number): Promise<Build[]> {
+    try {
+      return await this.methodCall('Build.filter', [{ product: productId }]);
+    } catch (error: any) {
+      logger.error(`Failed to list builds for product ${productId}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Create a new build
+   */
+  async createBuild(name: string, productId: number): Promise<Build> {
+    try {
+      return await this.methodCall('Build.create', [{ name, product: productId }]);
+    } catch (error: any) {
+      logger.error(`Failed to create build ${name}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Create a test run
+   */
+  async createTestRun(options: {
+    build: number;
+    plan?: number;
+    summary: string;
+    manager?: number;
+    default_tester?: number;
+  }): Promise<TestRun> {
+    try {
+      return await this.methodCall('TestRun.create', [options]);
+    } catch (error: any) {
+      logger.error('Failed to create test run', { error: error.message, options });
+      throw error;
+    }
+  }
+
+  /**
+   * Find test case by name
+   */
+  async findTestCaseByName(name: string): Promise<TestCase | null> {
+    try {
+      const cases = await this.methodCall('TestCase.filter', [{ name }]);
+      return cases.length > 0 ? cases[0] : null;
+    } catch (error: any) {
+      logger.error(`Failed to find test case ${name}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Create a test case
+   */
+  async createTestCase(options: {
+    name: string;
+    product: number;
+    category?: number;
+    summary?: string;
+    is_automated?: boolean;
+  }): Promise<TestCase> {
+    try {
+      const defaults = {
+        is_automated: true,
+        category: 1,
+        summary: options.name
+      };
+      return await this.methodCall('TestCase.create', [{ ...defaults, ...options }]);
+    } catch (error: any) {
+      logger.error(`Failed to create test case ${options.name}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Find test execution status by name
+   */
+  async findTestRunStatusByName(name: string): Promise<TestExecutionStatus | null> {
+    try {
+      const statuses = await this.methodCall('TestExecutionStatus.filter', [{ name }]);
+      return statuses.length > 0 ? statuses[0] : null;
+    } catch (error: any) {
+      logger.error(`Failed to find test execution status ${name}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Add a test execution to a test run
+   */
+  async addTestExecution(options: {
+    case: number;
+    run: number;
+    status: number;
+    comment?: string;
+    assignee?: number;
+    tested_by?: number;
+  }): Promise<any> {
+    try {
+      return await this.methodCall('TestExecution.create', [options]);
+    } catch (error: any) {
+      logger.error('Failed to add test execution', { error: error.message, options });
+      throw error;
+    }
+  }
+
+  /**
+   * Update test execution
+   */
+  async updateTestExecution(executionId: number, options: {
+    status?: number;
+    comment?: string;
+    tested_by?: number;
+  }): Promise<any> {
+    try {
+      return await this.methodCall('TestExecution.update', [executionId, options]);
+    } catch (error: any) {
+      logger.error(`Failed to update test execution ${executionId}`, { error: error.message, options });
+      throw error;
+    }
+  }
+
+  /**
+   * List test executions for a test run
+   */
+  async listTestExecutions(testRunId: number): Promise<any[]> {
+    try {
+      return await this.methodCall('TestExecution.filter', [{ run: testRunId }]);
+    } catch (error: any) {
+      logger.error(`Failed to list test executions for run ${testRunId}`, { error: error.message });
+      throw error;
+    }
+  }
+}

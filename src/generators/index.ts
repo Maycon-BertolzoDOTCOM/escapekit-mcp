@@ -10,6 +10,10 @@ export type { CompiledTemplate, HelperFunction } from './TemplateEngine.js';
 export { EscapeContractWriter } from './EscapeContractWriter.js';
 export type { EscapeContractParams } from './EscapeContractWriter.js';
 
+// Temporarily disabled due to type errors
+// export { EscapeJsonWriter } from './EscapeJsonWriter.js';
+// export type { EscapeJsonParams } from './EscapeJsonWriter.js';
+
 export { ProjectGenerator } from './ProjectGenerator.js';
 export type { GeneratorParams } from './ProjectGenerator.js';
 

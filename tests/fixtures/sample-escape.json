@@ -1,0 +1,166 @@
+{
+  "$schema": "https://raw.githubusercontent.com/escapekit/escapekit-mcp/main/schemas/escape-json-v1.schema.json",
+  "version": "1.0",
+  "escapeId": "test-analysis-12345",
+  "timestamp": "2026-03-18T08:30:00.000Z",
+  "provenance": {
+    "sandbox": "ai-studio",
+    "sourceUrl": "https://ai-studio.example.com/project/12345",
+    "sourceHash": "abc123def456789",
+    "files": [
+      {
+        "path": "src/app.tsx",
+        "hash": "hash123",
+        "size": 2048,
+        "type": "source",
+        "language": "typescript"
+      },
+      {
+        "path": "package.json",
+        "hash": "hash456",
+        "size": 512,
+        "type": "config"
+      }
+    ],
+    "detectedAt": "2026-03-18T08:30:00.000Z"
+  },
+  "analysis": {
+    "analysisId": "test-analysis-12345",
+    "analysisAt": "2026-03-18T08:30:00.000Z",
+    "escapeKitVersion": "2.0.0",
+    "config": {
+      "targetPlatform": "nextjs",
+      "targetRuntime": "node",
+      "strictness": "standard",
+      "useChineseMirrors": true
+    },
+    "issues": [
+      {
+        "type": "GHOST_IMPORT",
+        "severity": "error",
+        "filePath": "src/app.tsx",
+        "line": 1,
+        "column": 0,
+        "message": "Ghost import: 'fake-api' does not exist in npm registry",
+        "suggestion": "Replace with a real API package like 'axios' or 'fetch'",
+        "packageName": "fake-api",
+        "fixed": true,
+        "fixMethod": "REPLACED_WITH_REAL_PACKAGE"
+      },
+      {
+        "type": "MOCK_API",
+        "severity": "warning",
+        "filePath": "src/utils.ts",
+        "line": 10,
+        "column": 0,
+        "message": "Mock API: 'sandbox.api.getData' is not available in production",
+        "suggestion": "Implement real API call or use mock-service-worker for development",
+        "fixed": false
+      }
+    ],
+    "confidenceScore": 0.95,
+    "totalIssues": 2,
+    "issueBreakdown": {
+      "ghostImports": 1,
+      "mockApis": 1,
+      "sandboxApis": 0,
+      "unrealisticAssumptions": 0,
+      "securityRisks": 0,
+      "performanceIssues": 0,
+      "codeQuality": 0,
+      "missingDependencies": 0,
+      "versionMismatches": 0,
+      "webglFallbacksNeeded": 0
+    }
+  },
+  "transformations": {
+    "transformedAt": "2026-03-18T08:31:00.000Z",
+    "applied": [
+      {
+        "type": "IMPORT_REPLACEMENT",
+        "filePath": "src/app.tsx",
+        "originalCode": "import { fakeApi } from 'fake-api';",
+        "transformedCode": "import axios from 'axios';",
+        "reason": "Ghost import replaced with real package",
+        "packageUsed": "axios",
+        "timestamp": "2026-03-18T08:31:00.000Z"
+      }
+    ],
+    "totalTransformations": 1,
+    "breakdown": {
+      "importReplacements": 1,
+      "apiReplacements": 0,
+      "polyfillAdditions": 0,
+      "fallbackImplementations": 0,
+      "versionUpdates": 0,
+      "dependencyAdditions": 0,
+      "configGenerations": 0,
+      "codeRefactorings": 0
+    }
+  },
+  "validations": {
+    "validations": [
+      {
+        "type": "BUILD",
+        "validatedAt": "2026-03-18T08:32:00.000Z",
+        "environment": "local",
+        "status": "passed",
+        "duration": 5000
+      },
+      {
+        "type": "UNIT_TESTS",
+        "validatedAt": "2026-03-18T08:33:00.000Z",
+        "environment": "local",
+        "status": "passed",
+        "duration": 3000
+      }
+    ],
+    "overallStatus": "passed",
+    "totalValidations": 2,
+    "passedValidations": 2,
+    "failedValidations": 0,
+    "kiwiTestRunId": 12345,
+    "testResults": {
+      "total": 100,
+      "passed": 98,
+      "failed": 2,
+      "skipped": 0,
+      "passRate": 98.0,
+      "framework": "vitest",
+      "executedAt": "2026-03-18T08:33:00.000Z"
+    }
+  },
+  "deployment": {
+    "status": "deployed",
+    "target": "vercel",
+    "url": "https://test-app.vercel.app",
+    "deployedAt": "2026-03-18T08:35:00.000Z",
+    "environment": "production",
+    "method": "vercel"
+  },
+  "sovereignty": {
+    "compliant": true,
+    "complianceScore": 85,
+    "checkedAt": "2026-03-18T08:34:00.000Z",
+    "chineseMirrors": true,
+    "offlineCache": true,
+    "securityValidation": true,
+    "auditLogging": true,
+    "packageReplacements": [
+      {
+        "original": "fake-api",
+        "replacedWith": "axios",
+        "reason": "Ghost import replaced with real package",
+        "source": "npm"
+      }
+    ]
+  },
+  "metadata": {
+    "projectName": "Test Project",
+    "projectDescription": "A test project for audit command",
+    "projectVersion": "1.0.0",
+    "author": "Test Author",
+    "organization": "EscapeKit",
+    "tags": ["test", "demo", "audit"]
+  }
+}

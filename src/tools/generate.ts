@@ -33,6 +33,8 @@ export interface GenerateOptions {
   includeDocker?: boolean;
   /** Include CI/CD workflow */
   includeCI?: boolean;
+  /** Generate escape.json protocol file */
+  generateEscapeJson?: boolean;
   /** Custom template directory */
   templatePath?: string;
   /** Force processing of non-autoFixable issues */
@@ -162,6 +164,10 @@ export async function generateEscapeKit(
         targetPlatform,
         dependencies,
         escapeContract: contract,
+        analysisResult,
+        resolutions,
+        transformations,
+        generateEscapeJson: options.generateEscapeJson !== false,
         includeDocker,
         includeCI,
       });

@@ -1,6 +1,18 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ProjectValidator } from '../../src/validators/ProjectValidator';
 
+// Mock para EscapeContractWriter
+const { MockEscapeContractWriter } = vi.hoisted(() => ({
+  MockEscapeContractWriter: class {
+    readContract = vi.fn().mockResolvedValue({});
+    validateContract = vi.fn().mockResolvedValue(true);
+  }
+}));
+
+vi.mock('../../src/generators/EscapeContractWriter', () => ({
+  EscapeContractWriter: MockEscapeContractWriter,
+}));
+
 // Mock global para fs/promises
 vi.mock('fs/promises', async () => {
   const actual = await vi.importActual('fs/promises');
@@ -10,14 +22,6 @@ vi.mock('fs/promises', async () => {
     readFile: vi.fn(),
   };
 });
-
-// Mock para EscapeContractWriter
-vi.mock('../../src/generators/EscapeContractWriter', () => ({
-  EscapeContractWriter: vi.fn().mockImplementation(() => ({
-    readContract: vi.fn().mockResolvedValue({}),
-    validateContract: vi.fn().mockResolvedValue(true),
-  })),
-}));
 
 describe('ProjectValidator (Expanded)', () => {
   let validator: ProjectValidator;

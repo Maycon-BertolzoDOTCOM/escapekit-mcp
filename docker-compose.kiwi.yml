@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  kiwi-postgres:
+    image: postgres:15-alpine
+    container_name: kiwi-postgres-escapekit
+    environment:
+      POSTGRES_DB: kiwi
+      POSTGRES_USER: kiwi
+      POSTGRES_PASSWORD: kiwi_password
+    volumes:
+      - kiwi-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kiwi"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  kiwi-tcms:
+    image: kiwitcms/kiwi:latest
+    container_name: kiwi-tcms-escapekit
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    environment:
+      KIWI_DB_ENGINE: django.db.backends.postgresql
+      KIWI_DB_HOST: kiwi-postgres
+      KIWI_DB_PORT: 5432
+      KIWI_DB_NAME: kiwi
+      KIWI_DB_USER: kiwi
+      KIWI_DB_PASSWORD: kiwi_password
+      KIWI_DB_SSLMODE: disable
+      KIWI_USE_EXTERNAL_EMAIL_SERVER: "False"
+      KIWI_HTTPS: "False"
+      KIWI_DOMAIN: "localhost:8080"
+    depends_on:
+      kiwi-postgres:
+        condition: service_healthy
+    volumes:
+      - kiwi-media-files:/Kiwi/media_files
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  kiwi-postgres-data:
+  kiwi-media-files:

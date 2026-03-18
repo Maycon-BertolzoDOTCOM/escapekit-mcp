@@ -43,11 +43,30 @@ export class RateLimiter {
   private readonly semaphoreQueue: Array<() => void> = [];
 
   constructor(config?: RateLimiterConfig) {
+    const maxRequests = config?.maxRequests ?? DEFAULTS.maxRequests;
+    const windowMs = config?.windowMs ?? DEFAULTS.windowMs;
+    const maxConcurrent = config?.maxConcurrent ?? DEFAULTS.maxConcurrent;
+    const minDelayMs = config?.minDelayMs ?? DEFAULTS.minDelayMs;
+
+    // Validate configuration
+    if (maxRequests < 0) {
+      throw new Error(`maxRequests cannot be negative: ${maxRequests}`);
+    }
+    if (windowMs < 0) {
+      throw new Error(`windowMs cannot be negative: ${windowMs}`);
+    }
+    if (maxConcurrent < 0) {
+      throw new Error(`maxConcurrent cannot be negative: ${maxConcurrent}`);
+    }
+    if (minDelayMs < 0) {
+      throw new Error(`minDelayMs cannot be negative: ${minDelayMs}`);
+    }
+
     this.config = {
-      maxRequests: config?.maxRequests ?? DEFAULTS.maxRequests,
-      windowMs: config?.windowMs ?? DEFAULTS.windowMs,
-      maxConcurrent: config?.maxConcurrent ?? DEFAULTS.maxConcurrent,
-      minDelayMs: config?.minDelayMs ?? DEFAULTS.minDelayMs,
+      maxRequests,
+      windowMs,
+      maxConcurrent,
+      minDelayMs,
     };
   }
 
@@ -104,6 +123,7 @@ export class RateLimiter {
   reset(): void {
     this.requests.length = 0;
     this.lastRequestTime = 0;
+    this.activeCount = 0;
   }
 
   // ---------------------------------------------------------------------------

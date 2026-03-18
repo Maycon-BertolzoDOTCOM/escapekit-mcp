@@ -1,7 +1,7 @@
 {
-  "baseUrl": "https://kiwi.example.com",
-  "username": "api-user",
-  "password": "api-password",
+  "baseUrl": "https://localhost:8443",
+  "username": "admin",
+  "password": "axfwxZMnJK",
   "defaultProduct": "EscapeKit",
   "defaultPlanId": 1,
   "testRunTemplate": "AutoTest-{DATE}",

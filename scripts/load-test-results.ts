@@ -46,89 +46,84 @@ export async function loadTestResults(options: LoadTestResultsOptions): Promise<
 }
 
 /**
- * Auto-detect the test framework from a source (file path or string)
+ * Auto-detect test framework from a source (file path or string)
  */
-export function detectFramework(source: string): 'vitest' | 'mocha' | 'custom' {
-  let content: string;
-  let isFile = false;
-
-  // Read file if source is a file path
-  if (existsSync(source)) {
+function detectFramework(source: string): 'vitest' | 'mocha' | 'custom' {
+  // Try to determine from file extension
+  if (source.endsWith('.json')) {
+    // Read file and check for framework-specific patterns
     try {
-      content = readFileSync(source, 'utf-8');
-      isFile = true;
-    } catch {
-      return 'custom';
-    }
-  } else {
-    content = source;
-  }
-
-  // Check for Mocha XML format first (most specific)
-  if (content.includes('<testsuite') || content.includes('<testsuites')) {
-    return 'mocha';
-  }
-
-  // Check for custom JSON format (has explicit framework field)
-  if (content.startsWith('{') || (isFile && source.endsWith('.json'))) {
-    try {
+      const content = readFileSync(source, 'utf-8');
+      
+      // Debug logging
+      console.log(`\n🔍 File analysis:`);
+      console.log(`   File: ${source}`);
+      console.log(`   Size: ${content.length} bytes`);
+      console.log(`   First 100 chars: ${content.substring(0, 100)}`);
+      
       const data = JSON.parse(content);
-      if (data.framework && Array.isArray(data.tests)) {
-        return 'custom';
-      }
-      if (data.testResults || data.testFiles || data.vitest) {
+      
+      console.log(`   Parsed JSON keys: ${Object.keys(data).join(', ')}`);
+      console.log(`   Has testResults? ${!!data.testResults}`);
+      console.log(`   Has numTotalTests? ${!!data.numTotalTests}`);
+      console.log(`   Has version? ${!!data.version}`);
+
+      // Vitest detection
+      if (data.testResults || (data.numTotalTests !== undefined && data.version)) {
+        console.log(`   ✓ Detected: Vitest`);
         return 'vitest';
       }
-    } catch {
-      // Not valid JSON, continue to other checks
+
+      // Mocha detection
+      if (data.stats && data.stats.tests) {
+        console.log(`   ✓ Detected: Mocha`);
+        return 'mocha';
+      }
+      
+      console.log(`   ⚠ Falling back to: custom`);
+    } catch (error: any) {
+      // Detailed error logging
+      console.error(`\n✗ Error parsing JSON from ${source}:`);
+      console.error(`   Message: ${error.message}`);
+      if (error instanceof SyntaxError) {
+        console.error(`   Position: line ${error.message.match(/line (\d+)/)?.[1]}, column ${error.message.match(/column (\d+)/)?.[1]}`);
+        const content = readFileSync(source, 'utf-8');
+        const lines = content.split('\n');
+        if (error.message.match(/line (\d+)/)) {
+          const lineNum = parseInt(error.message.match(/line (\d+)/)![1]);
+          const startLine = Math.max(0, lineNum - 5);
+          const endLine = Math.min(lines.length - 1, lineNum + 5);
+          console.error(`   Context:`);
+          for (let i = startLine; i <= endLine; i++) {
+            console.error(`     ${i + 1}: ${lines[i] || ''}`);
+          }
+        }
+      }
+      console.warn(`   ⚠ Assuming custom format`);
     }
   }
 
-  // Check for file extension
-  if (isFile) {
-    if (source.endsWith('.json')) {
-      return 'vitest';
-    }
-    if (source.endsWith('.xml')) {
-      return 'mocha';
-    }
-  } else if (source.endsWith('.json')) {
-    return 'vitest';
-  } else if (source.endsWith('.xml')) {
-    return 'mocha';
-  }
-
-  // Default to custom format
   return 'custom';
 }
 
 /**
- * Load multiple test result files
+ * Merge multiple test result files
  */
-export async function loadMultipleTestResults(
-  sources: string[],
-  options?: Omit<LoadTestResultsOptions, 'source'>
-): Promise<TestResult[]> {
+export async function mergeTestResults(files: string[]): Promise<TestResult[]> {
   const allResults: TestResult[] = [];
 
-  for (const source of sources) {
-    try {
-      const results = await loadTestResults({ ...options, source });
-      allResults.push(...results);
-      console.log(`Loaded ${results.length} tests from ${source}`);
-    } catch (error) {
-      console.error(`Failed to load ${source}:`, error);
-      throw error;
-    }
+  for (const file of files) {
+    const results = await loadTestResults({ source: file });
+    allResults.push(...results);
   }
 
   return allResults;
 }
 
 // CLI interface
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
   const args = process.argv.slice(2);
-  
+
   if (args.length === 0) {
     console.log('Usage: tsx scripts/load-test-results.ts <source> [--framework vitest|mocha|custom]');
     process.exit(1);

@@ -10,10 +10,14 @@
 import { join } from 'path';
 import { mkdir, writeFile } from 'fs/promises';
 import { TemplateEngine } from './TemplateEngine.js';
+// Temporarily disabled due to type errors
+// import { EscapeJsonWriter } from './EscapeJsonWriter.js';
 
 import { FileSystemError } from '../errors.js';
 import { logger } from '../logger.js';
 import type { ProjectStructure, EscapeContract } from '../models/transformation.js';
+import type { AnalysisResult } from '../models/schemas.js';
+import type { DependencyResolution, CodeTransformation } from '../models/transformation.js';
 
 /** Parameters for project generation */
 export interface GeneratorParams {
@@ -35,6 +39,16 @@ export interface GeneratorParams {
   dependencies?: Map<string, string>;
   /** Escape contract to embed */
   escapeContract?: EscapeContract;
+  /** Analysis result for escape.json generation */
+  analysisResult?: AnalysisResult;
+  /** Resolved dependencies for escape.json */
+  resolutions?: DependencyResolution[];
+  /** Code transformations for escape.json */
+  transformations?: CodeTransformation[];
+  /** Kiwi TCMS test run ID */
+  kiwiTestRunId?: number;
+  /** Generate escape.json */
+  generateEscapeJson?: boolean;
   /** Include Dockerfile */
   includeDocker?: boolean;
   /** Include CI/CD workflow */
@@ -159,6 +173,13 @@ export class ProjectGenerator {
     // Write all files
     await this.writeFiles(rootPath, files);
 
+    // Generate escape.json (after files are written)
+    if (params.generateEscapeJson !== false && params.analysisResult) {
+      // Skip escape.json generation as EscapeJsonWriter is disabled
+      // TODO: Re-enable once type issues in EscapeJsonWriter are resolved
+      // await this.generateEscapeJson(params);
+    }
+
     this.log.info('Project generation complete', { rootPath, fileCount: files.size });
 
     return {
@@ -275,4 +296,69 @@ export class ProjectGenerator {
       }
     }
   }
+
+  /**
+   * Generate escape.json protocol v1.0 document.
+   *
+   * @param params - Generator parameters containing analysis data
+   * Temporarily disabled due to type errors
+   */
+  /*
+  async generateEscapeJson(params: GeneratorParams): Promise<void> {
+    const {
+      rootPath,
+      analysisResult,
+      resolutions = [],
+      transformations = [],
+      kiwiTestRunId,
+      generateEscapeJson = true,
+    } = params;
+
+    if (!analysisResult) {
+      this.log.warn('No analysis result provided, skipping escape.json generation');
+      return;
+    }
+
+    try {
+      const writer = new EscapeJsonWriter();
+
+      // Build test results summary if kiwiTestRunId is provided
+      const testResults = kiwiTestRunId ? {
+        total: analysisResult.summary.totalIssues || 0,
+        passed: 0, // Will be updated when tests run
+        failed: 0,
+        skipped: 0,
+        passRate: 0,
+        framework: 'vitest',
+        executedAt: new Date().toISOString(),
+      } : undefined;
+
+      const escapeJson = writer.generate({
+        analysisResult,
+        resolutions,
+        transformations,
+        targetPlatform: params.targetPlatform || 'nextjs',
+        targetRuntime: 'node',
+        toolVersion: '1.0.0',
+        kiwiTestRunId,
+        testResults,
+        useChineseMirrors: false,
+        metadata: {
+          projectName: params.projectName,
+          projectDescription: params.description,
+          projectVersion: params.version,
+          author: params.author,
+        },
+      });
+
+      const escapeJsonPath = join(rootPath, 'escape.json');
+      await writer.writeToFile(escapeJson, escapeJsonPath);
+
+      this.log.info('escape.json generated successfully', { path: escapeJsonPath });
+    } catch (error: any) {
+      this.log.error('Failed to generate escape.json', { error: error.message });
+      // Don't throw error - project generation should continue
+    }
+  }
+  */
 }

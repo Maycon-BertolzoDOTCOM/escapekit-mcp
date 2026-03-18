@@ -1,0 +1,118 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 1,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 5,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 6,
+  "startTime": 1679097600000,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ExampleTestSuite"],
+          "duration": 45,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ExampleTestSuite testAuthentication",
+          "location": {
+            "column": 1,
+            "file": "/home/user/project/tests/example.test.ts",
+            "line": 10
+          },
+          "meta": {},
+          "status": "passed",
+          "title": "testAuthentication"
+        },
+        {
+          "ancestorTitles": ["ExampleTestSuite"],
+          "duration": 123,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ExampleTestSuite testProductCreation",
+          "location": {
+            "column": 1,
+            "file": "/home/user/project/tests/example.test.ts",
+            "line": 20
+          },
+          "meta": {},
+          "status": "passed",
+          "title": "testProductCreation"
+        },
+        {
+          "ancestorTitles": ["ExampleTestSuite"],
+          "duration": 78,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ExampleTestSuite testTestPlanCreation",
+          "location": {
+            "column": 1,
+            "file": "/home/user/project/tests/example.test.ts",
+            "line": 30
+          },
+          "meta": {},
+          "status": "passed",
+          "title": "testTestPlanCreation"
+        },
+        {
+          "ancestorTitles": ["ExampleTestSuite"],
+          "duration": 56,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ExampleTestSuite testUploadResults",
+          "location": {
+            "column": 1,
+            "file": "/home/user/project/tests/example.test.ts",
+            "line": 40
+          },
+          "meta": {},
+          "status": "passed",
+          "title": "testUploadResults"
+        },
+        {
+          "ancestorTitles": ["ExampleTestSuite"],
+          "duration": 234,
+          "failureDetails": [
+            {
+              "message": "Expected: 'success' but received: 'error'",
+              "stack": "Error: Upload failed\n    at testUploadResultsWithRetry (tests/example.test.ts:50:15)"
+            }
+          ],
+          "failureMessages": [
+            "Expected: 'success' but received: 'error'"
+          ],
+          "fullName": "ExampleTestSuite testUploadResultsWithRetry",
+          "location": {
+            "column": 1,
+            "file": "/home/user/project/tests/example.test.ts",
+            "line": 50
+          },
+          "meta": {},
+          "status": "failed",
+          "title": "testUploadResultsWithRetry"
+        },
+        {
+          "ancestorTitles": ["ExampleTestSuite"],
+          "duration": 67,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ExampleTestSuite testDashboardAccess",
+          "location": {
+            "column": 1,
+            "file": "/home/user/project/tests/example.test.ts",
+            "line": 60
+          },
+          "meta": {},
+          "status": "passed",
+          "title": "testDashboardAccess"
+        }
+      ],
+      "duration": 603
+    }
+  ],
+  "version": "1.2.0"
+}

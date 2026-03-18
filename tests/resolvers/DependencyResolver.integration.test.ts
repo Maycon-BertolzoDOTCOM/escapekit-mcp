@@ -16,32 +16,30 @@ import { KnowledgeBase } from '../../src/resolvers/KnowledgeBase.js';
 import { SemanticMatcher } from '../../src/resolvers/SemanticMatcher.js';
 
 // ── Mocks ─────────────────────────────────────────────────────────────────────
-const { REAL_PACKAGES } = vi.hoisted(() => ({
+const { REAL_PACKAGES, MockNPMRegistry } = vi.hoisted(() => ({
   REAL_PACKAGES: new Set(['axios', 'lodash', 'react', 'express', 'typescript']),
+  MockNPMRegistry: class {
+    packageExists = vi.fn().mockImplementation(async (name: string) =>
+      REAL_PACKAGES.has(name)
+    );
+    getLatestVersion = vi.fn().mockImplementation(async (name: string) =>
+      REAL_PACKAGES.has(name) ? '^1.0.0' : 'unknown'
+    );
+    getCacheStats = vi.fn().mockReturnValue({ size: 3, entries: [] });
+    clearCache = vi.fn();
+  }
 }));
 
-vi.mock('../../src/services/NPMRegistry.js', () => {
-  const mockNPMRegistry = {
-    packageExists: vi.fn().mockImplementation(async (name: string) =>
-      REAL_PACKAGES.has(name)
-    ),
-    getLatestVersion: vi.fn().mockImplementation(async (name: string) =>
-      REAL_PACKAGES.has(name) ? '^1.0.0' : 'unknown'
-    ),
-    getCacheStats: vi.fn().mockReturnValue({ size: 3, entries: [] }),
-    clearCache: vi.fn(),
-  };
-  return {
-    NPMRegistry: vi.fn().mockImplementation(() => mockNPMRegistry),
-  };
-});
+vi.mock('../../src/services/NPMRegistry.js', () => ({
+  NPMRegistry: MockNPMRegistry,
+}));
 
 vi.mock('../../src/resolvers/SemanticMatcher.js', () => ({
-  SemanticMatcher: vi.fn().mockImplementation(() => ({
-    findSimilar: vi.fn().mockResolvedValue([]),
-    analyzePackage: vi.fn().mockResolvedValue({ name: 'unknown', deprecated: false }),
-    clearCache: vi.fn(),
-  })),
+  SemanticMatcher: class {
+    findSimilar = vi.fn().mockResolvedValue([]);
+    analyzePackage = vi.fn().mockResolvedValue({ name: 'unknown', deprecated: false });
+    clearCache = vi.fn();
+  }
 }));
 
 describe('DependencyResolver Integration - NPM Registry (mocked)', () => {

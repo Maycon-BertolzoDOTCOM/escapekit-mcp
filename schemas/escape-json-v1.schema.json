@@ -1,0 +1,606 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/escapekit/escapekit-mcp/main/schemas/escape-json-v1.schema.json",
+  "title": "EscapeKit Protocol v1.0",
+  "description": "Digital birth certificate for projects analyzed by EscapeKit - provides complete traceability from source to production deployment",
+  "type": "object",
+  "required": [
+    "$schema",
+    "version",
+    "escapeId",
+    "timestamp",
+    "provenance",
+    "analysis",
+    "transformations",
+    "validations",
+    "deployment",
+    "sovereignty",
+    "metadata"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri",
+      "description": "JSON Schema URI for validation"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Protocol version (semver)"
+    },
+    "escapeId": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$|analysis-\\d+-[a-z0-9]+$",
+      "description": "Unique identifier for this escape record (UUID or analysis ID)"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when escape.json was created"
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Source provenance information",
+      "required": ["sandbox", "sourceHash", "files", "detectedAt"],
+      "properties": {
+        "sandbox": {
+          "type": "string",
+          "enum": ["ai-studio", "bolt.new", "replit", "cursor", "claude", "unknown"],
+          "description": "Source sandbox type"
+        },
+        "sourceUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "Source URL (if available)"
+        },
+        "sourceHash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SHA-256 hash of source code"
+        },
+        "files": {
+          "type": "array",
+          "description": "List of original files with hashes",
+          "items": {
+            "$ref": "#/definitions/FileRecord"
+          }
+        },
+        "detectedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Detection timestamp"
+        }
+      }
+    },
+    "analysis": {
+      "type": "object",
+      "description": "Analysis information",
+      "required": ["analysisId", "analysisAt", "escapeKitVersion", "config", "issues", "confidenceScore", "totalIssues", "issueBreakdown"],
+      "properties": {
+        "analysisId": {
+          "type": "string",
+          "description": "Analysis ID (same as escapeId)"
+        },
+        "analysisAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Analysis timestamp"
+        },
+        "escapeKitVersion": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "description": "EscapeKit version used for analysis"
+        },
+        "config": {
+          "$ref": "#/definitions/AnalysisConfig"
+        },
+        "issues": {
+          "type": "array",
+          "description": "Issues detected during analysis",
+          "items": {
+            "$ref": "#/definitions/DetectedIssue"
+          }
+        },
+        "confidenceScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confidence score (0-1)"
+        },
+        "totalIssues": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total issues count"
+        },
+        "issueBreakdown": {
+          "$ref": "#/definitions/IssueBreakdown"
+        }
+      }
+    },
+    "transformations": {
+      "type": "object",
+      "description": "Transformations applied",
+      "required": ["transformedAt", "applied", "totalTransformations", "breakdown"],
+      "properties": {
+        "transformedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Transformations timestamp"
+        },
+        "applied": {
+          "type": "array",
+          "description": "Transformations applied",
+          "items": {
+            "$ref": "#/definitions/AppliedTransformation"
+          }
+        },
+        "totalTransformations": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total transformations count"
+        },
+        "breakdown": {
+          "$ref": "#/definitions/TransformationBreakdown"
+        }
+      }
+    },
+    "validations": {
+      "type": "object",
+      "description": "Validation information",
+      "required": ["validations", "overallStatus", "totalValidations", "passedValidations", "failedValidations"],
+      "properties": {
+        "validations": {
+          "type": "array",
+          "description": "Validations performed",
+          "items": {
+            "$ref": "#/definitions/ValidationRecord"
+          }
+        },
+        "overallStatus": {
+          "type": "string",
+          "enum": ["pending", "in_progress", "passed", "failed", "partial"],
+          "description": "Overall validation status"
+        },
+        "totalValidations": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total validation count"
+        },
+        "passedValidations": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Passed validations count"
+        },
+        "failedValidations": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Failed validations count"
+        },
+        "kiwiTestRunId": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Kiwi TCMS test run ID (if uploaded)"
+        },
+        "testResults": {
+          "$ref": "#/definitions/TestResultsSummary"
+        }
+      }
+    },
+    "deployment": {
+      "type": "object",
+      "description": "Deployment information",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["not_deployed", "deployed", "failed"],
+          "description": "Deployment status"
+        },
+        "target": {
+          "type": "string",
+          "description": "Deployment target"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Deployment URL"
+        },
+        "deployedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Deployment timestamp"
+        },
+        "environment": {
+          "type": "string",
+          "enum": ["development", "staging", "production"],
+          "description": "Deployment environment"
+        },
+        "method": {
+          "type": "string",
+          "enum": ["manual", "railway", "vercel", "docker", "github_actions", "custom"],
+          "description": "Deployment method"
+        }
+      }
+    },
+    "sovereignty": {
+      "type": "object",
+      "description": "Chinese sovereignty information (自主创新)",
+      "required": ["compliant", "complianceScore", "checkedAt", "chineseMirrors", "offlineCache", "securityValidation", "auditLogging", "packageReplacements"],
+      "properties": {
+        "compliant": {
+          "type": "boolean",
+          "description": "Overall sovereignty compliance"
+        },
+        "complianceScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Compliance score (0-100)"
+        },
+        "checkedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Checked at timestamp"
+        },
+        "chineseMirrors": {
+          "type": "boolean",
+          "description": "Use of Chinese mirrors"
+        },
+        "offlineCache": {
+          "type": "boolean",
+          "description": "Offline cache used"
+        },
+        "securityValidation": {
+          "type": "boolean",
+          "description": "Security validation passed"
+        },
+        "auditLogging": {
+          "type": "boolean",
+          "description": "Audit logging enabled"
+        },
+        "packageReplacements": {
+          "type": "array",
+          "description": "Package replacements for sovereignty",
+          "items": {
+            "$ref": "#/definitions/PackageReplacement"
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata",
+      "properties": {
+        "projectName": {
+          "type": "string",
+          "description": "Project name"
+        },
+        "projectDescription": {
+          "type": "string",
+          "description": "Project description"
+        },
+        "projectVersion": {
+          "type": "string",
+          "description": "Project version"
+        },
+        "author": {
+          "type": "string",
+          "description": "Author name"
+        },
+        "organization": {
+          "type": "string",
+          "description": "Organization name"
+        },
+        "tags": {
+          "type": "array",
+          "description": "Tags for categorization",
+          "items": {
+            "type": "string"
+          }
+        },
+        "customFields": {
+          "type": "object",
+          "description": "Custom fields (extensible)",
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "definitions": {
+    "FileRecord": {
+      "type": "object",
+      "required": ["path", "hash", "size", "type"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "File path relative to project root"
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SHA-256 hash of file contents"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "File size in bytes"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["source", "config", "asset", "test", "doc"],
+          "description": "File type"
+        },
+        "language": {
+          "type": "string",
+          "description": "Language (for source files)"
+        }
+      }
+    },
+    "AnalysisConfig": {
+      "type": "object",
+      "required": ["targetPlatform", "targetRuntime", "strictness", "useChineseMirrors"],
+      "properties": {
+        "targetPlatform": {
+          "type": "string",
+          "description": "Target platform"
+        },
+        "targetRuntime": {
+          "type": "string",
+          "description": "Target runtime"
+        },
+        "strictness": {
+          "type": "string",
+          "enum": ["basic", "standard", "strict"],
+          "description": "Strictness level"
+        },
+        "useChineseMirrors": {
+          "type": "boolean",
+          "description": "Whether to use Chinese mirrors"
+        }
+      }
+    },
+    "DetectedIssue": {
+      "type": "object",
+      "required": ["type", "severity", "filePath", "line", "message", "fixed"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "GHOST_IMPORT",
+            "MOCK_API",
+            "SANDBOX_API",
+            "UNREALISTIC_ASSUMPTION",
+            "SECURITY_RISK",
+            "PERFORMANCE_ISSUE",
+            "CODE_QUALITY",
+            "MISSING_DEPENDENCY",
+            "VERSION_MISMATCH",
+            "WEBGL_FALLBACK_NEEDED"
+          ]
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["error", "warning", "info"]
+        },
+        "filePath": {
+          "type": "string",
+          "description": "File path where issue was found"
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Line number (0-indexed)"
+        },
+        "column": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Column number (0-indexed)"
+        },
+        "message": {
+          "type": "string",
+          "description": "Issue description"
+        },
+        "suggestion": {
+          "type": "string",
+          "description": "Suggested fix"
+        },
+        "packageName": {
+          "type": "string",
+          "description": "Package name (for import-related issues)"
+        },
+        "fixed": {
+          "type": "boolean",
+          "description": "Whether issue was fixed"
+        },
+        "fixMethod": {
+          "type": "string",
+          "enum": [
+            "REPLACED_WITH_REAL_PACKAGE",
+            "REPLACED_WITH_POLYFILL",
+            "REMOVED",
+            "COMMENTED_OUT",
+            "UPDATED_TO_COMPATIBLE_VERSION",
+            "ADDED_FALLBACK",
+            "CUSTOM_IMPLEMENTATION"
+          ]
+        }
+      }
+    },
+    "IssueBreakdown": {
+      "type": "object",
+      "required": [
+        "ghostImports",
+        "mockApis",
+        "sandboxApis",
+        "unrealisticAssumptions",
+        "securityRisks",
+        "performanceIssues",
+        "codeQuality",
+        "missingDependencies",
+        "versionMismatches",
+        "webglFallbacksNeeded"
+      ],
+      "properties": {
+        "ghostImports": { "type": "integer", "minimum": 0 },
+        "mockApis": { "type": "integer", "minimum": 0 },
+        "sandboxApis": { "type": "integer", "minimum": 0 },
+        "unrealisticAssumptions": { "type": "integer", "minimum": 0 },
+        "securityRisks": { "type": "integer", "minimum": 0 },
+        "performanceIssues": { "type": "integer", "minimum": 0 },
+        "codeQuality": { "type": "integer", "minimum": 0 },
+        "missingDependencies": { "type": "integer", "minimum": 0 },
+        "versionMismatches": { "type": "integer", "minimum": 0 },
+        "webglFallbacksNeeded": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "AppliedTransformation": {
+      "type": "object",
+      "required": ["type", "filePath", "reason", "timestamp"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "IMPORT_REPLACEMENT",
+            "API_REPLACEMENT",
+            "POLYFILL_ADDITION",
+            "FALLBACK_IMPLEMENTATION",
+            "VERSION_UPDATE",
+            "DEPENDENCY_ADDITION",
+            "CONFIG_GENERATION",
+            "CODE_REFACTORING"
+          ]
+        },
+        "filePath": {
+          "type": "string",
+          "description": "Target file"
+        },
+        "originalCode": {
+          "type": "string",
+          "description": "Original code (snippet)"
+        },
+        "transformedCode": {
+          "type": "string",
+          "description": "Transformed code (snippet)"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason for transformation"
+        },
+        "packageUsed": {
+          "type": "string",
+          "description": "Package or resource used"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Transformation timestamp"
+        }
+      }
+    },
+    "TransformationBreakdown": {
+      "type": "object",
+      "required": [
+        "importReplacements",
+        "apiReplacements",
+        "polyfillAdditions",
+        "fallbackImplementations",
+        "versionUpdates",
+        "dependencyAdditions",
+        "configGenerations",
+        "codeRefactorings"
+      ],
+      "properties": {
+        "importReplacements": { "type": "integer", "minimum": 0 },
+        "apiReplacements": { "type": "integer", "minimum": 0 },
+        "polyfillAdditions": { "type": "integer", "minimum": 0 },
+        "fallbackImplementations": { "type": "integer", "minimum": 0 },
+        "versionUpdates": { "type": "integer", "minimum": 0 },
+        "dependencyAdditions": { "type": "integer", "minimum": 0 },
+        "configGenerations": { "type": "integer", "minimum": 0 },
+        "codeRefactorings": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "ValidationRecord": {
+      "type": "object",
+      "required": ["type", "validatedAt", "environment", "status"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "BUILD",
+            "LINT",
+            "TYPE_CHECK",
+            "UNIT_TESTS",
+            "INTEGRATION_TESTS",
+            "E2E_TESTS",
+            "WEBGL_SUPPORT",
+            "PERFORMANCE_TEST",
+            "ACCESSIBILITY_CHECK",
+            "SECURITY_SCAN"
+          ]
+        },
+        "validatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Validation timestamp"
+        },
+        "environment": {
+          "type": "string",
+          "description": "Validation environment"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["passed", "failed", "skipped"]
+        },
+        "details": {
+          "type": "object",
+          "description": "Validation details"
+        },
+        "errorMessage": {
+          "type": "string",
+          "description": "Error message (if failed)"
+        },
+        "duration": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Duration in milliseconds"
+        }
+      }
+    },
+    "TestResultsSummary": {
+      "type": "object",
+      "required": ["total", "passed", "failed", "skipped", "passRate", "framework", "executedAt"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "passed": { "type": "integer", "minimum": 0 },
+        "failed": { "type": "integer", "minimum": 0 },
+        "skipped": { "type": "integer", "minimum": 0 },
+        "passRate": { "type": "number", "minimum": 0, "maximum": 100 },
+        "framework": { "type": "string" },
+        "executedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "PackageReplacement": {
+      "type": "object",
+      "required": ["original", "replacedWith", "reason", "source"],
+      "properties": {
+        "original": {
+          "type": "string",
+          "description": "Original package name"
+        },
+        "replacedWith": {
+          "type": "string",
+          "description": "Replaced with Chinese package"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason for replacement"
+        },
+        "source": {
+          "type": "string",
+          "description": "Replacement source (mirror, custom, etc.)"
+        }
+      }
+    }
+  }
+}

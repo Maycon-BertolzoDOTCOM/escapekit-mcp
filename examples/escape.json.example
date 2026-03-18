@@ -1,0 +1,230 @@
+{
+  "$schema": "https://raw.githubusercontent.com/escapekit/escapekit-mcp/main/schemas/escape-json-v1.schema.json",
+  "version": "1.0",
+  "escapeId": "analysis-1234567890-abc123def456",
+  "timestamp": "2026-03-18T07:30:00.000Z",
+  "provenance": {
+    "sandbox": "ai-studio",
+    "sourceUrl": "https://ai.google.dev/...",
+    "sourceHash": "a1b2c3d4e5f6789012345678901234567890abcdef123456789012345678901234",
+    "files": [
+      {
+        "path": "src/app.tsx",
+        "hash": "b2c3d4e5f6789012345678901234567890abcdef1234567890123456789012345",
+        "size": 2048,
+        "type": "source",
+        "language": "typescript"
+      },
+      {
+        "path": "package.json",
+        "hash": "c3d4e5f6789012345678901234567890abcdef12345678901234567890123456",
+        "size": 512,
+        "type": "config"
+      }
+    ],
+    "detectedAt": "2026-03-18T07:25:00.000Z"
+  },
+  "analysis": {
+    "analysisId": "analysis-1234567890-abc123def456",
+    "analysisAt": "2026-03-18T07:25:30.000Z",
+    "escapeKitVersion": "1.0.0",
+    "config": {
+      "targetPlatform": "nextjs",
+      "targetRuntime": "node",
+      "strictness": "standard",
+      "useChineseMirrors": false
+    },
+    "issues": [
+      {
+        "type": "GHOST_IMPORT",
+        "severity": "error",
+        "filePath": "src/app.tsx",
+        "line": 5,
+        "column": 10,
+        "message": "Ghost import: Package \"mockapi.io\" does not exist on npm",
+        "suggestion": "Replace with a real REST API or use fetch() with proper error handling",
+        "packageName": "mockapi.io",
+        "fixed": true,
+        "fixMethod": "REPLACED_WITH_POLYFILL"
+      },
+      {
+        "type": "MOCK_API",
+        "severity": "warning",
+        "filePath": "src/app.tsx",
+        "line": 15,
+        "column": 25,
+        "message": "Mock API detected: mockapi.io",
+        "suggestion": "Replace with real API endpoints or implement proper error handling for production",
+        "fixed": true,
+        "fixMethod": "CUSTOM_IMPLEMENTATION"
+      },
+      {
+        "type": "WEBGL_FALLBACK_NEEDED",
+        "severity": "info",
+        "filePath": "src/components/ThreeScene.tsx",
+        "line": 10,
+        "column": 0,
+        "message": "WebGL component detected but no fallback implementation found",
+        "suggestion": "Add a 2D fallback or error boundary for environments without WebGL support",
+        "fixed": true,
+        "fixMethod": "ADDED_FALLBACK"
+      }
+    ],
+    "confidenceScore": 0.75,
+    "totalIssues": 3,
+    "issueBreakdown": {
+      "ghostImports": 1,
+      "mockApis": 1,
+      "sandboxApis": 0,
+      "unrealisticAssumptions": 0,
+      "securityRisks": 0,
+      "performanceIssues": 0,
+      "codeQuality": 0,
+      "missingDependencies": 0,
+      "versionMismatches": 0,
+      "webglFallbacksNeeded": 1
+    }
+  },
+  "transformations": {
+    "transformedAt": "2026-03-18T07:26:00.000Z",
+    "applied": [
+      {
+        "type": "IMPORT_REPLACEMENT",
+        "filePath": "src/app.tsx",
+        "originalCode": "import { mockApi } from 'mockapi.io';",
+        "transformedCode": "// Mock API replaced with polyfill\nimport { createMockApi } from '../lib/mock-api-polyfill';\nconst mockApi = createMockApi();",
+        "reason": "Ghost import: mockapi.io does not exist on npm",
+        "packageUsed": "escapekit-mock-api-polyfill",
+        "timestamp": "2026-03-18T07:26:05.000Z"
+      },
+      {
+        "type": "FALLBACK_IMPLEMENTATION",
+        "filePath": "src/components/ThreeScene.tsx",
+        "originalCode": "export default function ThreeScene() {\n  return <Canvas>...</Canvas>;\n}",
+        "transformedCode": "export default function ThreeScene() {\n  if (!isWebGLAvailable()) {\n    return <FallbackComponent />;\n  }\n  return <Canvas>...</Canvas>;\n}",
+        "reason": "WebGL component needs fallback for environments without support",
+        "timestamp": "2026-03-18T07:26:10.000Z"
+      },
+      {
+        "type": "CONFIG_GENERATION",
+        "filePath": "package.json",
+        "reason": "Added dependencies for polyfills and fallbacks",
+        "packageUsed": "escapekit-mock-api-polyfill@1.0.0",
+        "timestamp": "2026-03-18T07:26:15.000Z"
+      }
+    ],
+    "totalTransformations": 3,
+    "breakdown": {
+      "importReplacements": 1,
+      "apiReplacements": 0,
+      "polyfillAdditions": 1,
+      "fallbackImplementations": 1,
+      "versionUpdates": 0,
+      "dependencyAdditions": 1,
+      "configGenerations": 1,
+      "codeRefactorings": 0
+    }
+  },
+  "validations": {
+    "validations": [
+      {
+        "type": "BUILD",
+        "validatedAt": "2026-03-18T07:27:00.000Z",
+        "environment": "local",
+        "status": "passed",
+        "duration": 15000,
+        "details": {
+          "buildTool": "npm",
+          "outputSize": "2.5MB"
+        }
+      },
+      {
+        "type": "TYPE_CHECK",
+        "validatedAt": "2026-03-18T07:27:30.000Z",
+        "environment": "local",
+        "status": "passed",
+        "duration": 8000
+      },
+      {
+        "type": "LINT",
+        "validatedAt": "2026-03-18T07:27:45.000Z",
+        "environment": "local",
+        "status": "passed",
+        "duration": 3000
+      },
+      {
+        "type": "UNIT_TESTS",
+        "validatedAt": "2026-03-18T07:28:00.000Z",
+        "environment": "local",
+        "status": "passed",
+        "duration": 12000,
+        "details": {
+          "framework": "vitest",
+          "testFiles": 25,
+          "testsRun": 150
+        }
+      },
+      {
+        "type": "WEBGL_SUPPORT",
+        "validatedAt": "2026-03-18T07:28:15.000Z",
+        "environment": "local",
+        "status": "passed",
+        "duration": 2000,
+        "details": {
+          "webglAvailable": true,
+          "fallbackTested": true
+        }
+      }
+    ],
+    "overallStatus": "passed",
+    "totalValidations": 5,
+    "passedValidations": 5,
+    "failedValidations": 0,
+    "kiwiTestRunId": 8,
+    "testResults": {
+      "total": 1168,
+      "passed": 1102,
+      "failed": 62,
+      "skipped": 4,
+      "passRate": 94.35,
+      "framework": "vitest",
+      "executedAt": "2026-03-18T07:00:00.000Z"
+    }
+  },
+  "deployment": {
+    "status": "deployed",
+    "target": "vercel",
+    "url": "https://my-app.vercel.app",
+    "deployedAt": "2026-03-18T07:30:00.000Z",
+    "environment": "production",
+    "method": "vercel"
+  },
+  "sovereignty": {
+    "compliant": false,
+    "complianceScore": 60,
+    "checkedAt": "2026-03-18T07:29:00.000Z",
+    "chineseMirrors": false,
+    "offlineCache": false,
+    "securityValidation": true,
+    "auditLogging": false,
+    "packageReplacements": []
+  },
+  "metadata": {
+    "projectName": "My AI-Generated App",
+    "projectDescription": "A web application generated in AI Studio, transformed for production by EscapeKit",
+    "projectVersion": "1.0.0",
+    "author": "AI Developer",
+    "organization": "Example Corp",
+    "tags": [
+      "ai-generated",
+      "nextjs",
+      "webgl",
+      "escapekit-transformed"
+    ],
+    "customFields": {
+      "originalPrompt": "Create a 3D web application with Three.js",
+      "aiModel": "gemini-2.0-flash-exp",
+      "transformationTime": "2m30s"
+    }
+  }
+}

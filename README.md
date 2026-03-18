@@ -9,6 +9,8 @@
 [![CI/CD](https://github.com/escapekit/escapekit-mcp/workflows/CI/badge.svg)](https://github.com/escapekit/escapekit-mcp/actions)
 [![codecov](https://codecov.io/gh/escapekit/escapekit-mcp/branch/main/graph/badge.svg)](https://codecov.io/gh/escapekit/escapekit-mcp)
 
+> **✅ Kiwi TCMS Integrated** - 1,168 tests uploaded with 100% success rate (TestRun ID: 8)
+
 
 ## 🚀 Quick Deploy to Railway
 

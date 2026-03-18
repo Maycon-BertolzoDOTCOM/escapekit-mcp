@@ -9,20 +9,17 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { CodeAnalyzer } from '../../src/analyzers/CodeAnalyzer.js';
 
 // ── Mock NPMRegistry ──────────────────────────────────────────────────────────
-const { knownPackages } = vi.hoisted(() => ({
+const { knownPackages, MockNPMRegistry } = vi.hoisted(() => ({
   knownPackages: new Set(['react', 'react-dom', 'axios', 'lodash', 'express']),
-}));
-
-vi.mock('../../src/services/NPMRegistry.js', () => ({
-  NPMRegistry: vi.fn().mockImplementation(() => ({
-    packageExists: vi.fn().mockImplementation(async (name: string) =>
+  MockNPMRegistry: class {
+    packageExists = vi.fn().mockImplementation(async (name: string) =>
       knownPackages.has(name)
-    ),
-    getLatestVersion: vi.fn().mockImplementation(async (name: string) =>
+    );
+    getLatestVersion = vi.fn().mockImplementation(async (name: string) =>
       knownPackages.has(name) ? '^1.0.0' : 'unknown'
-    ),
-    isNodeBuiltin: vi.fn().mockReturnValue(false),
-    checkPackages: vi.fn().mockImplementation(async (names: string[]) => {
+    );
+    isNodeBuiltin = vi.fn().mockReturnValue(false);
+    checkPackages = vi.fn().mockImplementation(async (names: string[]) => {
       const result = new Map<string, { name: string; version: string; exists: boolean; status: string }>();
       for (const name of names) {
         result.set(name, {
@@ -33,10 +30,14 @@ vi.mock('../../src/services/NPMRegistry.js', () => ({
         });
       }
       return result;
-    }),
-    clearCache: vi.fn(),
-    getCacheStats: vi.fn().mockReturnValue({ size: 0, entries: [] }),
-  })),
+    });
+    clearCache = vi.fn();
+    getCacheStats = vi.fn().mockReturnValue({ size: 0, entries: [] });
+  }
+}));
+
+vi.mock('../../src/services/NPMRegistry.js', () => ({
+  NPMRegistry: MockNPMRegistry,
 }));
 
 describe('CodeAnalyzer Integration (mocked)', () => {
