@@ -4,7 +4,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
-    reporter: ['text', 'json', 'html'],
+    reporter: ['json', 'verbose'],
     outputFile: {
       json: 'vitest-results.json',
     },
