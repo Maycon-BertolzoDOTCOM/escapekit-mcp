@@ -2,7 +2,7 @@ name: Upload Test Results to Kiwi TCMS
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, phase3-ci-cd-test ]
   pull_request:
     branches: [ main, develop ]
   workflow_dispatch:
@@ -77,7 +77,7 @@ jobs:
       - name: Upload to Kiwi TCMS summary
         if: always()
         run: |
-          echo "## 📊 Test Results Upload Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## ?? Test Results Upload Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- **Run ID**: ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Run Number**: ${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
