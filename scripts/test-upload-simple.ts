@@ -1,4 +1,15 @@
-import { KiwiXmlRpcClient, KiwiConfig } from '../src/lib/kiwi-xmlrpc-http-client.ts';
+import { KiwiXmlRpcClient } from '../src/lib/kiwi-xmlrpc-client.cjs';
+
+interface KiwiConfig {
+  baseUrl: string;
+  username: string;
+  password: string;
+  defaultProduct?: string;
+  defaultPlanId?: number;
+  testRunTemplate?: string;
+  timeout?: number;
+  retries?: number;
+}
 
 const config: KiwiConfig = {
   baseUrl: 'https://localhost:8443',
@@ -13,21 +24,21 @@ const config: KiwiConfig = {
 
 async function main() {
   console.log('Starting simple upload test...');
-  
+
   const client = new KiwiXmlRpcClient(config);
-  
+
   // Get product
   const product = await client.findProductByName('EscapeKit');
   console.log('Product:', product);
-  
+
   // Get builds
   const builds = await client.listBuilds(product.id);
   console.log('Builds:', builds.length);
-  
+
   // Get current user
   const user = await client.getCurrentUser();
   console.log('Current user:', user);
-  
+
   // Create TestRun
   const testRun = await client.createTestRun({
     build: builds[0].id,
@@ -36,12 +47,12 @@ async function main() {
     manager: user.id,
   });
   console.log('TestRun created:', testRun);
-  
+
   // Find test case
   const testCase = await client.findTestCaseByName('Sample Test Case');
   if (testCase) {
     console.log('Found test case:', testCase.id);
-    
+
     // Add test execution
     const execution = await client.addTestExecution({
       case: testCase.id,
@@ -51,7 +62,7 @@ async function main() {
     });
     console.log('Test execution added:', execution);
   }
-  
+
   console.log('Test complete!');
 }
 

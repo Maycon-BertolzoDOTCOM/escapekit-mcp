@@ -1,7 +1,7 @@
 import axios from 'axios';
 import xml2js from 'xml2js';
-import https from 'https';
 import { logger } from '../logger';
+import * as toughCookie from 'tough-cookie';
 
 export interface KiwiConfig {
   baseUrl: string;
@@ -62,19 +62,23 @@ export class KiwiXmlRpcClient {
   constructor(config: KiwiConfig) {
     this.config = config;
     this.baseUrl = config.baseUrl.replace(/\/$/, '');
-    
+
+    // Create cookie jar
+    const cookieJar = new toughCookie.CookieJar();
+
     // Create axios instance
     this.axiosClient = axios.create({
       baseURL: `${this.baseUrl}/xml-rpc/`,
       timeout: config.timeout || 30000,
+      withCredentials: true,
       headers: {
         'Content-Type': 'text/xml',
-        'Accept': 'text/xml'
+        Accept: 'text/xml',
       },
-      httpsAgent: new https.Agent({
-        rejectUnauthorized: false
-      })
     });
+
+    // Store cookie jar reference for later use
+    (this.axiosClient as any).cookieJar = cookieJar;
   }
 
   /**
@@ -91,16 +95,23 @@ export class KiwiXmlRpcClient {
 
     try {
       const response = await this.axiosClient.post('', loginXml);
-      
-      // Parse XML response
+
+      // Try to extract session from Set-Cookie header first
+      const setCookie = response.headers['set-cookie'];
+      if (setCookie && Array.isArray(setCookie)) {
+        const sessionCookie = setCookie.find((c: string) => c.startsWith('sessionid='));
+        if (sessionCookie) {
+          this.sessionCookie = sessionCookie.split(';')[0]; // Get just the cookie name=value
+          logger.info('Successfully authenticated with Kiwi TCMS (via cookie)');
+          return;
+        }
+      }
+
+      // Fallback: extract from XML response
       const parser = new xml2js.Parser({ explicitArray: false });
       const parsedResponse = await parser.parseStringPromise(response.data);
-      
-      // Extract session token
       const params = parsedResponse?.methodResponse?.params?.param;
       if (params && params.value && params.value.string) {
-        // Note: Kiwi TCMS returns a session token in the response
-        // We don't need to store a cookie, just the token
         this.sessionCookie = `sessionid=${params.value.string}`;
         logger.info('Successfully authenticated with Kiwi TCMS');
       } else {
@@ -127,29 +138,25 @@ export class KiwiXmlRpcClient {
         }
 
         const xmlRequest = this.buildXmlRpcRequest(methodName, params);
-        
+
         // Debug: log the XML request
         if (attempt === 1) {
           console.log('XML-RPC Request:');
           console.log(xmlRequest);
         }
-        
-        const response = await this.axiosClient.post('', xmlRequest, {
-          headers: {
-            'Cookie': this.sessionCookie
-          }
-        });
-        
+
+        const response = await this.axiosClient.post('', xmlRequest);
+
         // Debug: log the XML response
         if (attempt === 1) {
           console.log('XML-RPC Response Status:', response.status);
           console.log('XML-RPC Response Data:', response.data);
         }
-        
+
         // Parse XML response
         const parser = new xml2js.Parser({ explicitArray: false });
         const parsedResponse = await parser.parseStringPromise(response.data);
-        
+
         // Check for XML-RPC fault
         const fault = this.extractFault(parsedResponse);
         if (fault) {
@@ -160,15 +167,15 @@ export class KiwiXmlRpcClient {
         return this.extractResponse(parsedResponse);
       } catch (error: any) {
         lastError = error;
-        logger.warn(`XML-RPC call failed (attempt ${attempt}/${maxRetries}): ${methodName}`, { 
-          error: error.message 
+        logger.warn(`XML-RPC call failed (attempt ${attempt}/${maxRetries}): ${methodName}`, {
+          error: error.message,
         });
-        
+
         // If authentication fails, try to login again
         if (error.message && error.message.includes('Authentication failed')) {
           this.sessionCookie = null;
         }
-        
+
         if (attempt < maxRetries) {
           await this.sleep(Math.pow(2, attempt) * 1000);
         }
@@ -184,7 +191,7 @@ export class KiwiXmlRpcClient {
   private buildXmlRpcRequest(methodName: string, params: any[]): string {
     // Each parameter must be wrapped in <param> tags
     const paramsXml = params.map(param => `<param>${this.buildParam(param)}</param>`).join('');
-    
+
     return `<methodCall>
   <methodName>${methodName}</methodName>
   <params>${paramsXml}</params>
@@ -198,35 +205,37 @@ export class KiwiXmlRpcClient {
     if (param === null || param === undefined) {
       return '<value><nil/></value>';
     }
-    
+
     const type = typeof param;
-    
+
     if (type === 'string') {
       return `<value><string>${this.escapeXml(param)}</string></value>`;
     }
-    
+
     if (type === 'number') {
-      return Number.isInteger(param) 
+      return Number.isInteger(param)
         ? `<value><int>${param}</int></value>`
         : `<value><double>${param}</double></value>`;
     }
-    
+
     if (type === 'boolean') {
       return `<value><boolean>${param ? 1 : 0}</boolean></value>`;
     }
-    
+
     if (type === 'object') {
       if (Array.isArray(param)) {
         const arrayData = param.map(p => this.buildParam(p)).join('');
         return `<value><array><data>${arrayData}</data></array></value>`;
       } else {
-        const structData = Object.keys(param).map(key => {
-          return `<member><name>${key}</name>${this.buildParam(param[key])}</member>`;
-        }).join('');
+        const structData = Object.keys(param)
+          .map(key => {
+            return `<member><name>${key}</name>${this.buildParam(param[key])}</member>`;
+          })
+          .join('');
         return `<value><struct>${structData}</struct></value>`;
       }
     }
-    
+
     return `<value><string>${this.escapeXml(String(param))}</string></value>`;
   }
 
@@ -250,7 +259,8 @@ export class KiwiXmlRpcClient {
       const fault = parsed.methodResponse.fault;
       return {
         faultCode: fault.value.struct.member.find((m: any) => m.name === 'faultCode').value.int,
-        faultString: fault.value.struct.member.find((m: any) => m.name === 'faultString').value.string
+        faultString: fault.value.struct.member.find((m: any) => m.name === 'faultString').value
+          .string,
       };
     }
     return null;
@@ -264,7 +274,7 @@ export class KiwiXmlRpcClient {
     if (!params) {
       return null;
     }
-    
+
     const value = params.value;
     return this.parseValue(value);
   }
@@ -274,7 +284,7 @@ export class KiwiXmlRpcClient {
    */
   private parseValue(value: any): any {
     if (!value) return null;
-    
+
     if (value.string !== undefined) return value.string;
     if (value.int !== undefined) return parseInt(value.int);
     if (value.double !== undefined) return parseFloat(value.double);
@@ -287,8 +297,8 @@ export class KiwiXmlRpcClient {
       return values.map(v => this.parseValue(v));
     }
     if (value.struct !== undefined) {
-      const members = Array.isArray(value.struct.member) 
-        ? value.struct.member 
+      const members = Array.isArray(value.struct.member)
+        ? value.struct.member
         : [value.struct.member];
       const result: any = {};
       members.forEach((m: any) => {
@@ -296,7 +306,7 @@ export class KiwiXmlRpcClient {
       });
       return result;
     }
-    
+
     return value;
   }
 
@@ -448,7 +458,7 @@ export class KiwiXmlRpcClient {
         category: 1,
         summary: options.name,
         case_status: 1, // CONFIRMED status
-        priority: 1 // P1 priority
+        priority: 1, // P1 priority
       };
       return await this.methodCall('TestCase.create', [{ ...defaults, ...options }]);
     } catch (error: any) {
@@ -494,15 +504,21 @@ export class KiwiXmlRpcClient {
   /**
    * Update test execution
    */
-  async updateTestExecution(executionId: number, options: {
-    status?: number;
-    comment?: string;
-    tested_by?: number;
-  }): Promise<any> {
+  async updateTestExecution(
+    executionId: number,
+    options: {
+      status?: number;
+      comment?: string;
+      tested_by?: number;
+    }
+  ): Promise<any> {
     try {
       return await this.methodCall('TestExecution.update', [executionId, options]);
     } catch (error: any) {
-      logger.error(`Failed to update test execution ${executionId}`, { error: error.message, options });
+      logger.error(`Failed to update test execution ${executionId}`, {
+        error: error.message,
+        options,
+      });
       throw error;
     }
   }
@@ -518,6 +534,26 @@ export class KiwiXmlRpcClient {
       logger.error(`Failed to list test executions for run ${testRunId}`, { error: error.message });
       throw error;
     }
+  }
+
+  /**
+   * Find test run by ID
+   */
+  async findTestRunById(runId: number): Promise<any | null> {
+    try {
+      const runs = await this.methodCall('TestRun.filter', [{ id: runId }]);
+      return Array.isArray(runs) && runs.length > 0 ? runs[0] : null;
+    } catch (error: any) {
+      logger.error(`Failed to find test run ${runId}`, { error: error.message });
+      throw error;
+    }
+  }
+
+  /**
+   * Generic method call - exposes methodCall for external use
+   */
+  async callMethod(methodName: string, params: any[] = []): Promise<any> {
+    return await this.methodCall(methodName, params);
   }
 }
 

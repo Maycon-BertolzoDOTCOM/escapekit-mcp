@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node
 
 import { join } from 'path';
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { TestResult } from '../src/adapters/index';
 import { loadTestResults } from './load-test-results';
 import { KiwiXmlRpcClient } from '../src/lib/kiwi-xmlrpc-client.cjs';
@@ -42,6 +42,12 @@ class KiwiTCMSUploader {
   private client: KiwiXmlRpcClient;
   private config: KiwiConfig;
   private statusMap: Record<string, number> = {};
+  private failedTests: Array<{
+    summary: string;
+    outcome: string;
+    error: string;
+    timestamp: string;
+  }> = [];
 
   constructor(
     config: KiwiConfig,
@@ -49,6 +55,28 @@ class KiwiTCMSUploader {
   ) {
     this.config = config;
     this.client = new KiwiXmlRpcClient(config);
+  }
+
+  private normalizeTestName(name: string): string {
+    return name.trim().replace(/\s+/g, ' ');
+  }
+
+  private async saveFailuresLog(): Promise<void> {
+    if (this.failedTests.length === 0) return;
+
+    const logDir = join(process.cwd(), 'logs');
+    if (!existsSync(logDir)) {
+      mkdirSync(logDir, { recursive: true });
+    }
+
+    const timestamp = new Date().toISOString().split('T')[0];
+    const logFile = join(logDir, `kiwi-failures-${timestamp}.json`);
+
+    const existingData = existsSync(logFile) ? JSON.parse(readFileSync(logFile, 'utf-8')) : [];
+    const updatedData = [...existingData, ...this.failedTests];
+
+    writeFileSync(logFile, JSON.stringify(updatedData, null, 2));
+    console.log(`✓ Failures logged to ${logFile}`);
   }
 
   /**
@@ -152,42 +180,41 @@ class KiwiTCMSUploader {
   }
 
   /**
-   * Buscar ou criar TestCase
+   * Buscar ou criar TestCase com normalização
    */
   async getOrCreateTestCase(testName: string, productId: number): Promise<number> {
-    const existing = await this.client.findTestCaseByName(testName);
+    const normalizedName = this.normalizeTestName(testName);
+
+    const existing = await this.client.findTestCaseByName(normalizedName);
     if (existing) {
       return existing.id;
     }
 
-    if (this.config.verbose) {
-      console.log(`  Creating new test case: ${testName}`);
+    const searchVariants = [normalizedName, testName.trim(), testName.replace(/\s+/g, ' ')];
+
+    for (const variant of searchVariants) {
+      const found = await this.client.findTestCaseByName(variant);
+      if (found) {
+        return found.id;
+      }
     }
-    return new Promise<number>((resolve, reject) => {
-      const xmlrpcClient = (this.client as any).client;
-      xmlrpcClient.methodCall(
-        'TestCase.create',
-        [
-          {
-            name: testName,
-            product: productId,
-            category: 1,
-          },
-        ],
-        (err: any, result: any) => {
-          if (err) {
-            console.error(`  ✗ Failed to create test case ${testName}:`, err);
-            reject(err);
-            return;
-          }
-          resolve(result.id);
-        }
-      );
-    });
+
+    if (this.config.verbose) {
+      console.log(`  Creating new test case: ${normalizedName}`);
+    }
+    return this.client
+      .callWithRetry('TestCase.create', [
+        {
+          name: normalizedName,
+          product: productId,
+          category: 1,
+        },
+      ])
+      .then((result: any) => result.id);
   }
 
   /**
-   * Upload resultado de teste
+   * Upload resultado de teste com retry
    */
   async uploadTestResult(
     testResult: TestResult,
@@ -199,27 +226,41 @@ class KiwiTCMSUploader {
       const caseId = await this.getOrCreateTestCase(testResult.testCase, productId);
       const statusId = this.statusMap[testResult.outcome] || this.statusMap['skipped'];
 
-      await this.client.addTestExecution({
+      await this.client.callWithRetry('TestExecution.create', [{
         case: caseId,
         run: testRunId,
         build: buildId,
         status: statusId,
         case_text_version: 1,
         comment: testResult.error || testResult.failureMessage || '',
-      });
+      }]);
 
       if (this.config.verbose) {
         console.log(`  ✓ Uploaded: ${testResult.testCase} (${testResult.outcome})`);
       }
     } catch (error: any) {
       console.error(`  ✗ Failed to upload ${testResult.testCase}:`, error.message);
+      
+      if (testResult.outcome === 'failed') {
+        this.failedTests.push({
+          summary: testResult.testCase,
+          outcome: testResult.outcome,
+          error: error.message,
+          timestamp: new Date().toISOString(),
+        });
+      }
+      
       throw error;
     }
   }
 
   /**
-   * Upload resultados em lote
+   * Upload resultados em lote com processamento paralelo
+   * Usa Promise.all em chunks para evitar sobrecarga do servidor
    */
+  private readonly BATCH_SIZE = 20;
+  private readonly BATCH_DELAY_MS = 500;
+
   async uploadTestResults(
     testResults: TestResult[],
     testRunId: number,
@@ -228,26 +269,69 @@ class KiwiTCMSUploader {
   ): Promise<void> {
     let successCount = 0;
     let failCount = 0;
+    const totalBatches = Math.ceil(testResults.length / this.BATCH_SIZE);
 
-    console.log(`\nUploading ${testResults.length} test results...`);
+    console.log(`\n📤 Uploading ${testResults.length} test results in ${totalBatches} batches (${this.BATCH_SIZE} per batch)...`);
 
-    for (let i = 0; i < testResults.length; i++) {
-      const result = testResults[i];
+    for (let batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
+      const start = batchIndex * this.BATCH_SIZE;
+      const end = Math.min(start + this.BATCH_SIZE, testResults.length);
+      const batch = testResults.slice(start, end);
+
       try {
-        await this.uploadTestResult(result, testRunId, productId, buildId);
-        successCount++;
+        const results = await Promise.allSettled(
+          batch.map(result => 
+            this.uploadTestResult(result, testRunId, productId, buildId)
+              .then(() => ({ success: true, name: result.testCase }))
+              .catch(error => ({ success: false, name: result.testCase, error }))
+          )
+        );
 
-        if (i % 50 === 0) {
-          console.log(
-            `  Progress: ${i}/${testResults.length} (${((i / testResults.length) * 100).toFixed(1)}%)`
-          );
+        results.forEach(r => {
+          if (r.status === 'fulfilled' && r.value.success) {
+            successCount++;
+          } else {
+            failCount++;
+            const name = r.status === 'fulfilled' ? r.value.name : 'unknown';
+            console.log(`  ⚠️  Failed: ${name}`);
+          }
+        });
+
+        const progress = ((end / testResults.length) * 100).toFixed(1);
+        console.log(`  Progress: ${end}/${testResults.length} (${progress}%) - Batch ${batchIndex + 1}/${totalBatches}`);
+
+        if (batchIndex < totalBatches - 1) {
+          await new Promise(resolve => setTimeout(resolve, this.BATCH_DELAY_MS));
         }
+
       } catch (error) {
-        failCount++;
+        console.error(`  ❌ Batch ${batchIndex + 1} failed:`, error);
+        failCount += batch.length;
       }
     }
 
-    console.log(`\n✓ Upload complete: ${successCount} successful, ${failCount} failed`);
+    await this.saveFailuresLog();
+
+    console.log(`\n✅ Upload complete: ${successCount} successful, ${failCount} failed`);
+  }
+        });
+
+        const progress = ((end / testResults.length) * 100).toFixed(1);
+        console.log(
+          `  Progress: ${end}/${testResults.length} (${progress}%) - Batch ${batchIndex + 1}/${totalBatches}`
+        );
+
+        // Delay entre batches para evitar sobrecarga
+        if (batchIndex < totalBatches - 1) {
+          await new Promise(resolve => setTimeout(resolve, this.BATCH_DELAY_MS));
+        }
+      } catch (error) {
+        console.error(`  ❌ Batch ${batchIndex + 1} failed:`, error);
+        failCount += batch.length;
+      }
+    }
+
+    console.log(`\n✅ Upload complete: ${successCount} successful, ${failCount} failed`);
   }
 }
 

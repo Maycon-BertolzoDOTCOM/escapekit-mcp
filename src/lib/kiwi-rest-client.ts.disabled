@@ -1,0 +1,256 @@
+/**
+ * Kiwi TCMS REST API Client
+ * 
+ * Alternativa moderna ao XML-RPC para comunicação com Kiwi TCMS.
+ * Oferece melhor performance, type safety e easier debugging.
+ * 
+ * API Reference: https://kiwitcms.readthedocs.io/en/latest/api.html
+ */
+
+import axios, { AxiosInstance } from 'axios';
+import { logger } from '../logger.js';
+
+export interface KiwiRestConfig {
+  baseUrl: string;
+  username: string;
+  password: string;
+  timeout?: number;
+}
+
+export interface KiwiProduct {
+  id: number;
+  name: string;
+  description: string;
+}
+
+export interface KiwiTestPlan {
+  id: number;
+  name: string;
+  product: number;
+}
+
+export interface KiwiTestRun {
+  id: number;
+  summary: string;
+  plan: number;
+  build: number;
+}
+
+export interface KiwiTestCase {
+  id: number;
+  name: string;
+  summary: string;
+  category: number;
+}
+
+export interface KiwiTestExecution {
+  id: number;
+  test_case: number;
+  test_run: number;
+  status: number;
+}
+
+export interface KiwiBuild {
+  id: number;
+  name: string;
+  product: number;
+  version: string;
+}
+
+export interface KiwiStatus {
+  id: number;
+  name: string;
+}
+
+export class KiwiRestClient {
+  private client: AxiosInstance;
+  private token: string | null = null;
+
+  constructor(private config: KiwiRestConfig) {
+    this.client = axios.create({
+      baseURL: config.baseUrl,
+      timeout: config.timeout || 30000,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
+  /**
+   * Authenticate using Django REST Framework token authentication
+   */
+  async authenticate(): Promise<boolean> {
+    try {
+      const response = await this.client.post('/api/auth/login/', {
+        username: this.config.username,
+        password: this.config.password,
+      });
+
+      // Kiwi TCMS returns token in response.data.token
+      this.token = response.data.token || response.data.key;
+      
+      if (this.token) {
+        // Set default authorization header
+        this.client.defaults.headers.common['Authorization'] = `Token ${this.token}`;
+        logger.info('Kiwi TCMS REST: Authenticated successfully');
+        return true;
+      }
+
+      logger.warn('Kiwi TCMS REST: No token in response');
+      return false;
+    } catch (error) {
+      logger.error('Kiwi TCMS REST: Authentication failed', { 
+        error: error instanceof Error ? error.message : String(error) 
+      });
+      return false;
+    }
+  }
+
+  /**
+   * Get all products
+   */
+  async listProducts(): Promise<KiwiProduct[]> {
+    const response = await this.client.get('/api/product/');
+    return response.data.results || response.data;
+  }
+
+  /**
+   * Find product by name
+   */
+  async findProductByName(name: string): Promise<KiwiProduct | null> {
+    const response = await this.client.get('/api/product/', {
+      params: { name },
+    });
+    const results = response.data.results || response.data;
+    return results.length > 0 ? results[0] : null;
+  }
+
+  /**
+   * Get test plan by ID
+   */
+  async getTestPlan(planId: number): Promise<KiwiTestPlan> {
+    const response = await this.client.get(`/api/testplan/${planId}/`);
+    return response.data;
+  }
+
+  /**
+   * List test plans for a product
+   */
+  async listTestPlans(productId: number): Promise<KiwiTestPlan[]> {
+    const response = await this.client.get('/api/testplan/', {
+      params: { product: productId },
+    });
+    return response.data.results || response.data;
+  }
+
+  /**
+   * Create a new test run
+   */
+  async createTestRun(data: {
+    name: string;
+    plan: number;
+    build: number;
+    manager?: number;
+  }): Promise<number> {
+    const response = await this.client.post('/api/testrun/', data);
+    return response.data.id;
+  }
+
+  /**
+   * Get test execution status options
+   */
+  async getTestExecutionStatuses(): Promise<KiwiStatus[]> {
+    const response = await this.client.get('/api/testexecutionstatus/');
+    return response.data.results || response.data;
+  }
+
+  /**
+   * Find status by name (e.g., 'PASSED', 'FAILED')
+   */
+  async findStatusByName(name: string): Promise<KiwiStatus | null> {
+    const statuses = await this.getTestExecutionStatuses();
+    return statuses.find(s => s.name.toUpperCase() === name.toUpperCase()) || null;
+  }
+
+  /**
+   * List builds for a product
+   */
+  async listBuilds(productId: number): Promise<KiwiBuild[]> {
+    const response = await this.client.get('/api/build/', {
+      params: { product: productId },
+    });
+    return response.data.results || response.data;
+  }
+
+  /**
+   * Create a new build
+   */
+  async createBuild(data: {
+    name: string;
+    product: number;
+    version?: string;
+  }): Promise<number> {
+    const response = await this.client.post('/api/build/', data);
+    return response.data.id;
+  }
+
+  /**
+   * Find test case by name/summary
+   */
+  async findTestCaseByName(summary: string): Promise<KiwiTestCase | null> {
+    const response = await this.client.get('/api/testcase/', {
+      params: { summary },
+    });
+    const results = response.data.results || response.data;
+    return results.length > 0 ? results[0] : null;
+  }
+
+  /**
+   * Create a new test case
+   */
+  async createTestCase(data: {
+    name: string;
+    summary: string;
+    product: number;
+    category: number;
+  }): Promise<number> {
+    const response = await this.client.post('/api/testcase/', data);
+    return response.data.id;
+  }
+
+  /**
+   * Add test execution (result)
+   */
+  async addTestExecution(data: {
+    test_case: number;
+    test_run: number;
+    status: number;
+    build: number;
+    case_text_version?: number;
+    comment?: string;
+  }): Promise<number> {
+    const response = await this.client.post('/api/testexecution/', data);
+    return response.data.id;
+  }
+
+  /**
+   * Batch create test executions (more efficient)
+   */
+  async addTestExecutionsBatch(executions: Array<{
+    test_case: number;
+    test_run: number;
+    status: number;
+    build: number;
+    comment?: string;
+  }>): Promise<number[]> {
+    const results = await Promise.all(
+      executions.map(exec => this.addTestExecution({
+        ...exec,
+        case_text_version: 1,
+      }))
+    );
+    return results;
+  }
+}
+
+export default KiwiRestClient;

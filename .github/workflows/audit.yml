@@ -1,0 +1,244 @@
+name: Audit Report
+
+on:
+  pull_request:
+    branches: [main, develop]
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      format:
+        description: 'Report format'
+        required: true
+        default: 'html'
+        type: choice
+        options:
+          - html
+          - markdown
+          - terminal
+          - json
+      include_kiwi_details:
+        description: 'Include Kiwi TCMS details'
+        required: false
+        type: boolean
+        default: false
+      with_charts:
+        description: 'Include charts (HTML only)'
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  # PR Audit - automático
+  audit-pr:
+    name: Audit Report on PR
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Check for escape.json
+        id: check-escape
+        run: |
+          if [ -f "escape.json" ]; then
+            echo "found=true" >> $GITHUB_OUTPUT
+            echo "✅ escape.json found in repository"
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+            echo "⚠️ No escape.json found in repository"
+          fi
+
+      - name: Generate Markdown audit report
+        if: steps.check-escape.outputs.found == 'true'
+        run: |
+          node dist/cli/index.js audit --format markdown --output /tmp/audit-report.md
+
+      - name: Generate HTML audit report
+        if: steps.check-escape.outputs.found == 'true'
+        run: |
+          node dist/cli/index.js audit --format html --with-charts --output /tmp/audit-report.html
+          echo "HTML report uploaded as artifact"
+
+      - name: Upload audit report artifacts
+        if: steps.check-escape.outputs.found == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-report-${{ github.event.pull_request.number }}
+          path: |
+            /tmp/audit-report.md
+            /tmp/audit-report.html
+          retention-days: 30
+
+      - name: Comment PR with audit report
+        if: steps.check-escape.outputs.found == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            
+            let reportContent = '';
+            try {
+              reportContent = fs.readFileSync('/tmp/audit-report.md', 'utf8');
+            } catch (error) {
+              reportContent = 'Error reading audit report';
+            }
+            
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const botComment = comments.data.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('📊 EscapeKit Audit Report')
+            );
+            
+            const commentBody = `## 📊 EscapeKit Audit Report
+            
+            <details>
+            <summary>Click to expand full report</summary>
+            
+            ${reportContent}
+            
+            </details>
+            
+            ---
+            
+            *This report was generated automatically by [EscapeKit](https://github.com/escapekit/escapekit-mcp)*
+            *📥 Download full reports: [Workflow Artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})*`;
+            
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: commentBody,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: commentBody,
+              });
+            }
+
+      - name: Comment PR - No escape.json
+        if: steps.check-escape.outputs.found == 'false'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const commentBody = `## ⚠️ No escape.json Found
+            
+            This repository does not have an \`escape.json\` file at the root.
+            
+            ### What is escape.json?
+            
+            \`escape.json\` is the "digital birth certificate" for projects analyzed by EscapeKit.
+            
+            ### How to create one?
+            
+            Run: \`\`\`bash
+            npx escapekit-mcp analyze
+            \`\`\`
+            
+            ---
+            
+            *Learn more at [EscapeKit Documentation](https://github.com/escapekit/escapekit-mcp)*`;
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: commentBody,
+            });
+
+  # Manual Audit - dispara manualmente
+  audit-manual:
+    name: Manual Audit Report
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Check for escape.json
+        id: check-escape
+        run: |
+          if [ -f "escape.json" ]; then
+            echo "found=true" >> $GITHUB_OUTPUT
+            echo "✅ escape.json found in repository"
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+            echo "❌ No escape.json found in repository"
+            exit 1
+          fi
+
+      - name: Build command arguments
+        id: build-args
+        run: |
+          ARGS="--format ${{ github.event.inputs.format }}"
+          
+          if [ "${{ github.event.inputs.include_kiwi_details }}" = "true" ]; then
+            ARGS="$ARGS --include-kiwi-details"
+          fi
+          
+          if [ "${{ github.event.inputs.format }}" = "html" ] && [ "${{ github.event.inputs.with_charts }}" = "true" ]; then
+            ARGS="$ARGS --with-charts"
+          fi
+          
+          echo "args=$ARGS" >> $GITHUB_OUTPUT
+
+      - name: Generate audit report
+        run: |
+          node dist/cli/index.js audit ${{ steps.build-args.outputs.args }} --output /tmp/audit-report.${{ github.event.inputs.format }}
+
+      - name: Upload audit report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-report-${{ github.run_id }}
+          path: /tmp/audit-report.${{ github.event.inputs.format }}
+          retention-days: 90
+
+      - name: Generate summary
+        run: |
+          echo "## 📊 Audit Report Generated" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Format:** ${{ github.event.inputs.format }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Kiwi Details:** ${{ github.event.inputs.include_kiwi_details }}" >> $GITHUB_STEP_SUMMARY

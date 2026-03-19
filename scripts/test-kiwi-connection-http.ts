@@ -1,6 +1,14 @@
 #!/usr/bin/env tsx
 
-import { KiwiXmlRpcClient, KiwiConfig } from '../src/lib/kiwi-xmlrpc-http-client.ts';
+import { KiwiXmlRpcClient } from '../src/lib/kiwi-xmlrpc-client.cjs';
+
+interface KiwiConfig {
+  baseUrl: string;
+  username: string;
+  password: string;
+  timeout?: number;
+  retries?: number;
+}
 
 async function testConnection() {
   console.log('Testing Kiwi TCMS XML-RPC connection (HTTP client)...\n');

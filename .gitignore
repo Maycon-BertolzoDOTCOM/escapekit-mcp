@@ -41,4 +41,4 @@ escape_output/
 *.escape-kit/
 
 # Paper to Contract logs (keep YAML contracts)
-knowledge-base/*.log
+knowledge-base/*.logvitest-results.json

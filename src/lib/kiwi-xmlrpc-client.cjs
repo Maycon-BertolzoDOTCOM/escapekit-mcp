@@ -80,13 +80,26 @@ class KiwiXmlRpcClient {
       }
 
       const req = this.httpClient.request(options, res => {
-        // Seguir redirecionamentos 301/302
+        // Seguir redirecionamentos 301/302 APENAS para endpoints XML-RPC
         if (res.statusCode === 301 || res.statusCode === 302) {
           const location = res.headers.location;
           console.log('🔄 DEBUG: Redirect to:', location);
           if (location) {
+            // Ignorar redirects para páginas HTML (como /init-db/)
+            const isXmlRpcRedirect = location.startsWith('http') || location.includes('/xml-rpc/');
+            if (!isXmlRpcRedirect) {
+              console.log('⚠️  DEBUG: Ignoring non-XML-RPC redirect:', location);
+              const setCookie = res.headers['set-cookie'];
+              if (setCookie) {
+                this.sessionCookie = setCookie.map(c => c.split(';')[0]).join('; ');
+              }
+              reject(new Error(`Redirect to non-XML-RPC endpoint ignored: ${location}`));
+              return;
+            }
+
             req.destroy(); // Fechar requisição original
-            const redirectUrl = new URL(location);
+            const baseUrl = `${this.useHttps ? 'https' : 'http'}://${this.host}:${this.port}`;
+            const redirectUrl = new URL(location, baseUrl);
             const savedHost = this.host;
             const savedPort = this.port;
             const savedPath = this.path;
@@ -436,6 +449,40 @@ class KiwiXmlRpcClient {
     console.log('🔍 DEBUG listProducts: Got', products.length, 'products');
     return products;
   }
+
+  /**
+   * Sleep utility for retries
+   */
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  /**
+   * Fazer chamada com retry e backoff exponencial
+   */
+  async callWithRetry(methodName, params, retryCount = 0) {
+    const maxRetries = this.config.retries || 3;
+
+    try {
+      return await this.xmlRpcCall(methodName, params);
+    } catch (err) {
+      // Check if it's an authentication error - don't retry, just fail
+      if (err.message && err.message.includes('Authentication failed')) {
+        throw err;
+      }
+
+      if (retryCount < maxRetries) {
+        const delay = Math.pow(2, retryCount) * 1000; // 1s, 2s, 4s
+        console.log(
+          `🔄 Retry ${methodName} in ${delay}ms (attempt ${retryCount + 1}/${maxRetries})`
+        );
+        await this.sleep(delay);
+        return await this.callWithRetry(methodName, params, retryCount + 1);
+      }
+      throw err;
+    }
+  }
+
 }
 
 module.exports = { KiwiXmlRpcClient };

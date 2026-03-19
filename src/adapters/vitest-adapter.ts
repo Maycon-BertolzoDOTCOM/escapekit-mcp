@@ -85,7 +85,7 @@ export class VitestAdapter implements TestAdapter {
   }
 
   async load(source: string): Promise<TestResult[]> {
-    let content: string;
+    let content: string = "";
     let data: VitestOutput;
 
     try {
@@ -235,7 +235,7 @@ export class VitestAdapter implements TestAdapter {
     return testResult;
   }
 
-  private mapStatus(status: VitestAssertionResult['status'] | VitestTestCase['result']['state']): TestResult['outcome'] {
+  private mapStatus(status: VitestAssertionResult['status'] | 'pass' | 'fail' | 'skip' | 'todo' | 'run'): TestResult['outcome'] {
     switch (status) {
       case 'passed':
       case 'pass':

@@ -43,8 +43,7 @@
     "commander": "^12.0.0",
     "ink": "^4.4.1",
     "react": "^18.2.0",
-    "tree-sitter": "^0.25.0",
-    "xml2js": "^0.6.2"
+    "tree-sitter": "^0.25.0"
   },
   "devDependencies": {
     "@babel/parser": "^7.29.0",

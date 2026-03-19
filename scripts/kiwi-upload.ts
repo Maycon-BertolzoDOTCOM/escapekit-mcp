@@ -1,10 +1,21 @@
 #!/usr/bin/env ts-node
 
-import { join } from "path";
+import { join } from 'path';
 import { readFileSync } from 'fs';
 import { TestResult } from '../src/adapters/index';
 import { loadTestResults } from './load-test-results.js';
-import { KiwiXmlRpcClient, KiwiConfig } from '../src/lib/kiwi-xmlrpc-http-client.ts';
+import { KiwiXmlRpcClient } from '../src/lib/kiwi-xmlrpc-client.cjs';
+
+interface KiwiConfig {
+  baseUrl: string;
+  username: string;
+  password: string;
+  defaultProduct?: string;
+  defaultPlanId?: number;
+  testRunTemplate?: string;
+  timeout?: number;
+  retries?: number;
+}
 
 interface UploadOptions {
   file: string;
@@ -48,7 +59,7 @@ class KiwiTCMSUploader {
   async getOrCreateBuild(productId: number, planId: number): Promise<number> {
     // Listar builds existentes
     const builds = await this.client.listBuilds(productId);
-    
+
     if (builds.length > 0) {
       // Usar o build mais recente
       console.log(`✓ Using existing build: ${builds[0].name} (ID: ${builds[0].id})`);
@@ -58,7 +69,7 @@ class KiwiTCMSUploader {
     // Criar novo build
     console.log('Creating new build...');
     const buildName = `Auto-${new Date().toISOString().split('T')[0]}`;
-    
+
     try {
       const result = await this.client.createBuild(buildName, productId);
       console.log(`✓ Build created: ${result.name} (ID: ${result.id})`);
@@ -78,7 +89,7 @@ class KiwiTCMSUploader {
     console.log('Current user:', user);
     const managerId = user?.id || 1; // Default to admin (ID 1)
     console.log('Using manager ID:', managerId);
-    
+
     const testRun = await this.client.createTestRun({
       build: buildId,
       plan: planId,
@@ -116,7 +127,11 @@ class KiwiTCMSUploader {
   /**
    * Upload resultado de teste
    */
-  async uploadTestResult(testResult: TestResult, testRunId: number, productId: number): Promise<void> {
+  async uploadTestResult(
+    testResult: TestResult,
+    testRunId: number,
+    productId: number
+  ): Promise<void> {
     try {
       // Buscar ou criar TestCase
       const caseId = await this.getOrCreateTestCase(testResult.testCase, productId);
@@ -146,7 +161,11 @@ class KiwiTCMSUploader {
   /**
    * Upload resultados em lote
    */
-  async uploadTestResults(testResults: TestResult[], testRunId: number, productId: number): Promise<void> {
+  async uploadTestResults(
+    testResults: TestResult[],
+    testRunId: number,
+    productId: number
+  ): Promise<void> {
     let successCount = 0;
     let failCount = 0;
 
@@ -160,7 +179,9 @@ class KiwiTCMSUploader {
 
         // Progress indicator
         if (i % 50 === 0) {
-          console.log(`  Progress: ${i}/${testResults.length} (${((i / testResults.length) * 100).toFixed(1)}%)`);
+          console.log(
+            `  Progress: ${i}/${testResults.length} (${((i / testResults.length) * 100).toFixed(1)}%)`
+          );
         }
       } catch (error) {
         failCount++;
@@ -263,17 +284,18 @@ export async function uploadResults(options: UploadOptions): Promise<void> {
 // Check if this module is being executed directly
 if (import.meta.url === `file://${process.argv[1]}`) {
   const args = process.argv.slice(2);
-  
+
   // Parse command-line arguments properly
   const fileFlagIndex = args.indexOf('--file');
   const file = fileFlagIndex !== -1 ? args[fileFlagIndex + 1] : args[0] || 'vitest-results.json';
-  
+
   const frameworkFlagIndex = args.indexOf('--framework');
-  const framework = frameworkFlagIndex !== -1 ? args[frameworkFlagIndex + 1] as any : undefined;
-  
+  const framework = frameworkFlagIndex !== -1 ? (args[frameworkFlagIndex + 1] as any) : undefined;
+
   const testPlanIdFlagIndex = args.indexOf('--test-plan-id');
-  const testPlanId = testPlanIdFlagIndex !== -1 ? parseInt(args[testPlanIdFlagIndex + 1]) : undefined;
-  
+  const testPlanId =
+    testPlanIdFlagIndex !== -1 ? parseInt(args[testPlanIdFlagIndex + 1]) : undefined;
+
   const verbose = args.includes('--verbose');
 
   uploadResults({ file, framework, testPlanId, verbose })
