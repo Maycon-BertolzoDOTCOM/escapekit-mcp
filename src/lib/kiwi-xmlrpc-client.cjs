@@ -85,10 +85,17 @@ class KiwiXmlRpcClient {
         res.on('data', chunk => (data += chunk));
         res.on('end', () => {
           console.log('🔍 DEBUG xmlRpcCall: response length:', data.length);
+          console.log('🔍 DEBUG xmlRpcCall: response status:', res.statusCode);
+          console.log('🔍 DEBUG xmlRpcCall: raw response:', data.substring(0, 1000));
           const result = this.parseXmlRpcResponse(data);
           if (result.error) {
+            console.error(`🔴 XML-RPC Error in ${methodName}:`, result.error);
             reject(new Error(result.error));
           } else {
+            console.log(
+              `🟢 XML-RPC Success in ${methodName}:`,
+              JSON.stringify(result.data).substring(0, 500)
+            );
             resolve(result.data);
           }
         });
@@ -177,7 +184,10 @@ class KiwiXmlRpcClient {
         msg = stringMatch ? stringMatch[1] : faultStringMatch[1];
       }
 
-      console.log('🔍 DEBUG parseXmlRpcResponse: fault detected:', code, msg);
+      console.error('🔴 DEBUG parseXmlRpcResponse: FAULT detected!');
+      console.error('  - faultCode:', code);
+      console.error('  - faultString:', msg);
+      console.error('  - full xml sample:', xml.substring(0, 500));
       return { error: `XML-RPC fault ${code}: ${msg}` };
     }
 
@@ -257,22 +267,38 @@ class KiwiXmlRpcClient {
    */
   async authenticate() {
     console.log('🔍 DEBUG authenticate: Calling Auth.login...');
-    const result = await this.xmlRpcCall('Auth.login', [
-      this.config.username,
-      this.config.password,
-    ]);
-    console.log('🔍 DEBUG authenticate: Auth.login returned:', result);
-    console.log('🔍 DEBUG authenticate: Session cookie:', this.sessionCookie);
-    console.log('✓ Authenticated successfully');
-    return result;
+    console.log('🔍 DEBUG authenticate: username:', this.config.username);
+    console.log('🔍 DEBUG authenticate: baseUrl:', this.config.baseUrl);
+    try {
+      const result = await this.xmlRpcCall('Auth.login', [
+        this.config.username,
+        this.config.password,
+      ]);
+      console.log('🔍 DEBUG authenticate: Auth.login returned:', result);
+      console.log('🔍 DEBUG authenticate: Session cookie:', this.sessionCookie);
+      console.log('✓ Authenticated successfully');
+      return result;
+    } catch (err) {
+      console.error('🔴 Authentication failed:', err.message);
+      throw err;
+    }
   }
 
   /**
    * Chamada RPC (usa cookie de sessão)
    */
   async call(methodName, params) {
-    console.log(`🔍 DEBUG call: ${methodName} with params:`, JSON.stringify(params || []));
-    return await this.xmlRpcCall(methodName, params || []);
+    console.log(
+      `🔍 DEBUG call: ${methodName} with params:`,
+      JSON.stringify(params || []).substring(0, 500)
+    );
+    try {
+      const result = await this.xmlRpcCall(methodName, params || []);
+      return result;
+    } catch (err) {
+      console.error(`🔴 call(${methodName}) failed:`, err.message);
+      throw err;
+    }
   }
 
   /**
