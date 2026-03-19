@@ -9,54 +9,88 @@ class KiwiXmlRpcClient {
   constructor(config) {
     this.config = config;
     this.authToken = null;
-    
+
     // Parsear baseUrl
     const url = new URL(config.baseUrl);
     const useHttps = url.protocol === 'https:';
-    
+
     const clientOptions = {
       host: url.hostname,
-      port: useHttps ? (url.port || 443) : (url.port || 80),
+      port: useHttps ? url.port || 443 : url.port || 80,
       path: '/xml-rpc/',
     };
-    
+
     if (useHttps) {
       clientOptions.rejectUnauthorized = false; // Aceitar certificado autoassinado
     }
-    
+
     if (useHttps) {
       this.client = xmlrpc.createSecureClient(clientOptions);
     } else {
       this.client = xmlrpc.createClient(clientOptions);
     }
   }
-  
+
   /**
    * Autenticar usando Auth.login
+   * NOTE: Auth.login NÃO requer token como primeiro parâmetro
    */
   async authenticate() {
-    const result = await this.call('Auth.login', [
+    console.log('🔍 DEBUG authenticate: Calling Auth.login...');
+    const result = await this.callNoAuth('Auth.login', [
       this.config.username,
-      this.config.password
+      this.config.password,
     ]);
+    console.log('🔍 DEBUG authenticate: Auth.login returned:', result);
     this.authToken = result;
-    console.log('✓ Authenticated successfully');
+    console.log('✓ Authenticated successfully, token:', this.authToken ? 'present' : 'MISSING');
     return result;
   }
 
   /**
-   * Método helper para chamadas RPC
+   * Chamada sem adicionar token (para Auth.login)
+   */
+  async callNoAuth(methodName, params) {
+    return new Promise((resolve, reject) => {
+      console.log(
+        `🔍 DEBUG callNoAuth: Calling ${methodName} with params:`,
+        JSON.stringify(params)
+      );
+      this.client.methodCall(methodName, params || [], (err, result) => {
+        if (err) {
+          console.error(`🔍 DEBUG callNoAuth: Error in ${methodName}:`, err);
+          reject(err);
+          return;
+        }
+        console.log(`🔍 DEBUG callNoAuth: ${methodName} result:`, result);
+        resolve(result);
+      });
+    });
+  }
+
+  /**
+   * Método helper para chamadas RPC (com token de autenticação)
    */
   async call(methodName, params) {
     return new Promise((resolve, reject) => {
       // Adicionar token de autenticação aos parâmetros
       const authParams = params || [];
+      console.log(`🔍 DEBUG call: ${methodName} - authToken:`, this.authToken);
+      console.log(`🔍 DEBUG call: ${methodName} - original params:`, JSON.stringify(authParams));
+
       if (this.authToken) {
         authParams.unshift(this.authToken);
+        console.log(
+          `🔍 DEBUG call: ${methodName} - params WITH token:`,
+          JSON.stringify(authParams)
+        );
+      } else {
+        console.log(`🔍 DEBUG call: ${methodName} - WARNING: No authToken, calling without token!`);
       }
-      
+
       this.client.methodCall(methodName, authParams, (err, result) => {
         if (err) {
+          console.error(`🔍 DEBUG call: Error in ${methodName}:`, err);
           reject(err);
           return;
         }
@@ -97,7 +131,9 @@ class KiwiXmlRpcClient {
    * Buscar Product pelo nome
    */
   async findProductByName(name) {
+    console.log('🔍 DEBUG findProductByName: Looking for product:', name);
     const result = await this.call('Product.filter', [{ name }]);
+    console.log('🔍 DEBUG findProductByName: Result:', result);
     if (result && result.length > 0) {
       return result[0];
     }
@@ -141,7 +177,10 @@ class KiwiXmlRpcClient {
    * Listar produtos
    */
   async listProducts() {
-    return await this.call('Product.filter', [{}]);
+    console.log('🔍 DEBUG listProducts: Calling Product.filter...');
+    const result = await this.call('Product.filter', [{}]);
+    console.log('🔍 DEBUG listProducts: Got', result?.length || 0, 'products');
+    return result;
   }
 }
 
