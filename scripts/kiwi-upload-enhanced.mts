@@ -246,18 +246,37 @@ class KiwiTCMSUploader {
 export async function uploadResults(options: UploadOptions): Promise<void> {
   console.log('🚀 Starting Kiwi TCMS upload via XML-RPC...');
 
+  // DEBUG: Log environment variables
+  console.log('🔍 DEBUG: Environment variables:');
+  console.log(`  KIWI_URL exists: ${!!process.env.KIWI_URL}`);
+  console.log(`  KIWI_URL value: ${process.env.KIWI_URL}`);
+  console.log(`  KIWI_USERNAME exists: ${!!process.env.KIWI_USERNAME}`);
+  console.log(`  KIWI_PASSWORD exists: ${!!process.env.KIWI_PASSWORD ? '***' : 'false'}`);
+
   // Load configuration
   let config: KiwiConfig;
   try {
     const configPath = join(process.cwd(), 'config', 'kiwi-tcms.json');
     const configFile = readFileSync(configPath, 'utf-8');
+    console.log(`🔍 DEBUG: Raw config file content:`);
+    console.log(configFile);
+    
     config = JSON.parse(configFile);
+    console.log(`🔍 DEBUG: Parsed config before substitution:`);
+    console.log(JSON.stringify(config, null, 2));
 
     // Substitute environment variables in config values
+    console.log(`🔍 DEBUG: Starting environment variable substitution...`);
     const resolvedConfig = JSON.stringify(config).replace(
       /\$\{(\w+)\}/g,
-      (_, key) => process.env[key] || ''
+      (_, key) => {
+        const value = process.env[key];
+        console.log(`  Replacing $\{${key}\} with "${value}"`);
+        return value || '';
+      }
     );
+    console.log(`🔍 DEBUG: Config after substitution:`);
+    console.log(resolvedConfig);
     config = JSON.parse(resolvedConfig);
 
     console.log(`✓ Loaded configuration from ${configPath}`);
@@ -265,6 +284,8 @@ export async function uploadResults(options: UploadOptions): Promise<void> {
   } catch (error: any) {
     console.error('✗ Failed to load configuration:', error.message);
     console.log('Using environment variables...');
+    console.log(`🔍 DEBUG: Using fallback config`);
+    console.log(`  KIWI_URL from env: ${process.env.KIWI_URL}`);
     config = {
       baseUrl: process.env.KIWI_URL || 'https://kiwi.example.com',
       username: process.env.KIWI_USERNAME || '',
@@ -275,6 +296,7 @@ export async function uploadResults(options: UploadOptions): Promise<void> {
       timeout: 5000,
       retries: 3,
     };
+    console.log(`🔍 DEBUG: Fallback config baseUrl: ${config.baseUrl}`);
   }
 
   // Build metadata from environment
