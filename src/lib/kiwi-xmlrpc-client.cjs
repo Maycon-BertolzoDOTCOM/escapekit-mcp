@@ -1,102 +1,266 @@
 /**
  * Cliente XML-RPC para Kiwi TCMS
- * Usa Auth.login para autenticação com token
+ * Usa autenticação por cookie de sessão Django
  */
 
 const xmlrpc = require('xmlrpc');
+const http = require('http');
+const https = require('https');
 
 class KiwiXmlRpcClient {
   constructor(config) {
     this.config = config;
-    this.authToken = null;
+    this.sessionCookie = null;
 
     // Parsear baseUrl
     const url = new URL(config.baseUrl);
-    const useHttps = url.protocol === 'https:';
+    this.useHttps = url.protocol === 'https:';
+    this.host = url.hostname;
+    this.port = url.port || (this.useHttps ? 443 : 80);
+    this.path = '/xml-rpc/';
 
+    // Criar cliente HTTP com suporte a cookies
     const clientOptions = {
-      host: url.hostname,
-      port: useHttps ? url.port || 443 : url.port || 80,
-      path: '/xml-rpc/',
+      host: this.host,
+      port: this.port,
+      path: this.path,
     };
 
-    if (useHttps) {
-      clientOptions.rejectUnauthorized = false; // Aceitar certificado autoassinado
+    if (this.useHttps) {
+      clientOptions.rejectUnauthorized = false;
+      this.httpClient = https;
+    } else {
+      this.httpClient = http;
+    }
+  }
+
+  /**
+   * Fazer chamada XML-RPC usando HTTP nativo (para manter cookies)
+   */
+  async xmlRpcCall(methodName, params) {
+    return new Promise((resolve, reject) => {
+      const xmlBody = this.buildXmlRpcRequest(methodName, params);
+
+      const options = {
+        hostname: this.host,
+        port: this.port,
+        path: this.path,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/xml',
+          'Content-Length': Buffer.byteLength(xmlBody),
+        },
+      };
+
+      if (this.sessionCookie) {
+        options.headers['Cookie'] = this.sessionCookie;
+      }
+
+      const req = this.httpClient.request(options, res => {
+        // Capturar cookie de sessão
+        const setCookie = res.headers['set-cookie'];
+        if (setCookie) {
+          this.sessionCookie = setCookie.map(c => c.split(';')[0]).join('; ');
+        }
+
+        let data = '';
+        res.on('data', chunk => (data += chunk));
+        res.on('end', () => {
+          const result = this.parseXmlRpcResponse(data);
+          if (result.error) {
+            reject(new Error(result.error));
+          } else {
+            resolve(result.data);
+          }
+        });
+      });
+
+      req.on('error', reject);
+      req.write(xmlBody);
+      req.end();
+    });
+  }
+
+  /**
+   * Construir request XML-RPC
+   */
+  buildXmlRpcRequest(methodName, params) {
+    let paramsXml = '';
+    for (const param of params) {
+      paramsXml += `<param>${this.xmlValue(param)}</param>`;
+    }
+    return `<?xml version="1.0"?>
+<methodCall>
+  <methodName>${methodName}</methodName>
+  <params>${paramsXml}</params>
+</methodCall>`;
+  }
+
+  /**
+   * Converter valor JavaScript para XML-RPC
+   */
+  xmlValue(value) {
+    if (value === null || value === undefined) {
+      return '<value><nil/></value>';
+    }
+    if (typeof value === 'string') {
+      return `<value><string>${this.escapeXml(value)}</string></value>`;
+    }
+    if (typeof value === 'number') {
+      if (Number.isInteger(value)) {
+        return `<value><int>${value}</int></value>`;
+      }
+      return `<value><double>${value}</double></value>`;
+    }
+    if (typeof value === 'boolean') {
+      return `<value><boolean>${value ? 1 : 0}</boolean></value>`;
+    }
+    if (Array.isArray(value)) {
+      const items = value.map(v => `<value>${this.xmlValue(v)}</value>`).join('');
+      return `<value><array><data>${items}</data></array></value>`;
+    }
+    if (typeof value === 'object') {
+      let members = '';
+      for (const [key, val] of Object.entries(value)) {
+        members += `<member><name>${key}</name>${this.xmlValue(val)}</member>`;
+      }
+      return `<value><struct>${members}</struct></value>`;
+    }
+    return `<value><string>${String(value)}</string></value>`;
+  }
+
+  /**
+   * Escapar XML
+   */
+  escapeXml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+  }
+
+  /**
+   * Parsar resposta XML-RPC
+   */
+  parseXmlRpcResponse(xml) {
+    // Verificar se há fault
+    if (xml.includes('<fault>')) {
+      const faultStringMatch = xml.match(/<faultString>([\s\S]*?)<\/faultString>/);
+      const faultCodeMatch = xml.match(/<faultCode>(\d+)<\/faultCode>/);
+      const code = faultCodeMatch ? faultCodeMatch[1] : '-32603';
+      let msg = 'Unknown error';
+
+      if (faultStringMatch) {
+        // Extrair conteúdo da faultString
+        const stringMatch = faultStringMatch[1].match(/<string>([\s\S]*?)<\/string>/);
+        msg = stringMatch ? stringMatch[1] : faultStringMatch[1];
+      }
+
+      console.log('🔍 DEBUG parseXmlRpcResponse: fault detected:', code, msg);
+      return { error: `XML-RPC fault ${code}: ${msg}` };
     }
 
-    if (useHttps) {
-      this.client = xmlrpc.createSecureClient(clientOptions);
-    } else {
-      this.client = xmlrpc.createClient(clientOptions);
+    const paramsMatch = xml.match(/<params>([\s\S]*?)<\/params>/);
+    if (paramsMatch) {
+      // Extrair primeiro parâmetro (geralmente o resultado)
+      const paramMatch = paramsMatch[1].match(/<param>([\s\S]*?)<\/param>/);
+      if (paramMatch) {
+        return { data: this.parseXmlValue(paramMatch[1]) };
+      }
     }
+
+    return { data: null };
+  }
+
+  /**
+   * Parsar valor XML
+   */
+  parseXmlValue(xml) {
+    // Verificar struct primeiro (pois contém outros valores)
+    const structMatch = xml.match(/<struct>([\s\S]*?)<\/struct>/);
+    if (structMatch) {
+      const result = {};
+      const members = structMatch[1].match(/<member>[\s\S]*?<\/member>/g);
+      if (members) {
+        for (const member of members) {
+          const nameMatch = member.match(/<name>(.*?)<\/name>/);
+          const valueMatch = member.match(/<value>([\s\S]*?)<\/value>/);
+          if (nameMatch && valueMatch) {
+            result[nameMatch[1]] = this.parseXmlValue(valueMatch[1]);
+          }
+        }
+      }
+      return result;
+    }
+
+    // Verificar array
+    const arrayMatch = xml.match(/<array>([\s\S]*?)<\/array>/);
+    if (arrayMatch) {
+      const dataMatch = arrayMatch[1].match(/<data>([\s\S]*?)<\/data>/);
+      if (dataMatch) {
+        const content = dataMatch[1];
+        // Extrair cada <value>...</value>
+        const values = [];
+        let remaining = content;
+        while (remaining.includes('<value>')) {
+          const valueMatch = remaining.match(/<value>([\s\S]*?)<\/value>/);
+          if (valueMatch) {
+            values.push(this.parseXmlValue(valueMatch[1]));
+            remaining = remaining.substring(valueMatch[0].length);
+          } else {
+            break;
+          }
+        }
+        return values;
+      }
+      return [];
+    }
+
+    const stringMatch = xml.match(/<string>(.*?)<\/string>/s);
+    if (stringMatch) return stringMatch[1];
+
+    const intMatch = xml.match(/<int>(-?\d+)<\/int>/);
+    if (intMatch) return parseInt(intMatch[1], 10);
+
+    const doubleMatch = xml.match(/<double>(-?[\d.]+)<\/double>/);
+    if (doubleMatch) return parseFloat(doubleMatch[1]);
+
+    const booleanMatch = xml.match(/<boolean>([01])<\/boolean>/);
+    if (booleanMatch) return booleanMatch[1] === '1';
+
+    return xml;
   }
 
   /**
    * Autenticar usando Auth.login
-   * NOTE: Auth.login NÃO requer token como primeiro parâmetro
    */
   async authenticate() {
     console.log('🔍 DEBUG authenticate: Calling Auth.login...');
-    const result = await this.callNoAuth('Auth.login', [
+    const result = await this.xmlRpcCall('Auth.login', [
       this.config.username,
       this.config.password,
     ]);
     console.log('🔍 DEBUG authenticate: Auth.login returned:', result);
-    this.authToken = result;
-    console.log('✓ Authenticated successfully, token:', this.authToken ? 'present' : 'MISSING');
+    console.log('🔍 DEBUG authenticate: Session cookie:', this.sessionCookie);
+    console.log('✓ Authenticated successfully');
     return result;
   }
 
   /**
-   * Chamada sem adicionar token (para Auth.login)
+   * Chamada RPC (usa cookie de sessão)
    */
-  async callNoAuth(methodName, params) {
-    return new Promise((resolve, reject) => {
-      console.log(
-        `🔍 DEBUG callNoAuth: Calling ${methodName} with params:`,
-        JSON.stringify(params)
-      );
-      this.client.methodCall(methodName, params || [], (err, result) => {
-        if (err) {
-          console.error(`🔍 DEBUG callNoAuth: Error in ${methodName}:`, err);
-          reject(err);
-          return;
-        }
-        console.log(`🔍 DEBUG callNoAuth: ${methodName} result:`, result);
-        resolve(result);
-      });
-    });
+  async call(methodName, params) {
+    console.log(`🔍 DEBUG call: ${methodName} with params:`, JSON.stringify(params || []));
+    return await this.xmlRpcCall(methodName, params || []);
   }
 
   /**
-   * Método helper para chamadas RPC (com token de autenticação)
+   * Chamada sem autenticação (para Auth.login)
    */
-  async call(methodName, params) {
-    return new Promise((resolve, reject) => {
-      // Adicionar token de autenticação aos parâmetros
-      const authParams = params || [];
-      console.log(`🔍 DEBUG call: ${methodName} - authToken:`, this.authToken);
-      console.log(`🔍 DEBUG call: ${methodName} - original params:`, JSON.stringify(authParams));
-
-      if (this.authToken) {
-        authParams.unshift(this.authToken);
-        console.log(
-          `🔍 DEBUG call: ${methodName} - params WITH token:`,
-          JSON.stringify(authParams)
-        );
-      } else {
-        console.log(`🔍 DEBUG call: ${methodName} - WARNING: No authToken, calling without token!`);
-      }
-
-      this.client.methodCall(methodName, authParams, (err, result) => {
-        if (err) {
-          console.error(`🔍 DEBUG call: Error in ${methodName}:`, err);
-          reject(err);
-          return;
-        }
-        resolve(result);
-      });
-    });
+  async callNoAuth(methodName, params) {
+    return await this.call(methodName, params);
   }
 
   /**
@@ -120,9 +284,11 @@ class KiwiXmlRpcClient {
    * Buscar TestCase pelo nome
    */
   async findTestCaseByName(name) {
-    const result = await this.call('TestCase.filter', [{ name }]);
-    if (result && result.length > 0) {
-      return result[0];
+    const result = await this.call('TestCase.filter', [{ summary: name }]);
+    // Garantir que result é um array
+    const results = Array.isArray(result) ? result : result ? [result] : [];
+    if (results && results.length > 0) {
+      return results[0];
     }
     return undefined;
   }
@@ -131,11 +297,11 @@ class KiwiXmlRpcClient {
    * Buscar Product pelo nome
    */
   async findProductByName(name) {
-    console.log('🔍 DEBUG findProductByName: Looking for product:', name);
     const result = await this.call('Product.filter', [{ name }]);
-    console.log('🔍 DEBUG findProductByName: Result:', result);
-    if (result && result.length > 0) {
-      return result[0];
+    // Garantir que result é um array
+    const results = Array.isArray(result) ? result : result ? [result] : [];
+    if (results && results.length > 0) {
+      return results[0];
     }
     return undefined;
   }
@@ -144,8 +310,9 @@ class KiwiXmlRpcClient {
    * Listar Build do Product
    */
   async listBuilds(productId) {
-    const result = await this.call('Build.filter', [{ product: productId }]);
-    return result || [];
+    const result = await this.call('Build.filter', [{ version: productId }]);
+    // Garantir que retornamos um array
+    return Array.isArray(result) ? result : result ? [result] : [];
   }
 
   /**
@@ -179,8 +346,11 @@ class KiwiXmlRpcClient {
   async listProducts() {
     console.log('🔍 DEBUG listProducts: Calling Product.filter...');
     const result = await this.call('Product.filter', [{}]);
-    console.log('🔍 DEBUG listProducts: Got', result?.length || 0, 'products');
-    return result;
+    console.log('🔍 DEBUG listProducts: raw result:', result);
+    // Garantir que retornamos um array
+    const products = Array.isArray(result) ? result : result ? [result] : [];
+    console.log('🔍 DEBUG listProducts: Got', products.length, 'products');
+    return products;
   }
 }
 

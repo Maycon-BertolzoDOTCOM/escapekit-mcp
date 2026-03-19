@@ -83,28 +83,22 @@ class KiwiTCMSUploader {
     console.log('Creating new build with metadata...');
     const buildName = `Auto-${this.buildMetadata?.runNumber || new Date().toISOString().split('T')[0]}`;
 
-    return new Promise<number>((resolve, reject) => {
-      const xmlrpcClient = (this.client as any).client;
-      xmlrpcClient.methodCall(
-        'Build.create',
-        [
-          {
-            name: buildName,
-            product: productId,
-            description: this.generateBuildDescription(),
-          },
-        ],
-        (err: any, result: any) => {
-          if (err) {
-            console.error('✗ Failed to create build:', err);
-            reject(err);
-            return;
-          }
-          console.log(`✓ Build created: ${result.name} (ID: ${result.id})`);
-          resolve(result.id);
-        }
-      );
-    });
+    try {
+      console.log('🔍 DEBUG productId:', productId, typeof productId);
+      const buildData = {
+        name: buildName,
+        product: productId,
+        version: productId,
+        description: this.generateBuildDescription(),
+      };
+      console.log('🔍 DEBUG buildData:', JSON.stringify(buildData));
+      const result = await this.client.createBuild(buildData);
+      console.log(`✓ Build created: ${result.name} (ID: ${result.id})`);
+      return result.id;
+    } catch (err) {
+      console.error('✗ Failed to create build:', err);
+      throw err;
+    }
   }
 
   /**
@@ -144,6 +138,7 @@ class KiwiTCMSUploader {
       build: buildId,
       plan: planId,
       summary,
+      manager: 1, // admin user ID
     });
   }
 
@@ -260,21 +255,18 @@ export async function uploadResults(options: UploadOptions): Promise<void> {
     const configFile = readFileSync(configPath, 'utf-8');
     console.log(`🔍 DEBUG: Raw config file content:`);
     console.log(configFile);
-    
+
     config = JSON.parse(configFile);
     console.log(`🔍 DEBUG: Parsed config before substitution:`);
     console.log(JSON.stringify(config, null, 2));
 
     // Substitute environment variables in config values
     console.log(`🔍 DEBUG: Starting environment variable substitution...`);
-    const resolvedConfig = JSON.stringify(config).replace(
-      /\$\{(\w+)\}/g,
-      (_, key) => {
-        const value = process.env[key];
-        console.log(`  Replacing $\{${key}\} with "${value}"`);
-        return value || '';
-      }
-    );
+    const resolvedConfig = JSON.stringify(config).replace(/\$\{(\w+)\}/g, (_, key) => {
+      const value = process.env[key];
+      console.log(`  Replacing $\{${key}\} with "${value}"`);
+      return value || '';
+    });
     console.log(`🔍 DEBUG: Config after substitution:`);
     console.log(resolvedConfig);
     config = JSON.parse(resolvedConfig);
