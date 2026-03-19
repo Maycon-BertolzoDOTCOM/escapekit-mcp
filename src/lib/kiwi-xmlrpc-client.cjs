@@ -51,8 +51,13 @@ class KiwiXmlRpcClient {
   /**
    * Fazer chamada XML-RPC usando HTTP nativo (para manter cookies)
    */
-  async xmlRpcCall(methodName, params) {
+  async xmlRpcCall(methodName, params, redirectCount = 0) {
     return new Promise((resolve, reject) => {
+      if (redirectCount > 5) {
+        reject(new Error('Too many redirects'));
+        return;
+      }
+
       const xmlBody = this.buildXmlRpcRequest(methodName, params);
 
       const options = {
@@ -75,6 +80,37 @@ class KiwiXmlRpcClient {
       }
 
       const req = this.httpClient.request(options, res => {
+        // Seguir redirecionamentos 301/302
+        if (res.statusCode === 301 || res.statusCode === 302) {
+          const location = res.headers.location;
+          console.log('🔄 DEBUG: Redirect to:', location);
+          if (location) {
+            req.destroy(); // Fechar requisição original
+            const redirectUrl = new URL(location);
+            const savedHost = this.host;
+            const savedPort = this.port;
+            const savedPath = this.path;
+            const savedUseHttps = this.useHttps;
+
+            this.host = redirectUrl.hostname;
+            this.port = redirectUrl.port || (redirectUrl.protocol === 'https:' ? 443 : 80);
+            this.useHttps = redirectUrl.protocol === 'https:';
+            this.path = redirectUrl.pathname;
+
+            this.xmlRpcCall(methodName, params, redirectCount + 1)
+              .then(resolve)
+              .catch(err => {
+                // Restaurar valores em caso de erro
+                this.host = savedHost;
+                this.port = savedPort;
+                this.path = savedPath;
+                this.useHttps = savedUseHttps;
+                reject(err);
+              });
+            return;
+          }
+        }
+
         // Capturar cookie de sessão
         const setCookie = res.headers['set-cookie'];
         if (setCookie) {
