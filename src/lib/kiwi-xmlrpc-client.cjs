@@ -28,10 +28,24 @@ class KiwiXmlRpcClient {
 
     if (this.useHttps) {
       clientOptions.rejectUnauthorized = false;
+      // Criar agente HTTPS - forçar IP específico se necessário
+      this.httpsAgent = new https.Agent({
+        rejectUnauthorized: false,
+        family: 4, // Force IPv4
+      });
       this.httpClient = https;
     } else {
       this.httpClient = http;
     }
+
+    console.log(
+      '🔍 DEBUG KiwiXmlRpcClient: Created with host:',
+      this.host,
+      'port:',
+      this.port,
+      'https:',
+      this.useHttps
+    );
   }
 
   /**
@@ -52,6 +66,10 @@ class KiwiXmlRpcClient {
         },
       };
 
+      if (this.useHttps) {
+        options.agent = this.httpsAgent;
+      }
+
       if (this.sessionCookie) {
         options.headers['Cookie'] = this.sessionCookie;
       }
@@ -66,6 +84,7 @@ class KiwiXmlRpcClient {
         let data = '';
         res.on('data', chunk => (data += chunk));
         res.on('end', () => {
+          console.log('🔍 DEBUG xmlRpcCall: response length:', data.length);
           const result = this.parseXmlRpcResponse(data);
           if (result.error) {
             reject(new Error(result.error));
