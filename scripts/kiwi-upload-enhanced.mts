@@ -192,7 +192,8 @@ class KiwiTCMSUploader {
   async uploadTestResult(
     testResult: TestResult,
     testRunId: number,
-    productId: number
+    productId: number,
+    buildId: number
   ): Promise<void> {
     try {
       const caseId = await this.getOrCreateTestCase(testResult.testCase, productId);
@@ -201,7 +202,9 @@ class KiwiTCMSUploader {
       await this.client.addTestExecution({
         case: caseId,
         run: testRunId,
+        build: buildId,
         status: statusId,
+        case_text_version: 1,
         comment: testResult.error || testResult.failureMessage || '',
       });
 
@@ -220,7 +223,8 @@ class KiwiTCMSUploader {
   async uploadTestResults(
     testResults: TestResult[],
     testRunId: number,
-    productId: number
+    productId: number,
+    buildId: number
   ): Promise<void> {
     let successCount = 0;
     let failCount = 0;
@@ -230,7 +234,7 @@ class KiwiTCMSUploader {
     for (let i = 0; i < testResults.length; i++) {
       const result = testResults[i];
       try {
-        await this.uploadTestResult(result, testRunId, productId);
+        await this.uploadTestResult(result, testRunId, productId, buildId);
         successCount++;
 
         if (i % 50 === 0) {
@@ -408,7 +412,7 @@ export async function uploadResults(options: UploadOptions): Promise<void> {
   console.log(`✓ TestRun created with ID: ${testRunId}`);
 
   // Upload results
-  await uploader.uploadTestResults(results, testRunId, product.id);
+  await uploader.uploadTestResults(results, testRunId, product.id, buildId);
 
   console.log(`\n✅ Upload complete!`);
   console.log(`📊 TestRun ID: ${testRunId}`);
