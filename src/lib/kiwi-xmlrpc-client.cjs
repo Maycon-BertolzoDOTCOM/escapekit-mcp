@@ -276,6 +276,7 @@ class KiwiXmlRpcClient {
    * Adicionar um resultado de teste a um TestRun
    */
   async addTestExecution(data) {
+    console.log('🔍 DEBUG addTestExecution: data:', JSON.stringify(data));
     const result = await this.call('TestExecution.create', [data]);
     return result.id;
   }
@@ -320,8 +321,10 @@ class KiwiXmlRpcClient {
    */
   async findTestExecutionStatusByName(name) {
     const result = await this.call('TestExecutionStatus.filter', [{ name }]);
-    if (result && result.length > 0) {
-      return result[0];
+    // Garantir que result é um array
+    const results = Array.isArray(result) ? result : result ? [result] : [];
+    if (results && results.length > 0) {
+      return results[0];
     }
     return undefined;
   }

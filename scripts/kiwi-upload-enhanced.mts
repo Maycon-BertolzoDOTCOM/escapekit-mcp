@@ -55,15 +55,24 @@ class KiwiTCMSUploader {
    * Inicializar status map
    */
   async initializeStatusMap(): Promise<void> {
-    const passedStatus = await this.client.findTestExecutionStatusByName('PASSED');
-    const failedStatus = await this.client.findTestExecutionStatusByName('FAILED');
-    const idleStatus = await this.client.findTestExecutionStatusByName('IDLE');
-    const waivedStatus = await this.client.findTestExecutionStatusByName('WAIVED');
+    try {
+      const passedStatus = await this.client.findTestExecutionStatusByName('PASSED');
+      const failedStatus = await this.client.findTestExecutionStatusByName('FAILED');
+      const idleStatus = await this.client.findTestExecutionStatusByName('IDLE');
+      const waivedStatus = await this.client.findTestExecutionStatusByName('WAIVED');
 
-    if (passedStatus) this.statusMap['passed'] = passedStatus.id;
-    if (failedStatus) this.statusMap['failed'] = failedStatus.id;
-    if (idleStatus) this.statusMap['skipped'] = idleStatus.id;
-    if (waivedStatus) this.statusMap['skipped'] = waivedStatus.id;
+      if (passedStatus) this.statusMap['passed'] = passedStatus.id;
+      if (failedStatus) this.statusMap['failed'] = failedStatus.id;
+      if (idleStatus) this.statusMap['skipped'] = idleStatus.id;
+      if (waivedStatus) this.statusMap['skipped'] = waivedStatus.id;
+    } catch (e) {
+      console.log('🔍 DEBUG: Status lookup failed, using defaults');
+    }
+
+    // Fallback para IDs padrão do Kiwi TCMS se não encontrou
+    if (!this.statusMap['passed']) this.statusMap['passed'] = 2;
+    if (!this.statusMap['failed']) this.statusMap['failed'] = 3;
+    if (!this.statusMap['skipped']) this.statusMap['skipped'] = 1;
 
     console.log(`✓ Status map initialized:`, this.statusMap);
   }
