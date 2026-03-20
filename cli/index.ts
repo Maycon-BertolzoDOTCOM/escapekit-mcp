@@ -339,6 +339,7 @@ program
   .option('--auto-fix', 'Automatically fix detected issues', false)
   .option('--timeout <ms>', 'Timeout in milliseconds', '300000')
   .option('--json', 'Output results as JSON')
+  .option('--quiet', 'Suppress verbose output', false)
   .action(async (projectPath, options) => {
     try {
       const { resolve } = await import('path');
@@ -347,6 +348,15 @@ program
       if (!existsSync(resolvedPath)) {
         console.error(`Error: Project path not found: ${resolvedPath}`);
         process.exit(1);
+      }
+
+      // Suppress logs when JSON output is requested
+      const isJsonMode = options.json || options.quiet;
+      const originalWrite = process.stdout.write.bind(process.stdout);
+
+      if (isJsonMode) {
+        // Discard stdout during validation to keep JSON clean
+        process.stdout.write = () => true;
       }
 
       const { ValidationEngine } = await import('../src/validate/ValidationEngine.js');
@@ -360,12 +370,17 @@ program
         timeout: parseInt(options.timeout),
       });
 
+      // Restore stdout
+      process.stdout.write = originalWrite;
+
       if (options.json) {
         process.stdout.write(JSON.stringify(result, null, 2) + '\n');
       }
 
       process.exit(result.canDeploy ? 0 : 1);
     } catch (error) {
+      // Restore stdout in case of error
+      process.stdout.write = process.stdout.write.bind(process.stdout);
       console.error('Error:', error instanceof Error ? error.message : error);
       process.exit(1);
     }
