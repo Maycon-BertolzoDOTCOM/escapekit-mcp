@@ -84,7 +84,7 @@ Modificar o script de upload para usar curl em vez de biblioteca Node.js.
 
 ### Scripts
 
-- `scripts/kiwi-upload-enhanced.mts` - Upload de resultados
+- `scripts/kiwi-upload-rest.ts` - Upload de resultados
 - `scripts/load-test-results.ts` - Carrega resultados do Vitest
 - `scripts/test-kiwi-connection-http.ts` - Testa conexão
 

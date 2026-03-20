@@ -56,7 +56,7 @@ jobs:
           KIWI_PRODUCT_ID: ${{ secrets.KIWI_PRODUCT_ID || '1' }}
           KIWI_TEST_PLAN_ID: ${{ secrets.KIWI_TEST_PLAN_ID || '1' }}
         run: |
-          npx tsx scripts/kiwi-upload-enhanced.mts \
+          npx tsx scripts/kiwi-upload-rest.ts \
             --file vitest-results.json \
             --framework vitest \
             --product-id $KIWI_PRODUCT_ID \
@@ -164,7 +164,7 @@ ls -la vitest-results.json
 export KIWI_URL="https://sua-instancia.com"
 export KIWI_USERNAME="admin"
 export KIWI_PASSWORD="sua-senha"
-npx tsx scripts/kiwi-upload-enhanced.mts \
+npx tsx scripts/kiwi-upload-rest.ts \
   --file vitest-results.json \
   --framework vitest \
   --verbose
@@ -396,7 +396,7 @@ Para fazer upload apenas se testes passarem:
 - name: Upload results
   if: success()  # Apenas se testes passarem
   run: |
-    npx tsx scripts/kiwi-upload-enhanced.mts ...
+    npx tsx scripts/kiwi-upload-rest.ts ...
 ```
 
 ---
@@ -458,7 +458,7 @@ jobs:
           KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
           KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD }}
         run: |
-          npx tsx scripts/kiwi-upload-enhanced.mts ...
+          npx tsx scripts/kiwi-upload-rest.ts ...
 ```
 
 ### Com Deploy

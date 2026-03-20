@@ -5,7 +5,7 @@ Script para upload de resultados de testes para o Kiwi TCMS via XML-RPC.
 ## Uso
 
 ```bash
-npx tsx scripts/kiwi-upload-enhanced.mts --file <arquivo> [opções]
+npx tsx scripts/kiwi-upload-rest.ts --file <arquivo> [opções]
 ```
 
 ### Exemplo Completo
@@ -17,7 +17,7 @@ export KIWI_PASSWORD=senha123
 export KIWI_TEST_PLAN_ID=1
 export KIWI_DEFAULT_CATEGORY_ID=1
 
-npx tsx scripts/kiwi-upload-enhanced.mts \
+npx tsx scripts/kiwi-upload-rest.ts \
   --file vitest-results.json \
   --auto-create-cases \
   --verbose
@@ -101,7 +101,7 @@ As variáveis de ambiente podem ser interpoladas usando `${NOME_DA_VARIAVEL}`.
 Para testar sem enviar resultados reais:
 
 ```bash
-npx tsx scripts/kiwi-upload-enhanced.mts \
+npx tsx scripts/kiwi-upload-rest.ts \
   --file vitest-results.json \
   --dry-run
 ```
@@ -149,7 +149,7 @@ jobs:
 
       - name: Upload to Kiwi TCMS
         run: |
-          npx tsx scripts/kiwi-upload-enhanced.mts \
+          npx tsx scripts/kiwi-upload-rest.ts \
             --file ${{ github.event.inputs.results_file }} \
             --auto-create-cases
         env:
