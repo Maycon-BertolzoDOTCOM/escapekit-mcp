@@ -12,17 +12,6 @@ export interface CustomTestSchema {
   metadata?: Record<string, unknown>;
 }
 
-function isCustomTestSchema(data: unknown): data is CustomTestSchema {
-  return (
-    data !== null &&
-    typeof data === 'object' &&
-    'version' in data &&
-    'framework' in data &&
-    'tests' in data &&
-    Array.isArray((data as CustomTestSchema).tests)
-  );
-}
-
 export interface CustomTestCase {
   id?: string;
   name: string;
@@ -39,6 +28,17 @@ export interface CustomParserConfig extends AdapterConfig {
   schema?: CustomTestSchema;
   transform?: (test: CustomTestCase, suite?: string) => TestResult;
   validateSchema?: boolean;
+}
+
+function isCustomTestSchema(data: unknown): data is CustomTestSchema {
+  return (
+    data !== null &&
+    typeof data === 'object' &&
+    'version' in data &&
+    'framework' in data &&
+    'tests' in data &&
+    Array.isArray((data as CustomTestSchema).tests)
+  );
 }
 
 export class CustomTestParser implements TestAdapter {
@@ -64,60 +64,30 @@ export class CustomTestParser implements TestAdapter {
     return this.customSchema?.framework || 'custom';
   }
 
-  async canHandle(source: string): Promise<boolean> {
-    try {
-      if (typeof source === 'string') {
-        if (source.endsWith('.json')) {
-          const data = await import(source).then(m => m.default || m);
-          return this.validateCustomSchema(data);
-        } else {
-          const data = JSON.parse(source);
-          return this.validateCustomSchema(data);
-        }
-      }
-    } catch {
-      return false;
-    }
-    return false;
+  canHandle(source: string): boolean {
+    return typeof source === 'string' && 
+      (source.endsWith('.json') || source.startsWith('{') || source.startsWith('['));
   }
 
-  async   async load(source: string): Promise<TestResult[]> {
+  async load(source: string): Promise<TestResult[]> {
     let data: unknown;
 
     try {
       if (source.endsWith('.json')) {
-        data = await import(source).then(m => m.default || m);
+        const module = await import(source);
+        data = module.default ?? module;
       } else {
         data = JSON.parse(source);
       }
+
+      if (this.config.validateSchema !== false && !isCustomTestSchema(data)) {
+        throw new Error('Invalid custom test schema');
+      }
+
+      return this.parseCustomResults(data as CustomTestSchema);
     } catch (error) {
       throw new Error(`Failed to parse custom JSON: ${error instanceof Error ? error.message : String(error)}`);
     }
-
-    if (this.config.validateSchema !== false) {
-      if (!this.validateCustomSchema(data)) {
-        throw new Error('Invalid custom test schema');
-      }
-    }
-
-    return this.parseCustomResults(data);
-  }
-
-  private validateCustomSchema(data: unknown): boolean {
-    // Basic validation - must have required fields
-    if (!data || typeof data !== 'object') {
-      return false;
-    }
-
-    if (!Array.isArray(data.tests)) {
-      return false;
-    }
-
-    // Check if each test has required fields
-    if (!isCustomTestSchema(data)) return false;
-    return data.tests.every((test: CustomTestCase) => {
-      return typeof test.name === 'string' && typeof test.status === 'string';
-    });
   }
 
   private parseCustomResults(data: CustomTestSchema): TestResult[] {
@@ -146,7 +116,7 @@ export class CustomTestParser implements TestAdapter {
   private defaultTransform(
     test: CustomTestCase,
     framework: string,
-    metadata: Record<string, any>
+    metadata: Record<string, unknown>
   ): TestResult {
     const duration = test.duration || 0;
     const maxDuration = this.config.maxDuration || 60000;
@@ -213,7 +183,7 @@ export class CustomTestParser implements TestAdapter {
 
   private normalizeTestCaseName(name: string, suite: string): string {
     const normalized = name
-      .replace(/[\s\(\)\[\]]+/g, '-')
+      .replace(/[\s()\[\]]+/g, '-')
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '')
       .toLowerCase();
@@ -240,7 +210,7 @@ export class CustomTestParser implements TestAdapter {
 export function createCustomTestResult(
   framework: string,
   tests: CustomTestCase[],
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 ): CustomTestSchema {
   return {
     version: '1.0',
