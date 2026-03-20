@@ -8,7 +8,7 @@ export interface TestResult {
   outcome: 'passed' | 'failed' | 'skipped';
   duration: number;
   error?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface TestAdapter {

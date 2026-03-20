@@ -32,7 +32,7 @@ interface JestOutput {
   numPendingTests: number;
   numTodoTests: number;
   testResults: JestSuite[];
-  coverage?: any;
+  coverage?: Record<string, unknown>;
 }
 
 export class JestAdapter implements TestAdapter {
@@ -159,7 +159,7 @@ export class JestAdapter implements TestAdapter {
 
     const suitePrefix = suite
       .replace(/\s+/g, '-')
-      .replace(/[\(\)\[\]]+/g, '-')
+      .replace(/[()\[\]]+/g, '-')
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '')
       .toLowerCase();
@@ -168,6 +168,7 @@ export class JestAdapter implements TestAdapter {
   }
 
   private stripAnsiColors(text: string): string {
+    // eslint-disable-next-line no-control-regex
     return text.replace(/\x1b\[[0-9;]*m/g, '');
   }
 }

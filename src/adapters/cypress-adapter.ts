@@ -34,7 +34,7 @@ interface CypressSuite {
 interface CypressOutput {
   browserName?: string;
   browserVersion?: string;
-  config?: any;
+  config?: Record<string, unknown>;
   results: Array<{
     suite: CypressSuite;
     tests: CypressTest[];
@@ -47,7 +47,7 @@ interface CypressOutput {
       skipped: number;
       duration: number;
     };
-    reporterStats?: any;
+    reporterStats?: Record<string, unknown>;
   }>;
 }
 
@@ -173,7 +173,7 @@ export class CypressAdapter implements TestAdapter {
 
     const suitePrefix = suite
       .replace(/\s+/g, '-')
-      .replace(/[\(\)\[\]]+/g, '-')
+      .replace(/[()\[\]]+/g, '-')
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '')
       .toLowerCase();
@@ -182,6 +182,7 @@ export class CypressAdapter implements TestAdapter {
   }
 
   private stripAnsiColors(text: string): string {
+    // eslint-disable-next-line no-control-regex
     return text.replace(/\x1b\[[0-9;]*m/g, '');
   }
 }

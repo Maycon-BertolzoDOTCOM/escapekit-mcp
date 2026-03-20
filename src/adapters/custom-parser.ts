@@ -9,7 +9,18 @@ export interface CustomTestSchema {
   version: string;
   framework: string;
   tests: CustomTestCase[];
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
+}
+
+function isCustomTestSchema(data: unknown): data is CustomTestSchema {
+  return (
+    data !== null &&
+    typeof data === 'object' &&
+    'version' in data &&
+    'framework' in data &&
+    'tests' in data &&
+    Array.isArray((data as CustomTestSchema).tests)
+  );
 }
 
 export interface CustomTestCase {
@@ -53,11 +64,11 @@ export class CustomTestParser implements TestAdapter {
     return this.customSchema?.framework || 'custom';
   }
 
-  canHandle(source: string): boolean {
+  async canHandle(source: string): Promise<boolean> {
     try {
       if (typeof source === 'string') {
         if (source.endsWith('.json')) {
-          const data = require(source);
+          const data = await import(source).then(m => m.default || m);
           return this.validateCustomSchema(data);
         } else {
           const data = JSON.parse(source);
@@ -70,12 +81,12 @@ export class CustomTestParser implements TestAdapter {
     return false;
   }
 
-  async load(source: string): Promise<TestResult[]> {
-    let data: any;
+  async   async load(source: string): Promise<TestResult[]> {
+    let data: unknown;
 
     try {
       if (source.endsWith('.json')) {
-        data = require(source);
+        data = await import(source).then(m => m.default || m);
       } else {
         data = JSON.parse(source);
       }
@@ -92,7 +103,7 @@ export class CustomTestParser implements TestAdapter {
     return this.parseCustomResults(data);
   }
 
-  private validateCustomSchema(data: any): boolean {
+  private validateCustomSchema(data: unknown): boolean {
     // Basic validation - must have required fields
     if (!data || typeof data !== 'object') {
       return false;
@@ -103,7 +114,8 @@ export class CustomTestParser implements TestAdapter {
     }
 
     // Check if each test has required fields
-    return data.tests.every((test: any) => {
+    if (!isCustomTestSchema(data)) return false;
+    return data.tests.every((test: CustomTestCase) => {
       return typeof test.name === 'string' && typeof test.status === 'string';
     });
   }
@@ -208,7 +220,7 @@ export class CustomTestParser implements TestAdapter {
 
     const suitePrefix = suite
       .replace(/\s+/g, '-')
-      .replace(/[\(\)\[\]]+/g, '-')
+      .replace(/[()\[\]]+/g, '-')
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '')
       .toLowerCase();
@@ -217,6 +229,7 @@ export class CustomTestParser implements TestAdapter {
   }
 
   private stripAnsiColors(text: string): string {
+    // eslint-disable-next-line no-control-regex
     return text.replace(/\x1b\[[0-9;]*m/g, '');
   }
 }
