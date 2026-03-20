@@ -1,11 +1,12 @@
 /**
  * Recommendation Engine
- * 
+ *
  * Generates contextual recommendations for detected issues
  */
 
-import { existsSync } from 'fs';
+import { existsSync, readFileSync, readdirSync } from 'fs';
 import { resolve } from 'path';
+import YAML from 'yaml';
 
 import type { Recommendation, RecommendationContext, RecommendationEngineOptions, RecommendationTemplate } from './types.js';
 
@@ -27,16 +28,13 @@ export class RecommendationEngine {
       return;
     }
 
-    const yaml = require('yaml');
-    
     try {
-      const fs = require('fs');
-      const files = fs.readdirSync(templatesDir).filter((f: string) => f.endsWith('.yaml'));
-      
+      const files = readdirSync(templatesDir).filter((f: string) => f.endsWith('.yaml'));
+
       for (const file of files) {
         const filePath = resolve(templatesDir, file);
-        const content = fs.readFileSync(filePath, 'utf-8');
-        const template = yaml.parse(content) as RecommendationTemplate;
+        const content = readFileSync(filePath, 'utf-8');
+        const template = YAML.parse(content) as RecommendationTemplate;
         
         if (template.id) {
           this.templateCache.set(template.id, template);

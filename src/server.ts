@@ -116,7 +116,8 @@ server.registerTool({
   name: 'validate_reality',
   description: 'Validate generated code in real environment with runtime tests and performance metrics',
   execute: async (params: any) => {
-    const { project_path, validation_level: _validation_level = 'standard' } = params;
+    const { project_path, validation_level = 'standard' } = params;
+    void validation_level; // TODO: Use validation_level when implementing validation logic
 
     if (!project_path) {
       return createErrorResponse('project_path parameter is required', 'MISSING_PARAMETER');

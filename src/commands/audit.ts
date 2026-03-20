@@ -71,14 +71,16 @@ export async function auditCommand(options: AuditOptions = {}): Promise<string> 
   // Generate report based on format
   let report: string;
   switch (format) {
-    case 'markdown':
+    case 'markdown': {
       const markdownGen = new MarkdownGenerator();
       report = markdownGen.generate(escapeJson, { includeKiwiDetails, verbose });
       break;
-    case 'html':
+    }
+    case 'html': {
       const htmlGen = new HtmlGenerator();
       report = htmlGen.generate(escapeJson, { includeKiwiDetails, withCharts, verbose });
       break;
+    }
     case 'json':
       report = JSON.stringify(escapeJson, null, 2);
       break;

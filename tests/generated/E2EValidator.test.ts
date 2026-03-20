@@ -16,7 +16,7 @@ describe('E2EValidator', () => {
 
   describe('validate', () => {
     it('should return invalid result for non-existent URL', async () => {
-      const validator = new E2EValidator({ timeoutMs: 2000 });
+      const validator = new E2EValidator();
       const result = await validator.validate('http://localhost:9999/nonexistent');
       expect(result).toBeDefined();
       expect(result.valid).toBe(false);

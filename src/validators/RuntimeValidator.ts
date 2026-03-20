@@ -144,7 +144,7 @@ export class RuntimeValidator {
           // Needs kill -9 to stop child processes spawned by npm
           try {
             process.kill(-child.pid!); // Ensure we kill the process group (requires detached: true if doing this, or just kill the child)
-          } catch (e) {
+          } catch {
             child.kill('SIGKILL');
           }
         }

@@ -463,8 +463,8 @@ export class SemanticMatcher {
       // 24 months = 0.5, 36 months = 0.25, etc.
       return Math.max(0.0, 1.0 - (monthsOld - 12) / 24);
 
-    } catch (error) {
-      this.log.warn('Invalid date format for lastUpdate', { lastUpdate });
+    } catch (err) {
+      this.log.warn('Invalid date format for lastUpdate', { lastUpdate, error: err });
       return 0.5;
     }
   }

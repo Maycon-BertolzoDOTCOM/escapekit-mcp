@@ -102,7 +102,7 @@ export class E2EValidator {
         const hasWebGL = canvases.some((canvas: any) => {
           try {
             return !!(canvas.getContext('webgl') || canvas.getContext('webgl2') || canvas.getContext('experimental-webgl'));
-          } catch (e) {
+          } catch {
             return false;
           }
         });

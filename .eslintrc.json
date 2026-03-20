@@ -15,9 +15,12 @@
     "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-non-null-assertion": "warn"
+    "@typescript-eslint/no-non-null-assertion": "warn",
+    "no-useless-escape": "warn",
+    "no-control-regex": "warn",
+    "@typescript-eslint/no-require-imports": "warn"
   },
-  "ignorePatterns": ["dist", "node_modules", "*.js"],
+  "ignorePatterns": ["dist", "node_modules", "*.js", "*.d.ts", "src/models/*.d.ts", "src/transformers/*.d.ts"],
   "overrides": [
     {
       "files": ["src/models/**/*.ts"],
