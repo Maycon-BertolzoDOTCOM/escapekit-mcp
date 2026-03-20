@@ -1,14 +1,16 @@
 /**
  * Validate tool for MCP server
- * 
- * Provides validate_reality functionality
+ *
+ * Provides validate_reality functionality using the Validation Engine.
  */
 
-import { generateId, createSuccessResponse, createErrorResponse, ValidationResult } from '../models/schemas.js';
-import { ProjectValidator } from '../validators/ProjectValidator.js';
-import { RuntimeValidator } from '../validators/RuntimeValidator.js';
-import { E2EValidator } from '../validators/E2EValidator.js';
-import { ValidationScorer, ValidationScoreInputs } from '../validators/ValidationScorer.js';
+import {
+  generateId,
+  createSuccessResponse,
+  createErrorResponse,
+  ValidationResult,
+} from '../models/schemas.js';
+import { ValidationEngine } from '../validate/ValidationEngine.js';
 import { logger } from '../logger.js';
 
 export async function validateReality(
@@ -23,60 +25,48 @@ export async function validateReality(
   log.info('Starting validation', { projectPath, validationLevel });
 
   try {
-    const projectValidator = new ProjectValidator();
-    const runtimeValidator = new RuntimeValidator();
-    const e2eValidator = new E2EValidator();
-    const scorer = new ValidationScorer();
+    const engine = new ValidationEngine();
 
-    const scoreInputs: ValidationScoreInputs = {
-      validationLevel,
-      projectResult: await projectValidator.validate(projectPath)
-    };
-
-    let apiLatency = 0;
-    let buildTime = 0;
-    let webglSupport = false;
-
-    // Run Runtime validation if requested and project exists
-    if (validationLevel === 'standard' || validationLevel === 'thorough') {
-      const startBuild = Date.now();
-      scoreInputs.runtimeResult = await runtimeValidator.validate(projectPath);
-      buildTime = Date.now() - startBuild;
-    }
-
-    // Run E2E validation if requested and runtime server successfully booted
-    if (validationLevel === 'thorough' && scoreInputs.runtimeResult?.serverUrl) {
-      scoreInputs.e2eResult = await e2eValidator.validate(scoreInputs.runtimeResult.serverUrl);
-      apiLatency = scoreInputs.e2eResult.metrics.loadTimeMs || 0;
-      webglSupport = scoreInputs.e2eResult.metrics.hasWebGL || false;
-    }
-
-    const scoreResult = scorer.score(scoreInputs);
+    const result = await engine.validate(projectPath, {
+      level: validationLevel,
+      environment: 'local',
+      autoFix: false,
+      timeout: 300000,
+    });
 
     const validationId = generateId('validation');
 
     return createSuccessResponse<ValidationResult>({
       validationId,
       kitId: generateId('kit'),
-      overallScore: scoreResult.overallScore,
+      overallScore: result.confidence,
       metrics: {
-        webglSupport,
-        bundleSize: 'N/A', // TODO: Implement bundle size calculation in Phase 5
-        apiLatency,
-        fallbackCount: scoreInputs.projectResult.checks.filter(c => !c.passed).length,
-        buildTime,
+        webglSupport: result.checks.webgl?.hasWebGL ?? false,
+        bundleSize: result.checks.build.bundleSize
+          ? `${(result.checks.build.bundleSize / 1024).toFixed(0)}KB`
+          : 'N/A',
+        apiLatency: result.checks.runtime.apiResponses[0]?.latencyMs ?? 0,
+        fallbackCount: result.remainingIssues.filter(i => i.severity === 'error').length,
+        buildTime: result.checks.build.buildTime,
       },
-      issues: scoreResult.recommendations.map(msg => ({
+      issues: result.remainingIssues.map(issue => ({
         id: generateId('issue'),
-        type: 'unrealistic_assumption',
-        severity: 'warning',
-        message: msg,
-        description: msg,
-        file: 'N/A',
-        location: { line: 0, column: 0 },
-        autoFixable: false
+        type:
+          issue.type === 'BUILD_ERROR'
+            ? ('unrealistic_assumption' as const)
+            : issue.type === 'GHOST_IMPORT'
+              ? ('ghost_import' as const)
+              : issue.type === 'SECURITY_VULNERABILITY'
+                ? ('security_risk' as const)
+                : ('unrealistic_assumption' as const),
+        severity: issue.severity,
+        message: issue.message,
+        description: issue.suggestion || issue.message,
+        file: issue.file || 'N/A',
+        location: { line: issue.line || 0, column: 0 },
+        autoFixable: engine.canFix(issue.type as any),
       })),
-      readyForProduction: scoreResult.readyForProduction,
+      readyForProduction: result.canDeploy,
       timestamp: new Date().toISOString(),
     });
   } catch (error) {

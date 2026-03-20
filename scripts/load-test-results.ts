@@ -1,107 +1,83 @@
 #!/usr/bin/env tsx
 import { VitestAdapter } from '../src/adapters/vitest-adapter';
+import { JestAdapter } from '../src/adapters/jest-adapter';
 import { MochaAdapter } from '../src/adapters/mocha-adapter';
+import { PlaywrightAdapter } from '../src/adapters/playwright-adapter';
+import { CypressAdapter } from '../src/adapters/cypress-adapter';
 import { CustomTestParser } from '../src/adapters/custom-parser';
-import { TestResult } from '../src/adapters/index';
-import { readFileSync, existsSync } from 'fs';
-import { join } from 'path';
+import { TestAdapter, TestResult } from '../src/adapters/index';
+import { readFileSync } from 'fs';
+
+export type Framework = 'vitest' | 'jest' | 'mocha' | 'playwright' | 'cypress' | 'custom';
 
 export interface LoadTestResultsOptions {
-  framework?: 'vitest' | 'mocha' | 'custom';
+  framework?: Framework;
   source: string;
   adapterConfig?: any;
 }
 
 /**
- * Load test results from a file or string
- * Supports Vitest, Mocha, and custom formats
+ * Auto-detect test framework from file content
  */
-export async function loadTestResults(options: LoadTestResultsOptions): Promise<TestResult[]> {
-  const { framework, source, adapterConfig = {} } = options;
-
-  // Auto-detect framework if not specified
-  let detectedFramework = framework;
-  if (!detectedFramework) {
-    detectedFramework = detectFramework(source);
-    console.log(`Auto-detected framework: ${detectedFramework}`);
-  }
-
-  // Use appropriate adapter
-  switch (detectedFramework) {
-    case 'vitest': {
-      const adapter = new VitestAdapter(adapterConfig);
-      return adapter.load(source);
-    }
-    case 'mocha': {
-      const adapter = new MochaAdapter(adapterConfig);
-      return adapter.load(source);
-    }
-    case 'custom': {
-      const adapter = new CustomTestParser(adapterConfig);
-      return adapter.load(source);
-    }
-    default:
-      throw new Error(`Unsupported framework: ${detectedFramework}`);
-  }
-}
-
-/**
- * Auto-detect test framework from a source (file path or string)
- */
-function detectFramework(source: string): 'vitest' | 'mocha' | 'custom' {
-  // Try to determine from file extension
+function detectFramework(source: string): Framework {
   if (source.endsWith('.json')) {
-    // Read file and check for framework-specific patterns
     try {
       const content = readFileSync(source, 'utf-8');
-
-      // Debug logging
-      console.log(`\n🔍 File analysis:`);
-      console.log(`   File: ${source}`);
-      console.log(`   Size: ${content.length} bytes`);
-      console.log(`   First 100 chars: ${content.substring(0, 100)}`);
-
       const data = JSON.parse(content);
 
-      console.log(`   Parsed JSON keys: ${Object.keys(data).join(', ')}`);
-      console.log(`   Has testResults? ${!!data.testResults}`);
-      console.log(`   Has numTotalTests? ${!!data.numTotalTests}`);
-      console.log(`   Has version? ${!!data.version}`);
+      // Playwright
+      if (data.suites !== undefined || data.config !== undefined) {
+        return 'playwright';
+      }
 
-      // Vitest detection
-      if (data.testResults || (data.numTotalTests !== undefined && data.version)) {
-        console.log(`   ✓ Detected: Vitest`);
+      // Cypress
+      if (
+        data.browserName !== undefined ||
+        (data.results !== undefined && Array.isArray(data.results) && data.results[0]?.suite)
+      ) {
+        return 'cypress';
+      }
+
+      // Vitest (has testResults with assertionResults or numTotalTestSuites)
+      if (
+        data.testResults &&
+        (data.numTotalTestSuites !== undefined || data.numFailedTestSuites !== undefined)
+      ) {
         return 'vitest';
       }
 
-      // Mocha detection
-      if (data.stats && data.stats.tests) {
-        console.log(`   ✓ Detected: Mocha`);
+      // Jest (has testResults with snapshot)
+      if (
+        data.numTotalTests !== undefined &&
+        data.testResults !== undefined &&
+        data.snapshot !== undefined
+      ) {
+        return 'jest';
+      }
+
+      // Mocha
+      if (data.stats && (data.failures !== undefined || data.passes !== undefined)) {
         return 'mocha';
       }
 
-      console.log(`   ⚠ Falling back to: custom`);
-    } catch (error: any) {
-      // Detailed error logging
-      console.error(`\n✗ Error parsing JSON from ${source}:`);
-      console.error(`   Message: ${error.message}`);
-      if (error instanceof SyntaxError) {
-        console.error(
-          `   Position: line ${error.message.match(/line (\d+)/)?.[1]}, column ${error.message.match(/column (\d+)/)?.[1]}`
-        );
-        const content = readFileSync(source, 'utf-8');
-        const lines = content.split('\n');
-        if (error.message.match(/line (\d+)/)) {
-          const lineNum = parseInt(error.message.match(/line (\d+)/)![1]);
-          const startLine = Math.max(0, lineNum - 5);
-          const endLine = Math.min(lines.length - 1, lineNum + 5);
-          console.error(`   Context:`);
-          for (let i = startLine; i <= endLine; i++) {
-            console.error(`     ${i + 1}: ${lines[i] || ''}`);
-          }
-        }
+      // Custom array format
+      if (Array.isArray(data) && data[0]?.testCase !== undefined) {
+        return 'custom';
       }
-      console.warn(`   ⚠ Assuming custom format`);
+    } catch {
+      // Not JSON
+    }
+  }
+
+  // XML detection (Mocha xunit)
+  if (source.endsWith('.xml')) {
+    try {
+      const content = readFileSync(source, 'utf-8');
+      if (content.includes('<testsuite') || content.includes('<testsuites>')) {
+        return 'mocha';
+      }
+    } catch {
+      // Not readable
     }
   }
 
@@ -109,16 +85,49 @@ function detectFramework(source: string): 'vitest' | 'mocha' | 'custom' {
 }
 
 /**
+ * Create adapter instance for a given framework
+ */
+function createAdapter(framework: Framework, config: any = {}): TestAdapter {
+  switch (framework) {
+    case 'vitest':
+      return new VitestAdapter(config);
+    case 'jest':
+      return new JestAdapter(config);
+    case 'mocha':
+      return new MochaAdapter(config);
+    case 'playwright':
+      return new PlaywrightAdapter(config);
+    case 'cypress':
+      return new CypressAdapter(config);
+    case 'custom':
+      return new CustomTestParser(config);
+    default:
+      throw new Error(`Unsupported framework: ${framework}`);
+  }
+}
+
+/**
+ * Load test results from a file or string
+ */
+export async function loadTestResults(options: LoadTestResultsOptions): Promise<TestResult[]> {
+  const { framework, source, adapterConfig = {} } = options;
+
+  const detectedFramework = framework || detectFramework(source);
+  console.log(`Framework: ${detectedFramework}${framework ? '' : ' (auto-detected)'}`);
+
+  const adapter = createAdapter(detectedFramework, adapterConfig);
+  return adapter.load(source);
+}
+
+/**
  * Merge multiple test result files
  */
 export async function mergeTestResults(files: string[]): Promise<TestResult[]> {
   const allResults: TestResult[] = [];
-
   for (const file of files) {
     const results = await loadTestResults({ source: file });
     allResults.push(...results);
   }
-
   return allResults;
 }
 
@@ -128,14 +137,14 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 
   if (args.length === 0) {
     console.log(
-      'Usage: tsx scripts/load-test-results.ts <source> [--framework vitest|mocha|custom]'
+      'Usage: tsx scripts/load-test-results.ts <source> [--framework vitest|jest|mocha|playwright|cypress|custom]'
     );
     process.exit(1);
   }
 
   const source = args[0];
   const frameworkFlag = args.indexOf('--framework');
-  const framework = frameworkFlag !== -1 ? (args[frameworkFlag + 1] as any) : undefined;
+  const framework = frameworkFlag !== -1 ? (args[frameworkFlag + 1] as Framework) : undefined;
 
   loadTestResults({ source, framework })
     .then(results => {

@@ -127,12 +127,33 @@ escapekit validate ./my-app --env local --level standard
 
 - **[NEW] Diff-Based Editing**: Git-style unified diffs with fuzzy matching using Levenshtein distance (94.46% test coverage)
 
-### Validation Engine (Coming Soon)
+### Validation Engine ✅ Complete
 
 - **Build Verification**: Ensures code compiles successfully
 - **Runtime Testing**: Validates code execution in real environments
 - **WebGL Support Testing**: Verifies WebGL availability and fallback behavior
-- **Performance Metrics**: Measures bundle size, load times, API latency
+- **Dependency Validation**: Detects ghost packages and outdated dependencies
+- **Auto-Fix**: Automatically fixes detected issues (ghost imports, missing polyfills, outdated configs)
+- **Multi-Environment Support**: Local, Docker, and Browser environments
+
+#### Validation CLI Commands
+
+```bash
+# Basic validation
+escapekit validate ./my-project
+
+# With auto-fix
+escapekit validate ./my-project --auto-fix
+
+# JSON output
+escapekit validate ./my-project --json
+
+# Docker environment
+escapekit validate ./my-project --env docker
+
+# Thorough validation level
+escapekit validate ./my-project --level thorough
+```
 
 ### Knowledge Base Engine
 
@@ -326,11 +347,13 @@ npm run health-check
          │
          ▼
 ┌─────────────────┐
-│   Validator   │  (Coming Soon)
+│   Validator   │  ✅ Complete
 │                 │
-│  • Builder     │
-│  • E2E Tests   │
-│  • Metrics     │
+│  • BuildValidator    │
+│  • DependencyValidator  │
+│  • WebGLValidator   │
+│  • AutoFix Engine   │
+│  • Multi-Environment│
 └─────────────────┘
 ```
 
@@ -343,11 +366,11 @@ npm run health-check
 | Phase 3: Transformation Engine | ✅ Complete | 100% |
 | Phase 4: Knowledge Base Engine | ✅ Complete | 100% |
 | Phase 5: qwen-escapekit CLI | ✅ Complete | 100% |
-| Phase 6: Validation Engine | ⏳ Not Started | 0% |
+| Phase 6: Validation Engine | ✅ Complete | 100% |
 | Phase 7: Docs & Testing | ⏳ In Progress | 70% |
 | Phase 8: MVP Release | ⏳ Not Started | 0% |
 
-**Overall Progress**: ~75% (Phase 5 complete)
+**Overall Progress**: ~80% (Phase 6 complete)
 
 ## 🧠 Research
 

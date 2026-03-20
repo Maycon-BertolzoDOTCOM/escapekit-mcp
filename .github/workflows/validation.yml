@@ -1,0 +1,69 @@
+name: EscapeKit Validation
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  test-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Unit tests
+        run: npm test -- --run
+
+      - name: Run Validation
+        id: validate
+        run: |
+          chmod +x scripts/validate-ci.sh
+          bash scripts/validate-ci.sh . validation-report.json
+
+      - name: Upload Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-report
+          path: validation-report.json
+          retention-days: 30
+
+      - name: Comment PR
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = JSON.parse(fs.readFileSync('validation-report.json', 'utf8'));
+            const icon = report.canDeploy ? '✅' : '❌';
+            const body = `## ${icon} Validation Report
+            - **canDeploy:** ${report.canDeploy}
+            - **confidence:** ${(report.confidence * 100).toFixed(1)}%
+            - **duration:** ${(report.duration / 1000).toFixed(1)}s
+            - **build:** ${report.checks.build.passed ? '✅' : '❌'}
+            - **dependencies:** ${report.checks.dependencies.passed ? '✅' : '❌'} (${report.checks.dependencies.ghostPackages.length} ghosts)
+            - **vulnerabilities:** ${report.checks.dependencies.vulnerabilities.length}
+            - **fixes applied:** ${report.fixesApplied.length}
+            `;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            });

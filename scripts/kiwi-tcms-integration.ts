@@ -1,39 +1,75 @@
-import { KiwiClient } from './lib/kiwi-client';
-import { TestResultParser } from './lib/test-parser';
-import { logger } from '../src/logger';
+/**
+ * Kiwi TCMS Integration Module
+ * Uses REST API client for all operations
+ */
 
-class KiwiIntegration {
+import { KiwiClient, KiwiClientConfig } from '../src/lib/kiwi-client';
+import { TestResult } from '../src/adapters/index';
+import { getLogger } from '../scripts/kiwi-logger';
+
+const logger = getLogger();
+
+export interface IntegrationConfig extends KiwiClientConfig {
+  defaultPlanId?: number;
+  defaultProduct?: string;
+  testRunTemplate?: string;
+}
+
+export class KiwiIntegration {
   private client: KiwiClient;
-  
-  constructor(private config: {
-    baseUrl: string;
-    username: string;
-    password: string;
-  }) {
+
+  constructor(private config: IntegrationConfig) {
     this.client = new KiwiClient(config);
   }
 
-  async importResults(testRunId: number, results: TestResult[]) {
+  async connect(): Promise<boolean> {
+    return this.client.authenticate();
+  }
+
+  async importResults(testRunId: number, results: TestResult[]): Promise<boolean> {
     try {
-      const parsed = TestResultParser.parse(results);
-      await this.client.uploadResults(testRunId, parsed);
-      logger.info(`Successfully imported ${parsed.length} test results`);
-      return true;
+      const statusMap = await this.client.getStatusMap();
+      let success = 0;
+
+      for (const result of results) {
+        try {
+          const testCase = await this.client.findTestCase(result.testCase);
+          if (!testCase) {
+            logger.warn(`Test case not found: ${result.testCase}`);
+            continue;
+          }
+
+          const statusId = statusMap[result.outcome] || statusMap['skipped'];
+          await this.client.addTestExecution({
+            case: testCase.id,
+            run: testRunId,
+            build: 1,
+            status: statusId,
+            comment: result.error || '',
+          });
+          success++;
+        } catch (err: any) {
+          logger.error(`Failed to upload ${result.testCase}: ${err.message}`);
+        }
+      }
+
+      logger.info(`Imported ${success}/${results.length} test results`);
+      return success > 0;
     } catch (error) {
       logger.error('Failed to import test results', { error });
       return false;
     }
   }
 
-  async createTestRun(name: string, planId: number) {
-    return this.client.createTestRun(name, planId);
+  async createTestRun(summary: string, planId: number): Promise<{ id: number }> {
+    return this.client.createTestRun({
+      summary,
+      plan: planId,
+      build: 1,
+    });
   }
-}
 
-// Helper types
-interface TestResult {
-  testCase: string;
-  outcome: 'passed' | 'failed' | 'skipped';
-  duration: number;
-  error?: string;
+  getClient(): KiwiClient {
+    return this.client;
+  }
 }

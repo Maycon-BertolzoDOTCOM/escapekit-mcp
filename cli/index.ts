@@ -2,7 +2,7 @@
 
 /**
  * EscapeKit CLI
- * 
+ *
  * Command-line interface for EscapeKit MCP tools
  */
 
@@ -28,7 +28,9 @@ const program = new Command();
 
 program
   .name('escapekit')
-  .description('EscapeKit: Breaking Ralph Loop Inverso - Transform AI sandbox code into production-ready projects')
+  .description(
+    'EscapeKit: Breaking Ralph Loop Inverso - Transform AI sandbox code into production-ready projects'
+  )
   .version('0.1.0');
 
 /**
@@ -65,7 +67,9 @@ program
       }
 
       if (!code || code.trim().length === 0) {
-        console.error('Error: No code provided. Use --code, specify a file, or pipe code via stdin.');
+        console.error(
+          'Error: No code provided. Use --code, specify a file, or pipe code via stdin.'
+        );
         process.exit(1);
       }
 
@@ -81,7 +85,7 @@ program
       console.log(`   Analysis ID: ${result.analysisId}`);
       console.log(`   Sandbox: ${result.sandboxType || 'auto-detected'}`);
       console.log(`   Language: ${result.language}`);
-      
+
       console.log('\n✅ Analysis complete!');
       console.log('\nSummary:');
       console.log(`   Total Issues: ${result.summary.totalIssues}`);
@@ -129,7 +133,13 @@ program
         const riskScorer = new RiskScorer();
         const issueGenerator = new IssueGenerator();
         const packageJsonParser = new PackageJsonParser();
-        const postInstallDetector = new PostInstallDetector(registry, packageJsonParser, patternMatcher, riskScorer, issueGenerator);
+        const postInstallDetector = new PostInstallDetector(
+          registry,
+          packageJsonParser,
+          patternMatcher,
+          riskScorer,
+          issueGenerator
+        );
         const scanner = new DeepDependencyScanner(
           registry,
           lockFileParser,
@@ -300,7 +310,7 @@ program
 
       if (kit.filesCreated.length > 0) {
         console.log('\nFiles created:');
-        kit.filesCreated.slice(0, 10).forEach((f) => console.log(`   - ${f}`));
+        kit.filesCreated.slice(0, 10).forEach(f => console.log(`   - ${f}`));
         if (kit.filesCreated.length > 10) {
           console.log(`   ... and ${kit.filesCreated.length - 10} more`);
         }
@@ -323,45 +333,38 @@ program
 program
   .command('validate')
   .description('Validate generated code in real environment')
-  .argument('<project_path_or_kit_id>', 'Path to project or Escape Kit ID')
-  .option('--env <environment>', 'Validation environment (docker, local)', 'local')
+  .argument('<project_path>', 'Path to project to validate')
+  .option('--env <environment>', 'Validation environment (docker, local, both)', 'local')
   .option('--level <level>', 'Validation level (basic, standard, thorough)', 'standard')
+  .option('--auto-fix', 'Automatically fix detected issues', false)
+  .option('--timeout <ms>', 'Timeout in milliseconds', '300000')
   .option('--json', 'Output results as JSON')
-  .action(async (projectPathOrKitId, options) => {
+  .action(async (projectPath, options) => {
     try {
-      console.log('✅ Validating project...');
-      console.log(`   Project/Kit: ${projectPathOrKitId}`);
-      console.log(`   Environment: ${options.env}`);
-      console.log(`   Level: ${options.level}`);
+      const { resolve } = await import('path');
+      const resolvedPath = resolve(projectPath);
 
-      // TODO: Implement actual validation
-      const validationId = generateId('validation');
+      if (!existsSync(resolvedPath)) {
+        console.error(`Error: Project path not found: ${resolvedPath}`);
+        process.exit(1);
+      }
 
-      console.log('\n🧪 Running tests...');
+      const { ValidationEngine } = await import('../src/validate/ValidationEngine.js');
 
-      // Mock validation steps
-      console.log('   ✓ Build check');
-      console.log('   ✓ Runtime validation');
-      console.log('   ✓ WebGL support');
-      console.log('   ✓ API latency');
+      const engine = new ValidationEngine();
 
-      console.log('\n✅ Validation complete!');
-      console.log(`   Validation ID: ${validationId}`);
-      console.log(`   Overall Score: 0.85`);
-      console.log(`   Ready for Production: Yes`);
+      const result = await engine.validate(resolvedPath, {
+        environment: options.env as 'local' | 'docker' | 'both',
+        level: options.level as 'basic' | 'standard' | 'thorough',
+        autoFix: options.autoFix ?? false,
+        timeout: parseInt(options.timeout),
+      });
 
       if (options.json) {
-        console.log('\n' + JSON.stringify({
-          validationId,
-          overallScore: 0.85,
-          metrics: {
-            webglSupport: true,
-            bundleSize: '245KB',
-            apiLatency: 120,
-          },
-          readyForProduction: true,
-        }, null, 2));
+        process.stdout.write(JSON.stringify(result, null, 2) + '\n');
       }
+
+      process.exit(result.canDeploy ? 0 : 1);
     } catch (error) {
       console.error('Error:', error instanceof Error ? error.message : error);
       process.exit(1);
@@ -392,7 +395,7 @@ async function readStdin(): Promise<string> {
   return new Promise((resolve, reject) => {
     let data = '';
     process.stdin.setEncoding('utf8');
-    process.stdin.on('data', (chunk) => {
+    process.stdin.on('data', chunk => {
       data += chunk;
     });
     process.stdin.on('end', () => {

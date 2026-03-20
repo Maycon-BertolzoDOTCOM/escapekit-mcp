@@ -1,0 +1,120 @@
+name: Upload to Kiwi TCMS
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.test.ts'
+      - 'vitest-results.json'
+      - '.github/workflows/kiwi-upload.yml'
+  workflow_dispatch:
+    inputs:
+      results_file:
+        description: 'Path to test results file'
+        required: true
+        default: 'vitest-results.json'
+      framework:
+        description: 'Test framework (auto-detected if empty)'
+        required: false
+        type: choice
+        options:
+          - ''
+          - 'vitest'
+          - 'jest'
+          - 'mocha'
+          - 'playwright'
+          - 'cypress'
+      auto_create_cases:
+        description: 'Auto-create test cases'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      dry_run:
+        description: 'Dry run mode'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check if results file exists
+        id: check_results
+        run: |
+          if [ -f "${{ github.event.inputs.results_file || 'vitest-results.json' }}" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run tests (if not exists)
+        if: steps.check_results.outputs.exists == 'false'
+        run: |
+          npm test -- --json --outputFile=vitest-results.json || true
+
+      - name: Upload to Kiwi TCMS (Production)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          npx tsx scripts/kiwi-upload-rest.ts \
+            --file vitest-results.json \
+            --auto-create-cases \
+            --json-logs
+        env:
+          KIWI_URL: ${{ secrets.KIWI_URL }}
+          KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
+          KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD }}
+          KIWI_TEST_PLAN_ID: ${{ secrets.KIWI_TEST_PLAN_ID }}
+
+      - name: Upload to Kiwi TCMS (Manual)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          ARGS="--file ${{ github.event.inputs.results_file }} --json-logs"
+
+          if [ -n "${{ github.event.inputs.framework }}" ]; then
+            ARGS="$ARGS --framework ${{ github.event.inputs.framework }}"
+          fi
+
+          if [ "${{ github.event.inputs.auto_create_cases }}" == "true" ]; then
+            ARGS="$ARGS --auto-create-cases"
+          fi
+
+          if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+
+          npx tsx scripts/kiwi-upload-rest.ts $ARGS
+        env:
+          KIWI_URL: ${{ secrets.KIWI_URL }}
+          KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
+          KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD }}
+          KIWI_TEST_PLAN_ID: ${{ secrets.KIWI_TEST_PLAN_ID }}
+
+      - name: Upload failure log if exists
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kiwi-failures
+          path: logs/kiwi-failures-*.json
+          retention-days: 30

@@ -1,0 +1,666 @@
+[
+  {
+    "name": "customtestparser-getframeworkname-should-return-correct-framework-name",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 4]."
+  },
+  {
+    "name": "customtestparser-canhandle-should-reject-invalid-json",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 3]."
+  },
+  {
+    "name": "customtestparser-canhandle-should-reject-json-without-tests-array",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 2]."
+  },
+  {
+    "name": "customtestparser-canhandle-should-identify-custom-json-files-correctly",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 1]."
+  },
+  {
+    "name": "customtestparser-load-should-parse-custom-json-with-failed-tests",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 7]."
+  },
+  {
+    "name": "helper-functions-createcustomtestresult-should-create-a-valid-custom-test-result-object",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 15]."
+  },
+  {
+    "name": "customtestparser-load-should-parse-custom-json-with-passed-tests",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 5]."
+  },
+  {
+    "name": "customtestparser-status-mapping-should-map-various-status-values-correctly",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 13]."
+  },
+  {
+    "name": "customtestparser-edge-cases-should-handle-malformed-json-gracefully",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 14]."
+  },
+  {
+    "name": "helper-functions-exampletransform-should-transform-a-failed-test-case",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 18]."
+  },
+  {
+    "name": "cypressadapter-canhandle-should-identify-cypress-json-with-browsername",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 19]."
+  },
+  {
+    "name": "customtestparser-edge-cases-should-mark-tests-as-failed-if-they-exceed-max-duration",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 17]."
+  },
+  {
+    "name": "customtestparser-load-should-load-from-file-path",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 12]."
+  },
+  {
+    "name": "customtestparser-getframeworkname-should-return-custom-framework-name-if-schema-provided",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 6]."
+  },
+  {
+    "name": "customtestparser-load-should-normalize-test-case-names-correctly",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 10]."
+  },
+  {
+    "name": "customtestparser-load-should-filter-out-skipped-tests-when-configured",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 9]."
+  },
+  {
+    "name": "customtestparser-load-should-parse-custom-json-with-skipped-tests",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 8]."
+  },
+  {
+    "name": "helper-functions-exampletransform-should-transform-a-custom-test-case-to-test-result",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 20]."
+  },
+  {
+    "name": "customtestparser-load-should-support-custom-transform-function",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 11]."
+  },
+  {
+    "name": "customtestparser-edge-cases-should-handle-empty-test-results",
+    "error": "JSON-RPC Error: Invalid parameters: Field 'id' expected a number but got [1, 16]."
+  },
+  {
+    "name": "cypressadapter-canhandle-should-identify-cypress-json-with-results-array",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-canhandle-should-reject-non-cypress-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-getframeworkname-should-return-cypress",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-parse-cypress-json-with-passed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-parse-cypress-json-with-failed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-parse-nested-suites",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-join-title-array-for-test-case-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-map-pending-state-to-skipped",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-handle-empty-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-load-from-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-get-error-from-attempt-if-no-direct-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-canhandle-should-identify-jest-json-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-canhandle-should-reject-non-jest-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-canhandle-should-reject-invalid-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-getframeworkname-should-return-jest",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-parse-jest-json-with-passed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-parse-jest-json-with-failed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-parse-jest-json-with-skipped-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-filter-skipped-when-configured",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-normalize-test-case-names",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-load-from-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-handle-empty-test-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-handle-nested-suites",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-canhandle-should-identify-mocha-xml-files-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-canhandle-should-reject-non-mocha-xml-files",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-canhandle-should-reject-non-xml-files",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-canhandle-should-identify-xml-content-directly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-getframeworkname-should-return-correct-framework-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-load-should-parse-mocha-xml-output-with-passed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-load-should-parse-mocha-xml-output-with-failed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-load-should-parse-mocha-xml-output-with-skipped-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-load-should-filter-out-skipped-tests-when-configured",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-load-should-normalize-test-case-names-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-load-should-handle-test-errors",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-load-should-load-from-file-path",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-edge-cases-should-handle-empty-test-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-edge-cases-should-handle-malformed-xml-gracefully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-edge-cases-should-handle-single-testsuite-without-testsuites-wrapper",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-canhandle-should-identify-playwright-json-with-suites",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-canhandle-should-identify-playwright-json-with-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-canhandle-should-reject-non-playwright-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-getframeworkname-should-return-playwright",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-load-should-parse-playwright-json-with-passed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-load-should-parse-playwright-json-with-failed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-load-should-handle-nested-suites",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-load-should-include-duration-from-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-load-should-normalize-test-case-names",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-load-should-handle-empty-suites",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-load-should-load-from-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-cache-test-case-cache-should-cache-test-case-lookups",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-cache-test-case-cache-should-cache-created-test-cases",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-cache-product-cache-should-cache-product-list",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-cache-build-cache-should-cache-builds-per-product",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-cache-build-cache-should-invalidate-build-cache-on-create",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-cache-clearcache-should-clear-all-caches",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-cache-getcachestats-should-return-cache-statistics",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-validation-validateproduct-should-throw-when-product-not-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-validation-validateproduct-should-return-product-when-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-validation-validateproduct-should-skip-validation-on-repeated-calls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-validation-validatecategory-should-throw-when-category-not-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-validation-validatecategory-should-return-category-when-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-validation-getorcreatetestcase-with-validation-should-validate-product-and-category-before-creating",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-validation-getorcreatetestcase-with-validation-should-fail-if-product-is-invalid",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-authenticate-should-authenticate-and-store-token",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-authenticate-should-return-false-on-auth-failure",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-findtestcase-should-find-test-case-by-summary",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-findtestcase-should-return-undefined-when-not-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-createtestcase-should-create-a-test-case",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-createtestrun-should-create-a-test-run",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-addtestexecution-should-add-a-test-execution",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-listproducts-should-list-products",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-findproductbyname-should-find-product-by-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-findproductbyname-should-return-undefined-for-non-existent-product",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-listbuilds-should-list-builds-for-a-product",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-getorcreatebuild-should-return-existing-build-if-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-getorcreatebuild-should-create-build-if-not-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-listcategories-should-list-categories-for-a-product",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-getdefaultcategoryid-should-return-first-category-id",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-getdefaultcategoryid-should-return-1-as-fallback-when-no-categories",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-getstatusmap-should-build-status-map-from-api",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-getstatusmap-should-use-fallbacks-when-statuses-not-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-circuit-breaker-should-expose-circuit-breaker-state",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-circuit-breaker-should-reset-circuit-breaker",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-auto-authentication-should-auto-authenticate-when-calling-api-methods-without-prior-auth",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-http→https-auto-upgrade-should-auto-upgrade-to-https-on-400-plain-http-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-http→https-auto-upgrade-should-normalize-http://host:443-to-https://host",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-http→https-auto-upgrade-should-keep-https://-urls-unchanged",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-http→https-auto-upgrade-should-keep-http://-non-443-urls-unchanged",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-ingestlogline-should-parse-a-valid-upload_complete-event",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-ingestlogline-should-ignore-non-json-lines",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-ingestlogline-should-ignore-non-upload-events",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-toprometheustext-should-return-placeholder-when-no-data",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-toprometheustext-should-generate-valid-prometheus-format",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-toprometheustext-should-include-timestamp",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-toprometheustext-should-include-all-test-outcome-counters",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-getlatest-should-return-null-when-no-data",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-getlatest-should-return-latest-snapshot",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-multiple-ingestions-should-keep-only-the-latest-snapshot-for-prometheus-output",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slacknotifier-should-send-summary-to-slack",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slacknotifier-should-send-failure-alert",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slacknotifier-should-return-false-on-slack-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jiranotifier-should-add-comment-to-jira-issue",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jiranotifier-should-return-false-on-jira-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "notificationmanager-should-detect-slack-configured",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "notificationmanager-should-detect-jira-configured",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "notificationmanager-should-notify-all-channels",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "loadnotificationconfig-should-load-slack-config-from-env",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "loadnotificationconfig-should-load-jira-config-from-env",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "loadnotificationconfig-should-return-empty-config-when-no-env-vars-set",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "retryhandler-jitter-should-add-jitter-to-delay-delays-vary",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "retryhandler-jitter-should-respect-maxdelayms-cap",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "retryhandler-rate-limiting-429-should-retry-on-http-429",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "retryhandler-rate-limiting-429-should-use-retry-after-header-when-present",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "retryhandler-rate-limiting-429-should-not-retry-4xx-errors-other-than-429",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "getretryafterdelay-should-parse-retry-after-header-in-seconds",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "getretryafterdelay-should-parse-x-ratelimit-reset-as-unix-timestamp",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "getretryafterdelay-should-return-null-when-no-headers-present",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "circuitbreaker-should-open-after-threshold-failures",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "circuitbreaker-should-transition-to-half-open-after-timeout",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-normalizevitest-should-normalize-test-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-normalizevitest-should-remove-special-characters",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-normalizevitest-should-add-filepath-prefix",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-normalizemocha-should-normalize-with-classname-prefix",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-normalizemocha-should-handle-empty-classname",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-normalizegeneric-should-normalize-and-lowercase",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-normalizegeneric-should-trim-and-remove-extra-spaces",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-normalizetestname-should-trim-and-collapse-spaces",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-parsepriority-should-parse-p1-from-test-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-parsepriority-should-parse-p3-from-test-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-parsepriority-should-parse-critical-from-metadata",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-parsepriority-should-default-to-p1",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-parsestatus-should-map-passed-to-passed",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-parsestatus-should-map-failed-to-failed",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-parsestatus-should-map-skipped-to-idle",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-analyzetestfile-should-detect-vitest-format",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-analyzetestfile-should-detect-jest-format",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-analyzetestfile-should-detect-mocha-format",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-priority_map-should-have-p1-p5-mapped",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-normalizer-status_map-should-map-test-outcomes",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "retryhandler-should-succeed-on-first-try",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "retryhandler-should-retry-on-failure",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "retryhandler-should-not-retry-on-auth-errors",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "retryhandler-should-not-retry-on-validation-errors",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "circuitbreaker-should-start-in-closed-state",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "circuitbreaker-should-open-after-failure-threshold",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "circuitbreaker-should-succeed-after-half-open",
+    "error": "Circuit breaker is open"
+  }
+]

@@ -1,10 +1,10 @@
 {
-  "baseUrl": "${KIWI_URL}",
-  "username": "${KIWI_USERNAME}",
-  "password": "${KIWI_PASSWORD}",
+  "baseUrl": "https://paulita-unbreathed-blair.ngrok-free.dev",
+  "username": "admin",
+  "password": "axfwxZMnJK",
   "defaultProduct": "EscapeKit",
   "defaultPlanId": 1,
   "testRunTemplate": "AutoTest-{DATE}",
-  "timeout": 5000,
+  "timeout": 30000,
   "retries": 3
 }

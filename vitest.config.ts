@@ -4,21 +4,14 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
-    reporter: ['json', 'verbose'],
+    reporters: ['json'],
     outputFile: {
       json: 'vitest-results.json',
     },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      exclude: [
-        'node_modules/',
-        'tests/',
-        'dist/',
-        '**/*.test.ts',
-        '**/*.spec.ts',
-        '**/types/',
-      ],
+      exclude: ['node_modules/', 'tests/', 'dist/', '**/*.test.ts', '**/*.spec.ts', '**/types/'],
     },
   },
 });
