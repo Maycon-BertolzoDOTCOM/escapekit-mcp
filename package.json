@@ -19,7 +19,7 @@
     "build:cli": "tsc -p tsconfig.cli.json",
     "start": "node dist/server.js",
     "cli": "tsx cli/index.ts",
-    "test": "vitest",
+    "test": "vitest --coverage",
     "test:coverage": "vitest --coverage",
     "test:systemeval": "bash .comate/systemeval/run-systemeval.sh",
     "lint": "eslint src --ext .ts",

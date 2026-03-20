@@ -20,6 +20,22 @@ test:
     paths:
       - ${TEST_RESULTS_FILE}
       - coverage/
+
+# Upload coverage to Codecov
+upload-coverage:
+  stage: upload
+  image: node:${NODE_VERSION}
+  script:
+    - npm install -g codecov
+    - codecov --file ./coverage/coverage-final.json --flags unittests
+  needs:
+    - test
+  dependencies:
+    - test
+  only:
+    - main
+    - develop
+  when: on_success
     expire_in: 30 days
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
   only:
@@ -36,7 +52,7 @@ upload-to-kiwi-tcms:
     - |
       if [ -f "${TEST_RESULTS_FILE}" ]; then
         echo "Uploading test results to Kiwi TCMS..."
-        npx ts-node scripts/kiwi-upload.ts \
+        npx tsx scripts/kiwi-upload-rest.ts \
           --file ${TEST_RESULTS_FILE} \
           --framework vitest \
           --product-id ${KIWI_PRODUCT_ID} \
@@ -64,7 +80,7 @@ upload-manual:
     - |
       if [ -f "${TEST_RESULTS_FILE}" ]; then
         echo "Manual upload of test results to Kiwi TCMS..."
-        npx ts-node scripts/kiwi-upload.ts \
+        npx tsx scripts/kiwi-upload-rest.ts \
           --file ${TEST_RESULTS_FILE} \
           --framework vitest \
           --product-id ${KIWI_PRODUCT_ID} \
@@ -88,7 +104,7 @@ test-report:
       if [ -f "${TEST_RESULTS_FILE}" ]; then
         echo "Test Results Summary:"
         echo "====================="
-        npx ts-node scripts/kiwi-upload.ts \
+        npx tsx scripts/kiwi-upload-rest.ts \
           --file ${TEST_RESULTS_FILE} \
           --framework vitest \
           --dry-run
