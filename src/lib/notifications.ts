@@ -42,6 +42,33 @@ export interface UploadSummary {
 
 // ─── Slack ──────────────────────────────────────────────
 
+type SlackText = {
+  type: 'plain_text' | 'mrkdwn';
+  text: string;
+  emoji?: boolean;
+};
+
+type SlackAccessory = {
+  type: 'button';
+  text: SlackText;
+  url: string;
+  style?: 'primary' | 'danger';
+};
+
+
+
+type SlackBlock = {
+  type: 'header';
+  text: SlackText;
+} | {
+  type: 'section';
+  text?: SlackText;
+  fields?: SlackText[];
+} | {
+  type: 'actions';
+  elements: SlackAccessory[];
+};
+
 export class SlackNotifier {
   constructor(private config: SlackConfig) {}
 
@@ -51,7 +78,7 @@ export class SlackNotifier {
     const failEmoji = summary.failed > 0 ? '❌' : '';
     const errEmoji = summary.errors > 0 ? '⚠️' : '';
 
-    const blocks: any[] = [
+    const blocks: SlackBlock[] = [
       {
         type: 'header',
         text: {
@@ -95,8 +122,8 @@ export class SlackNotifier {
         blocks,
       });
       return true;
-    } catch (error: any) {
-      console.error('Slack notification failed:', error.message);
+    } catch (error: unknown) {
+      console.error('Slack notification failed:', error instanceof Error ? error.message : String(error));
       return false;
     }
   }
@@ -110,7 +137,7 @@ export class SlackNotifier {
       .map(f => `• \`${f.name}\`: ${f.error.substring(0, 100)}`)
       .join('\n');
 
-    const blocks: any[] = [
+    const blocks: SlackBlock[] = [
       {
         type: 'header',
         text: { type: 'plain_text', text: '🔴 Test Failures Detected' },
@@ -142,8 +169,8 @@ export class SlackNotifier {
         blocks,
       });
       return true;
-    } catch (error: any) {
-      console.error('Slack failure alert failed:', error.message);
+    } catch (error: unknown) {
+      console.error('Slack failure alert failed:', error instanceof Error ? error.message : String(error));
       return false;
     }
   }
@@ -158,7 +185,7 @@ export class JiraNotifier {
     this.auth = Buffer.from(`${config.email}:${config.apiToken}`).toString('base64');
   }
 
-  private async request<T>(method: 'GET' | 'POST' | 'PUT', path: string, data?: any): Promise<T> {
+  private async request<T>(method: 'GET' | 'POST' | 'PUT', path: string, data?: unknown): Promise<T> {
     const response = await axios.request({
       method,
       url: `${this.config.baseUrl}/rest/api/3${path}`,
@@ -264,19 +291,19 @@ export class JiraNotifier {
     try {
       await this.request('POST', `/issue/${issueKey}/comment`, body);
       return true;
-    } catch (error: any) {
-      console.error('Jira comment failed:', error.message);
+    } catch (error: unknown) {
+      console.error('Jira comment failed:', error instanceof Error ? error.message : String(error));
       return false;
     }
   }
 
   async findIssuesByLabel(label: string): Promise<string[]> {
     try {
-      const data = await this.request<any>(
+      const data = await this.request<{issues: Array<{key: string}>}>(
         'GET',
         `/search?jql=labels=${label}&fields=key&maxResults=10`
       );
-      return data.issues?.map((i: any) => i.key) || [];
+      return data.issues?.map(i => i.key) || [];
     } catch {
       return [];
     }
@@ -288,8 +315,8 @@ export class JiraNotifier {
         transition: { id: transitionId },
       });
       return true;
-    } catch (error: any) {
-      console.error('Jira transition failed:', error.message);
+    } catch (error: unknown) {
+      console.error('Jira transition failed:', error instanceof Error ? error.message : String(error));
       return false;
     }
   }
@@ -319,7 +346,7 @@ export class NotificationManager {
   }
 
   async notifyAll(summary: UploadSummary, jiraIssueKey?: string): Promise<void> {
-    const promises: Promise<any>[] = [];
+    const promises: Promise<unknown>[] = [];
 
     if (this.slack) {
       promises.push(this.slack.sendSummary(summary));

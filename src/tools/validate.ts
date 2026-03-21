@@ -64,7 +64,7 @@ export async function validateReality(
         description: issue.suggestion || issue.message,
         file: issue.file || 'N/A',
         location: { line: issue.line || 0, column: 0 },
-        autoFixable: engine.canFix(issue.type as any),
+        autoFixable: engine.canFix(issue.type),
       })),
       readyForProduction: result.canDeploy,
       timestamp: new Date().toISOString(),

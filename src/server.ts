@@ -5,16 +5,38 @@
  * for analyzing, generating, and validating AI-generated sandbox code.
  */
 
-import { generateId, createErrorResponse, createSuccessResponse } from './models/schemas.js';
+import { generateId, createErrorResponse, createSuccessResponse, AnalysisResult } from './models/schemas.js';
 import { analyzeCode } from './tools/analyze.js';
 import { generateEscapeKit } from './tools/generate.js';
 
 // Note: Using a simple implementation for now
 // TODO: Replace with actual Photon Skill or FastMCP integration
+interface MCPParams {
+  code?: string;
+  language?: string;
+  sandbox_type?: string;
+  enable_security_analysis?: boolean;
+  analysis_result?: unknown;
+  source_code?: string;
+  target_platform?: string;
+  output_dir?: string;
+  include_docker?: boolean;
+  include_ci?: boolean;
+  force?: boolean;
+  dry_run?: boolean;
+  project_path?: string;
+  validation_level?: string;
+}
+
 interface MCPTool {
   name: string;
   description: string;
-  execute: (params: unknown) => Promise<unknown>;
+  execute: (params: MCPParams) => Promise<unknown>;
+}
+
+// Type guard for MCPParams
+function isMCPParams(p: unknown): p is MCPParams {
+  return typeof p === 'object' && p !== null;
 }
 
 class MCPServer {
@@ -33,6 +55,11 @@ class MCPServer {
 
     try {
       console.log(`[MCP] Executing tool: ${toolName}`);
+      
+      if (!isMCPParams(params)) {
+        return createErrorResponse('Invalid parameters format', 'INVALID_PARAMETERS');
+      }
+      
       const result = await tool.execute(params);
       return result;
     } catch (error) {
@@ -61,7 +88,7 @@ const server = new MCPServer();
 server.registerTool({
   name: 'analyze_sandbox_code',
   description: 'Analyze AI-generated code to identify sandbox dependencies, ghost imports, and other issues. Optionally enable security analysis to detect malicious postinstall scripts.',
-  execute: async (params: any) => {
+  execute: async (params: MCPParams) => {
     const { 
       code, 
       language = 'javascript', 
@@ -83,7 +110,7 @@ server.registerTool({
 server.registerTool({
   name: 'generate_escape_kit',
   description: 'Generate a portable project based on analysis results with real dependencies and polyfills',
-  execute: async (params: any) => {
+  execute: async (params: MCPParams) => {
     const {
       analysis_result,
       source_code = '',
@@ -97,6 +124,23 @@ server.registerTool({
 
     if (!analysis_result) {
       return createErrorResponse('analysis_result parameter is required', 'MISSING_PARAMETER');
+    }
+    
+    // Type guard for AnalysisResult
+    function isAnalysisResult(r: unknown): r is AnalysisResult {
+      return (
+        typeof r === 'object' && 
+        r !== null && 
+        'analysisId' in r && 
+        'timestamp' in r && 
+        'language' in r && 
+        'summary' in r &&
+        'confidenceScore' in r
+      );
+    }
+    
+    if (!isAnalysisResult(analysis_result)) {
+      return createErrorResponse('Invalid analysis_result format', 'INVALID_ANALYSIS_RESULT');
     }
 
     return await generateEscapeKit(
@@ -115,7 +159,7 @@ server.registerTool({
 server.registerTool({
   name: 'validate_reality',
   description: 'Validate generated code in real environment with runtime tests and performance metrics',
-  execute: async (params: any) => {
+  execute: async (params: MCPParams) => {
     const { project_path, validation_level = 'standard' } = params;
     void validation_level; // TODO: Use validation_level when implementing validation logic
 

@@ -99,7 +99,7 @@ export class DockerEnvironment implements Environment {
 
     // 4. Wait for container to be ready
     const serverUrl = `http://localhost:${this.port}`;
-    const ready = await this.waitForReady(serverUrl, this.options.startupTimeoutMs!);
+    const ready = await this.waitForReady(serverUrl, this.options.startupTimeoutMs ?? 60000);
     result.startupTimeMs = Date.now() - startTime;
 
     if (!ready) {
@@ -182,7 +182,7 @@ export class DockerEnvironment implements Environment {
       try {
         const resp = await this.fetchWithTimeout(
           `${url}${path}`,
-          this.options.healthCheckTimeoutMs!
+          this.options.healthCheckTimeoutMs ?? 5000
         );
         checks.push({
           name: `docker:${path}`,
@@ -207,7 +207,7 @@ export class DockerEnvironment implements Environment {
       try {
         const resp = await this.fetchWithTimeout(
           `${url}${endpoint}`,
-          this.options.healthCheckTimeoutMs!
+          this.options.healthCheckTimeoutMs ?? 5000
         );
         checks.push({
           endpoint,
@@ -290,11 +290,12 @@ ${startScript ? `CMD ["npm", "run", "${startScript}"]` : 'CMD ["node", "index.js
         reject(new Error(`Request to ${url} timed out`));
       }, timeoutMs);
 
-      get(url, (res: any) => {
+      get(url, (res: import('http').IncomingMessage) => {
         clearTimeout(timeout);
+        const statusCode = res.statusCode ?? 500;
         resolve({
-          ok: res.statusCode >= 200 && res.statusCode < 400,
-          status: res.statusCode,
+          ok: statusCode >= 200 && statusCode < 400,
+          status: statusCode,
           latencyMs: Date.now() - startTime,
         });
       }).on('error', (err: Error) => {

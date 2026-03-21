@@ -1,10 +1,18 @@
 import { TestResult } from './types';
 import { logger } from '../logger';
 
+function isRawResult(r: unknown): r is { name: string; status: string; duration?: number; error?: string } {
+  return typeof r === 'object' && r !== null && 'name' in r && 'status' in r;
+}
+
 export class TestResultParser {
-  static parse(results: any[]): TestResult[] {
+  static parse(results: unknown[]): TestResult[] {
     return results.map(result => {
       try {
+        if (!isRawResult(result)) {
+          throw new Error('Invalid test result format');
+        }
+        
         return {
           testCase: this.normalizeCaseName(result.name),
           outcome: this.mapOutcome(result.status),

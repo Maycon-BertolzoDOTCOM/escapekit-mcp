@@ -418,7 +418,7 @@ export interface ValidationRecord {
   /**
    * Validation details
    */
-  details?: Record<string, any>;
+  details?: Record<string, unknown>;
   
   /**
    * Error message (if failed)
@@ -628,7 +628,7 @@ export interface Metadata {
   /**
    * Custom fields (extensible)
    */
-  customFields?: Record<string, any>;
+  customFields?: Record<string, unknown>;
 }
 
 /**

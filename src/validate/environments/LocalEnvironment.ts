@@ -62,7 +62,7 @@ export class LocalEnvironment implements Environment {
   async cleanup(): Promise<void> {
     if (this.process && !this.process.killed) {
       try {
-        process.kill(-this.process.pid!);
+        if (this.process.pid) process.kill(-this.process.pid);
       } catch {
         this.process.kill('SIGKILL');
       }
@@ -106,7 +106,7 @@ export class LocalEnvironment implements Environment {
         if (readyPatterns.some(p => p.test(data)) && foundUrl) {
           hasResolved = true;
           clearTimeout(timeout);
-          setTimeout(() => resolve(foundUrl!), 500);
+          if (foundUrl) setTimeout(() => resolve(foundUrl), 500);
         }
       };
 
@@ -154,7 +154,7 @@ export class LocalEnvironment implements Environment {
       try {
         const resp = await this.fetchWithTimeout(
           `${url}${path}`,
-          this.options.healthCheckTimeoutMs!
+          this.options.healthCheckTimeoutMs ?? 5000
         );
         if (resp.ok) {
           checks.push({
@@ -175,7 +175,7 @@ export class LocalEnvironment implements Environment {
 
   private async checkEndpoint(url: string, name: string): Promise<HealthCheck> {
     try {
-      const resp = await this.fetchWithTimeout(url, this.options.healthCheckTimeoutMs!);
+      const resp = await this.fetchWithTimeout(url, this.options.healthCheckTimeoutMs ?? 5000);
       return {
         name,
         passed: resp.ok,
@@ -216,7 +216,7 @@ export class LocalEnvironment implements Environment {
             try {
               const resp = await this.fetchWithTimeout(
                 `${serverUrl}${endpoint}`,
-                this.options.healthCheckTimeoutMs!
+                this.options.healthCheckTimeoutMs ?? 5000
               );
               checks.push({
                 endpoint,
@@ -255,11 +255,12 @@ export class LocalEnvironment implements Environment {
         reject(new Error(`Request to ${url} timed out after ${timeoutMs}ms`));
       }, timeoutMs);
 
-      get(url, (res: any) => {
+      get(url, (res: import('http').IncomingMessage) => {
         clearTimeout(timeout);
+        const statusCode = res.statusCode ?? 500;
         resolve({
-          ok: res.statusCode >= 200 && res.statusCode < 400,
-          status: res.statusCode,
+          ok: statusCode >= 200 && statusCode < 400,
+          status: statusCode,
           latencyMs: Date.now() - startTime,
         });
       }).on('error', (err: Error) => {

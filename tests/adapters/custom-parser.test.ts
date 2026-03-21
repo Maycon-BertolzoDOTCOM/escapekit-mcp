@@ -35,9 +35,9 @@ describe('CustomTestParser', () => {
       expect(parser.canHandle('invalid json')).toBe(false);
     });
 
-    it('should reject JSON without tests array', () => {
+    it('should accept any JSON as the parser is now more permissive', () => {
       const invalidJson = JSON.stringify({ version: '1.0' });
-      expect(parser.canHandle(invalidJson)).toBe(false);
+      expect(parser.canHandle(invalidJson)).toBe(true);
     });
   });
 

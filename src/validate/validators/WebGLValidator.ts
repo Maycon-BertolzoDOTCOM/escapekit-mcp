@@ -26,7 +26,7 @@ export class WebGLValidator {
   async validate(url: string): Promise<WebGLCheckResult> {
     this.log.info('Starting WebGL validation', { url });
 
-    let chromium: any;
+    let chromium: typeof import('@playwright/test').chromium;
     try {
       const playwright = await import('@playwright/test');
       chromium = playwright.chromium;
@@ -54,7 +54,7 @@ export class WebGLValidator {
     };
 
     const startTime = Date.now();
-    let browser: any = null;
+    let browser: import('@playwright/test').Browser | null = null;
 
     try {
       browser = await chromium.launch({
@@ -81,22 +81,22 @@ export class WebGLValidator {
 
       // Check for canvas and WebGL
       const canvasData = await page.evaluate(() => {
-        const doc = (globalThis as any).document;
-        const canvases = Array.from(doc.querySelectorAll('canvas')) as any[];
+        const doc = window.document;
+        const canvases = Array.from(doc.querySelectorAll('canvas'));
         let hasWebGL = false;
         let hasWebGL2 = false;
 
         for (const canvas of canvases) {
           try {
             const gl =
-              (canvas as any).getContext('webgl') ||
-              (canvas as any).getContext('experimental-webgl');
+              canvas.getContext('webgl') ||
+              canvas.getContext('experimental-webgl');
             if (gl) hasWebGL = true;
           } catch {
             // WebGL not available for this canvas
           }
           try {
-            const gl2 = (canvas as any).getContext('webgl2');
+            const gl2 = canvas.getContext('webgl2');
             if (gl2) hasWebGL2 = true;
           } catch {
             // WebGL2 not available for this canvas
@@ -112,7 +112,7 @@ export class WebGLValidator {
 
       // Check if fallback is used (e.g., CSS 2D transform instead of WebGL)
       const hasFallback = await page.evaluate(() => {
-        const doc = (globalThis as any).document;
+        const doc = window.document;
         return !!(
           doc.querySelector('[data-fallback]') ||
           doc.querySelector('.webgl-fallback') ||

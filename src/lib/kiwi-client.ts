@@ -7,6 +7,14 @@ import axios, { AxiosInstance } from 'axios';
 import { RetryHandler, CircuitBreaker, createRetryHandler, createCircuitBreaker } from './retry';
 import { getLogger } from './logger';
 
+export interface KiwiRawResult {
+  id: number;
+  name?: string;
+  summary?: string;
+  product?: number;
+  [key: string]: unknown;
+}
+
 export interface KiwiClientConfig {
   baseUrl: string;
   username: string;
@@ -164,7 +172,7 @@ export class KiwiClient {
 
   // ─── JSON-RPC Core ─────────────────────────────────────
 
-  private async jsonrpc<T>(method: string, params?: any): Promise<T> {
+  private async jsonrpc<T>(method: string, params?: unknown[] | Record<string, unknown>): Promise<T> {
     this.requestId++;
     const payload = {
       jsonrpc: '2.0',
@@ -226,9 +234,12 @@ export class KiwiClient {
     if (cached && Date.now() < cached.expiresAt) return cached.data;
 
     try {
-      const results = await this.jsonrpc<any[]>('TestCase.filter', [{ summary }]);
+      const results = await this.jsonrpc<KiwiRawResult[]>('TestCase.filter', [{ summary }]);
       if (results.length > 0) {
-        const tc: KiwiTestCase = { id: results[0].id, summary: results[0].summary };
+        const tc: KiwiTestCase = { 
+          id: results[0].id, 
+          summary: results[0].summary !== undefined ? results[0].summary : String(results[0].summary) 
+        };
         this.testCaseCache.set(summary, this.setCache(tc));
         return tc;
       }
@@ -241,8 +252,11 @@ export class KiwiClient {
   async createTestCase(data: TestCaseData): Promise<KiwiTestCase> {
     await this.ensureAuth();
 
-    const result = await this.jsonrpc<any>('TestCase.create', [data]);
-    const tc: KiwiTestCase = { id: result.id, summary: result.summary };
+    const result = await this.jsonrpc<KiwiRawResult>('TestCase.create', [data]);
+    const tc: KiwiTestCase = { 
+      id: result.id, 
+      summary: result.summary !== undefined ? result.summary : String(result.summary) 
+    };
     this.testCaseCache.set(data.summary, this.setCache(tc));
     return tc;
   }
@@ -276,14 +290,16 @@ export class KiwiClient {
   async validateProduct(productId: number): Promise<KiwiProduct> {
     if (this.validatedProducts.has(productId)) {
       const products = this.getFromCache(this.productCache) || (await this.listProducts());
-      return products.find(p => p.id === productId)!;
+      const product = products.find(p => p.id === productId);
+      if (!product) throw new Error(`Product ID ${productId} not found`);
+      return product;
     }
 
     const products = await this.listProducts();
     const product = products.find(p => p.id === productId);
 
     if (!product) {
-      const available = products.map(p => `${p.name} (ID: ${p.id})`).join(', ');
+      const available = products.map(p => `${p.name !== undefined ? p.name : String(p.name)} (ID: ${p.id})`).join(', ');
       throw new Error(`Product ID ${productId} not found. Available: ${available || 'none'}`);
     }
 
@@ -297,14 +313,16 @@ export class KiwiClient {
       const categories =
         this.getFromCache(this.categoryCache.get(productId)) ||
         (await this.listCategories(productId));
-      return categories.find(c => c.id === categoryId)!;
+      const category = categories.find(c => c.id === categoryId);
+      if (!category) throw new Error(`Category ID ${categoryId} not found`);
+      return category;
     }
 
     const categories = await this.listCategories(productId);
     const category = categories.find(c => c.id === categoryId);
 
     if (!category) {
-      const available = categories.map(c => `${c.name} (ID: ${c.id})`).join(', ');
+      const available = categories.map(c => `${c.name !== undefined ? c.name : String(c.name)} (ID: ${c.id})`).join(', ');
       throw new Error(
         `Category ID ${categoryId} not found for product ${productId}. Available: ${available || 'none'}`
       );
@@ -318,8 +336,11 @@ export class KiwiClient {
 
   async createTestRun(data: TestRunData): Promise<KiwiTestRun> {
     await this.ensureAuth();
-    const result = await this.jsonrpc<any>('TestRun.create', [data]);
-    return { id: result.id, summary: result.summary };
+    const result = await this.jsonrpc<KiwiRawResult>('TestRun.create', [data]);
+    return { 
+      id: result.id, 
+      summary: result.summary !== undefined ? result.summary : String(result.summary) 
+    };
   }
 
   async addTestCaseToRun(runId: number, caseId: number): Promise<void> {
@@ -329,21 +350,22 @@ export class KiwiClient {
 
   // ─── TestExecutions ────────────────────────────────────
 
-  async addTestExecution(data: TestExecutionData): Promise<any> {
+  async addTestExecution(data: TestExecutionData): Promise<KiwiRawResult> {
     await this.ensureAuth();
 
     // Step 1: Add test case to the run (idempotent)
     try {
       await this.jsonrpc('TestRun.add_case', [data.run, data.case]);
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Case may already be in the run, ignore "already exists" errors
-      if (!error?.message?.includes('already')) {
-        this.logger.debug(`add_case error (may be already added): ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      if (!errorMessage.includes('already')) {
+        this.logger.debug(`add_case error (may be already added): ${errorMessage}`);
       }
     }
 
     // Step 2: Find the execution ID
-    const executions = await this.jsonrpc<any[]>('TestExecution.filter', [
+    const executions = await this.jsonrpc<KiwiRawResult[]>('TestExecution.filter', [
       {
         run: data.run,
         case: data.case,
@@ -367,7 +389,7 @@ export class KiwiClient {
     ]);
   }
 
-  async updateTestExecution(executionId: number, data: Partial<TestExecutionData>): Promise<any> {
+  async updateTestExecution(executionId: number, data: Partial<TestExecutionData>): Promise<KiwiRawResult> {
     await this.ensureAuth();
     return this.jsonrpc('TestExecution.update', [[executionId], data]);
   }
@@ -381,8 +403,8 @@ export class KiwiClient {
     if (cached && Date.now() < cached.expiresAt) return cached.data;
 
     try {
-      const results = await this.jsonrpc<any[]>('Build.filter', [{ product: productId }]);
-      const builds = results.map(b => ({ id: b.id, name: b.name }));
+      const results = await this.jsonrpc<KiwiRawResult[]>('Build.filter', [{ product: productId }]);
+      const builds = results.map(b => ({ id: b.id, name: b.name !== undefined ? b.name : String(b.name) }));
       this.buildCache.set(productId, this.setCache(builds));
       return builds;
     } catch {
@@ -392,9 +414,9 @@ export class KiwiClient {
 
   async createBuild(data: BuildData): Promise<KiwiBuild> {
     await this.ensureAuth();
-    const result = await this.jsonrpc<any>('Build.create', [data]);
+    const result = await this.jsonrpc<KiwiRawResult>('Build.create', [data]);
     this.buildCache.delete(data.product);
-    return { id: result.id, name: result.name };
+    return { id: result.id, name: result.name !== undefined ? result.name : String(result.name) };
   }
 
   async getOrCreateBuild(
@@ -406,14 +428,14 @@ export class KiwiClient {
 
     // Search all builds (Kiwi JSON-RPC Build.filter doesn't filter by product reliably)
     try {
-      const allBuilds = await this.jsonrpc<any[]>('Build.filter', [{}]);
+      const allBuilds = await this.jsonrpc<KiwiRawResult[]>('Build.filter', [{}]);
       const existing = allBuilds.find(b => b.name === buildName);
-      if (existing) return { id: existing.id, name: existing.name };
+      if (existing) return { id: existing.id, name: existing.name !== undefined ? existing.name : String(existing.name) };
     } catch {
       /* ignore */
     }
 
-    const data: any = {
+    const data: BuildData = {
       name: buildName,
       product: productId,
       is_active: true,
@@ -430,8 +452,8 @@ export class KiwiClient {
     if (cached) return cached;
 
     await this.ensureAuth();
-    const results = await this.jsonrpc<any[]>('Product.filter', [{}]);
-    const products = results.map(p => ({ id: p.id, name: p.name }));
+    const results = await this.jsonrpc<KiwiRawResult[]>('Product.filter', [{}]);
+    const products = results.map(p => ({ id: p.id, name: p.name !== undefined ? p.name : String(p.name) }));
     this.productCache = this.setCache(products);
     return products;
   }
@@ -454,8 +476,12 @@ export class KiwiClient {
     const cached = this.categoryCache.get(productId);
     if (cached && Date.now() < cached.expiresAt) return cached.data;
 
-    const results = await this.jsonrpc<any[]>('Category.filter', [{ product: productId }]);
-    const categories = results.map(c => ({ id: c.id, name: c.name, product: c.product }));
+    const results = await this.jsonrpc<KiwiRawResult[]>('Category.filter', [{ product: productId }]);
+    const categories = results.map(c => ({ 
+      id: c.id, 
+      name: c.name !== undefined ? c.name : String(c.name),
+      product: c.product !== undefined ? Number(c.product) : undefined
+    }));
     this.categoryCache.set(productId, this.setCache(categories));
     return categories;
   }
@@ -466,7 +492,7 @@ export class KiwiClient {
 
     this.logger.warn(`No categories found for product ${productId}, creating default`);
     await this.ensureAuth();
-    const result = await this.jsonrpc<any>('Category.create', [
+    const result = await this.jsonrpc<KiwiRawResult>('Category.create', [
       { name: 'Default', product: productId },
     ]);
     this.categoryCache.delete(productId);
@@ -479,7 +505,7 @@ export class KiwiClient {
     await this.ensureAuth();
 
     try {
-      const results = await this.jsonrpc<any[]>('Version.filter', [
+      const results = await this.jsonrpc<KiwiRawResult[]>('Version.filter', [
         { product: productId, value: versionValue },
       ]);
       if (results.length > 0) return results[0].id;
@@ -487,7 +513,7 @@ export class KiwiClient {
       /* ignore */
     }
 
-    const result = await this.jsonrpc<any>('Version.create', [
+    const result = await this.jsonrpc<KiwiRawResult>('Version.create', [
       { product: productId, value: versionValue },
     ]);
     return result.id;
@@ -500,15 +526,17 @@ export class KiwiClient {
     if (cached) return cached;
 
     await this.ensureAuth();
-    const statuses = await this.jsonrpc<any[]>('TestExecutionStatus.filter', [{}]);
+    const statuses = await this.jsonrpc<KiwiRawResult[]>('TestExecutionStatus.filter', [{}]);
     const map: Record<string, number> = {};
 
     for (const s of statuses) {
-      const key = s.name.toLowerCase();
-      if (key === 'passed') map['passed'] = s.id;
-      if (key === 'failed') map['failed'] = s.id;
-      if (key === 'idle') map['skipped'] = s.id;
-      if (key === 'waived') map['waived'] = s.id;
+      if (s.name) {
+        const key = s.name.toLowerCase();
+        if (key === 'passed') map['passed'] = s.id;
+        if (key === 'failed') map['failed'] = s.id;
+        if (key === 'idle') map['skipped'] = s.id;
+        if (key === 'waived') map['waived'] = s.id;
+      }
     }
 
     if (!map['passed']) map['passed'] = 2;

@@ -21,10 +21,15 @@ interface PlaywrightTest {
   results?: PlaywrightTestResult[];
 }
 
+interface PlaywrightError {
+  message: string;
+  stack?: string;
+}
+
 interface PlaywrightTestResult {
   workerIndex: number;
   status: 'passed' | 'failed' | 'skipped' | 'timedOut';
-  errors: any[];
+  errors: PlaywrightError[];
   tests: PlaywrightTest[];
   startTime: number;
   duration: number;
@@ -38,9 +43,9 @@ interface PlaywrightSuite {
 }
 
 interface PlaywrightOutput {
-  config?: any;
+  config?: Record<string, unknown>;
   suites: PlaywrightSuite[];
-  errors?: any[];
+  errors?: PlaywrightError[];
   stats?: {
     total: number;
     passed: number;
@@ -157,14 +162,14 @@ export class PlaywrightAdapter implements TestAdapter {
 
   private normalizeTestCaseName(name: string, suite: string): string {
     const normalized = name
-      .replace(/[\s\(\)\[\]]+/g, '-')
+      .replace(/[\s()[\]]+/g, '-')
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '')
       .toLowerCase();
 
     const suitePrefix = suite
       .replace(/\s+/g, '-')
-      .replace(/[>\(\)\[\]]+/g, '-')
+      .replace(/[>()[\]]+/g, '-')
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '')
       .toLowerCase();
@@ -173,6 +178,7 @@ export class PlaywrightAdapter implements TestAdapter {
   }
 
   private stripAnsiColors(text: string): string {
+    // eslint-disable-next-line no-control-regex
     return text.replace(/\x1b\[[0-9;]*m/g, '');
   }
 }

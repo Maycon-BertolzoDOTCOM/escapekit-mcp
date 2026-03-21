@@ -192,14 +192,14 @@ export class MochaAdapter implements TestAdapter {
 
   private normalizeTestCaseName(name: string, classname: string): string {
     const normalized = name
-      .replace(/[\s\(\)\[\]]+/g, '-')
+      .replace(/[\s()[\]]+/g, '-')
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '')
       .toLowerCase();
 
     const classPrefix = classname
       .replace(/\s+/g, '-')
-      .replace(/[\(\)\[\]]+/g, '-')
+      .replace(/[()[\]]+/g, '-')
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '')
       .toLowerCase();
@@ -208,6 +208,7 @@ export class MochaAdapter implements TestAdapter {
   }
 
   private stripAnsiColors(text: string): string {
+    // eslint-disable-next-line no-control-regex
     return text.replace(/\x1b\[[0-9;]*m/g, '');
   }
 }

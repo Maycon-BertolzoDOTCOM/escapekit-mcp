@@ -9,6 +9,14 @@ import { DEFAULT_NPM_REGISTRY_CONFIG, validateNPMRegistryConfig, type NPMRegistr
 import { logger } from '../logger.js';
 import { NPMRegistryError, TimeoutError, PackageNotFoundError } from '../errors.js';
 
+interface NpmPackageData {
+  'dist-tags'?: {
+    latest: string;
+  };
+  version?: string;
+  scripts?: Record<string, string>;
+}
+
 interface PackageInfo {
   name: string;
   version: string;
@@ -214,7 +222,7 @@ export class NPMRegistry {
         throw new PackageNotFoundError(packageName);
       }
 
-      const data = (await response.json()) as any;
+      const data = (await response.json()) as NpmPackageData;
       const version = data['dist-tags']?.latest || data.version || 'unknown';
 
       this.cacheSet(packageName, {
@@ -259,7 +267,7 @@ export class NPMRegistry {
     // Return cached value if present (even if null)
     if (this.scriptsCache.has(cacheKey)) {
       this.logger.debug(`Scripts cache hit for: ${cacheKey}`);
-      return this.scriptsCache.get(cacheKey)!;
+      return this.scriptsCache.get(cacheKey) ?? null;
     }
 
     try {
@@ -319,8 +327,8 @@ export class NPMRegistry {
         );
       }
 
-      const data = (await response.json()) as any;
-      return (data.scripts as Record<string, string>) ?? {};
+      const data = (await response.json()) as NpmPackageData;
+      return data.scripts ?? {};
     } catch (error) {
       clearTimeout(timeoutId);
 

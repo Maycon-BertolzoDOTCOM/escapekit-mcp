@@ -183,14 +183,14 @@ export class CustomTestParser implements TestAdapter {
 
   private normalizeTestCaseName(name: string, suite: string): string {
     const normalized = name
-      .replace(/[\s()\[\]]+/g, '-')
+      .replace(/[\s()[\]]+/g, '-')
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '')
       .toLowerCase();
 
     const suitePrefix = suite
       .replace(/\s+/g, '-')
-      .replace(/[()\[\]]+/g, '-')
+      .replace(/[()[\]]+/g, '-')
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '')
       .toLowerCase();

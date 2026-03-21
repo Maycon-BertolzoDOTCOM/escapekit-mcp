@@ -50,7 +50,7 @@ export class BrowserEnvironment implements Environment {
   async testUrl(url: string): Promise<EnvironmentResult> {
     this.log.info('Testing URL in browser', { url });
 
-    let chromium: any;
+    let chromium: typeof import('@playwright/test').chromium;
     try {
       const playwright = await import('@playwright/test');
       chromium = playwright.chromium;
@@ -77,7 +77,7 @@ export class BrowserEnvironment implements Environment {
     };
 
     const startTime = Date.now();
-    let browser: any = null;
+    let browser: import('@playwright/test').Browser | null = null;
     const jsErrors: string[] = [];
     const consoleErrors: string[] = [];
 
@@ -95,7 +95,7 @@ export class BrowserEnvironment implements Environment {
         result.logs.push(`[browser:js-error] ${err.message}`);
       });
 
-      page.on('console', (msg: any) => {
+      page.on('console', (msg: import('@playwright/test').ConsoleMessage) => {
         if (msg.type() === 'error') {
           consoleErrors.push(msg.text());
           result.logs.push(`[browser:console-error] ${msg.text()}`);

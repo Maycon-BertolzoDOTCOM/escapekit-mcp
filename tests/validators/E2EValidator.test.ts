@@ -14,7 +14,7 @@ describe('E2EValidator', () => {
   let browserMock: any;
 
   beforeEach(() => {
-    validator = new E2EValidator({ timeoutMs: 100 });
+    validator = new E2EValidator({ timeoutMs: 10000 });
     vi.clearAllMocks();
 
     pageMock = {

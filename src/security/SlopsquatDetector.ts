@@ -71,7 +71,7 @@ export class SlopsquatDetector {
 
     // 3. Entropy Check
     const entropy = this.calculateShannonEntropy(packageName);
-    if (entropy > this.options.maxEntropy!) {
+    if (this.options.maxEntropy !== undefined && entropy > this.options.maxEntropy) {
       risks.push(`High name entropy (${entropy.toFixed(2)}), suggesting auto-generated or obfuscated naming.`);
     }
 
@@ -87,7 +87,7 @@ export class SlopsquatDetector {
     if (risks.length > 0) {
       // If it's just a pattern match but no typosquatting, it might be a valid generic name
       // We only flag as Warning if multiple risks overlap or if typosquatting / high entropy is found
-      const isHighRisk = typoTarget || entropy > this.options.maxEntropy! || risks.length > 1 || this.matchesHallucinationPattern(packageName);
+      const isHighRisk = typoTarget || (this.options.maxEntropy !== undefined && entropy > this.options.maxEntropy) || risks.length > 1 || this.matchesHallucinationPattern(packageName);
       
       if (isHighRisk) {
         return {
@@ -152,7 +152,7 @@ export class SlopsquatDetector {
       const distance = this.levenshtein(lowerName, popular);
       
       // If it's 1 edit away, it's highly likely a typosquat (e.g. 'lodsh' vs 'lodash')
-      if (distance > 0 && distance <= this.options.maxDistance!) {
+      if (distance > 0 && this.options.maxDistance !== undefined && distance <= this.options.maxDistance) {
         // Exception: react-dom, react-native shouldn't trigger 'react' distance
         if (lowerName.startsWith(popular + '-')) continue;
         

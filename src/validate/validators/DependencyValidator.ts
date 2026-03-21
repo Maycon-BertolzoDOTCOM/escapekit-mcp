@@ -11,6 +11,26 @@ import { spawn } from 'child_process';
 import { readFile, access, readdir } from 'fs/promises';
 import { join } from 'path';
 import { logger } from '../../logger.js';
+interface PackageJson {
+  name?: string;
+  version?: string;
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+}
+
+interface VulnerabilityInfo {
+  severity?: string;
+  via?: Array<{ title?: string; url?: string }>;
+  fixAvailable?: boolean;
+}
+
+interface OutdatedInfo {
+  current?: string;
+  wanted?: string;
+  latest?: string;
+}
+
 import type {
   DependencyCheckResult,
   GhostPackage,
@@ -74,7 +94,7 @@ export class DependencyValidator {
 
   async checkGhostPackages(
     projectPath: string,
-    packageJson?: Record<string, any>
+    packageJson?: PackageJson
   ): Promise<GhostPackage[]> {
     const pkg = packageJson || (await this.readPackageJson(projectPath));
     if (!pkg) return [];
@@ -125,11 +145,11 @@ export class DependencyValidator {
       const vulnerabilities: Vulnerability[] = [];
 
       if (audit.vulnerabilities) {
-        for (const [name, vuln] of Object.entries(audit.vulnerabilities as Record<string, any>)) {
+        for (const [name, vuln] of Object.entries(audit.vulnerabilities as Record<string, VulnerabilityInfo>)) {
           vulnerabilities.push({
             name,
-            severity: vuln.severity || 'moderate',
-            title: vuln.via?.[0]?.title || vuln.via?.[0] || 'Unknown vulnerability',
+            severity: (vuln.severity && ['critical', 'high', 'moderate', 'low'].includes(vuln.severity) ? vuln.severity : 'moderate') as 'critical' | 'high' | 'moderate' | 'low',
+            title: typeof vuln.via?.[0] === 'string' ? vuln.via[0] : vuln.via?.[0]?.title || 'Unknown vulnerability',
             url: vuln.via?.[0]?.url,
             fixAvailable: !!vuln.fixAvailable,
           });
@@ -152,7 +172,7 @@ export class DependencyValidator {
 
     try {
       const outdated = JSON.parse(result.stdout);
-      return Object.entries(outdated as Record<string, any>).map(([name, info]) => ({
+      return Object.entries(outdated as Record<string, OutdatedInfo>).map(([name, info]) => ({
         name,
         current: info.current || 'unknown',
         wanted: info.wanted || 'unknown',
@@ -262,7 +282,7 @@ export class DependencyValidator {
     return files;
   }
 
-  private async readPackageJson(projectPath: string): Promise<Record<string, any> | null> {
+  private async readPackageJson(projectPath: string): Promise<PackageJson | null> {
     try {
       const content = await readFile(join(projectPath, 'package.json'), 'utf-8');
       return JSON.parse(content);

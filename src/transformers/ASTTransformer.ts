@@ -10,11 +10,12 @@
 
 import { parse as babelParse, ParserOptions } from '@babel/parser';
 import traverseModule from '@babel/traverse';
+import type { NodePath } from '@babel/traverse';
 import * as t from '@babel/types';
 import { parse as recastParse, print as recastPrint } from 'recast';
 
 // Handle both CommonJS and ES module imports for @babel/traverse
-const traverse = (traverseModule as any).default || traverseModule;
+const traverse = ((traverseModule as unknown) as { default: typeof traverseModule }).default || traverseModule;
 
 /**
  * Visitor type for AST traversal
@@ -211,13 +212,13 @@ export class ASTTransformer {
 
     this.traverse(ast, {
       // ES6 import statements: import foo from 'bar'
-      ImportDeclaration(path: any) {
+      ImportDeclaration(path: NodePath<t.ImportDeclaration>) {
         imports.push(path.node);
       },
 
       // CommonJS require: const foo = require('bar')
       // Dynamic import: import('bar')
-      CallExpression(path: any) {
+      CallExpression(path: NodePath<t.CallExpression>) {
         const { node } = path;
         
         // Check for require() calls
@@ -241,7 +242,7 @@ export class ASTTransformer {
       },
 
       // TypeScript type imports: import type { Foo } from 'bar'
-      TSImportType(path: any) {
+      TSImportType(path: NodePath<t.TSImportType>) {
         imports.push(path.node);
       },
     });

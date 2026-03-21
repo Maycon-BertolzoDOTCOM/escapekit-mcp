@@ -150,7 +150,12 @@ export class TemplateEngine {
    */
   compileTemplate(template: string): CompiledTemplate {
     if (this.cache.has(template)) {
-      return this.cache.get(template)!;
+      const cached = this.cache.get(template);
+      if (!cached) {
+        this.cache.delete(template);
+        return this.compileTemplate(template);
+      }
+      return cached;
     }
 
     const compiled: CompiledTemplate = (context: Record<string, unknown>) =>
@@ -296,7 +301,11 @@ export class TemplateEngine {
 
         if (this.helpers.has(helperName)) {
           const argValue = this.resolveValue(argExpr, context);
-          const helperFn = this.helpers.get(helperName)!;
+          const helperFn = this.helpers.get(helperName);
+          if (!helperFn) {
+            this.helpers.delete(helperName);
+            return '';
+          }
           return helperFn(argValue);
         }
       }

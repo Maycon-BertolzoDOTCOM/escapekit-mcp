@@ -143,7 +143,9 @@ export class RuntimeValidator {
         if (!child.killed) {
           // Needs kill -9 to stop child processes spawned by npm
           try {
-            process.kill(-child.pid!); // Ensure we kill the process group (requires detached: true if doing this, or just kill the child)
+            if (child.pid) {
+              process.kill(-child.pid); // Ensure we kill the process group (requires detached: true if doing this, or just kill the child)
+            }
           } catch {
             child.kill('SIGKILL');
           }
@@ -177,7 +179,11 @@ export class RuntimeValidator {
           // Wait a tiny bit for the server to fully bind before killing it and returning
           setTimeout(() => {
              cleanup();
-             resolve(foundUrl!);
+             if (foundUrl) {
+               resolve(foundUrl);
+             } else {
+               reject(new Error('Server ready but no URL detected'));
+             }
           }, 500);
         }
       };

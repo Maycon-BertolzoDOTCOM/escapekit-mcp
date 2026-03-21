@@ -96,10 +96,18 @@ export class E2EValidator {
       // Check canvas and webgl presence (common in generative UI tasks)
       this.log.debug('Evaluating DOM contexts');
       const canvasData = await page.evaluate(() => {
-        const canvases = Array.from((globalThis as any).document.querySelectorAll('canvas')) as any[];
+        if (!('document' in globalThis)) {
+          return { hasCanvas: false, hasWebGL: false };
+        }
+        
+        const canvases = Array.from(document.querySelectorAll('canvas'));
         
         // Check if any canvas successfully initialized a WebGL context
-        const hasWebGL = canvases.some((canvas: any) => {
+        const hasWebGL = canvases.some((canvas) => {
+          if (!(canvas instanceof HTMLCanvasElement)) {
+            return false;
+          }
+          
           try {
             return !!(canvas.getContext('webgl') || canvas.getContext('webgl2') || canvas.getContext('experimental-webgl'));
           } catch {

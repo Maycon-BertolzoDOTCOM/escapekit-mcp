@@ -13,6 +13,12 @@ import { join } from 'path';
 import { logger } from '../../logger.js';
 import type { BuildCheckResult } from '../types.js';
 
+interface PackageJson {
+  scripts?: Record<string, string>;
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+}
+
 export interface BuildValidatorOptions {
   installTimeoutMs?: number;
   buildTimeoutMs?: number;
@@ -237,8 +243,8 @@ export class BuildValidator {
     });
   }
 
-  private cleanupProcess(child: any): void {
-    if (child && !child.killed) {
+  private cleanupProcess(child: import('child_process').ChildProcess): void {
+    if (child && !child.killed && child.pid) {
       try {
         process.kill(-child.pid);
       } catch {
@@ -290,7 +296,7 @@ export class BuildValidator {
     return total;
   }
 
-  private async readPackageJson(projectPath: string): Promise<Record<string, any> | null> {
+  private async readPackageJson(projectPath: string): Promise<PackageJson | null> {
     try {
       const content = await readFile(join(projectPath, 'package.json'), 'utf-8');
       return JSON.parse(content);

@@ -79,7 +79,8 @@ export class IssueGenerator {
       if (!patternsByType.has(pattern.type)) {
         patternsByType.set(pattern.type, []);
       }
-      patternsByType.get(pattern.type)!.push(pattern);
+      const patterns = patternsByType.get(pattern.type);
+      if (patterns) patterns.push(pattern);
     }
 
     // List patterns by type

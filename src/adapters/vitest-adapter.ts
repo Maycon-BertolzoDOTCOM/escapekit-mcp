@@ -41,7 +41,7 @@ interface VitestAssertionResult {
   title: string;
   duration?: number;
   failureMessages?: string[];
-  meta?: any;
+  meta?: Record<string, unknown>;
   tags?: string[];
 }
 
@@ -103,9 +103,9 @@ export class VitestAdapter implements TestAdapter {
       console.log(`   ✓ JSON parsed successfully`);
       console.log(`   Keys: ${Object.keys(data).join(', ')}`);
       console.log(`   Test results count: ${data.testResults?.length || 0}`);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(`\n✗ VitestAdapter parsing error:`);
-      console.error(`   Error message: ${error.message}`);
+      console.error(`   Error message: ${error instanceof Error ? error.message : String(error)}`);
       
       if (error instanceof SyntaxError) {
         const match = error.message.match(/at position (\d+)/);
@@ -116,7 +116,8 @@ export class VitestAdapter implements TestAdapter {
         }
       }
       
-      throw new Error(`Failed to parse Vitest JSON: ${error instanceof Error ? error.message : String(error)}`);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      throw new Error(`Failed to parse Vitest JSON: ${errorMessage}`);
     }
 
     const results: TestResult[] = [];
@@ -205,8 +206,8 @@ export class VitestAdapter implements TestAdapter {
     result: VitestTestCase['result'],
     filepath: string
   ): TestResult {
-    const outcome = this.mapStatus(result!.state);
-    const duration = result!.duration || 0;
+    const outcome = this.mapStatus(result?.state ?? 'skip');
+    const duration = result?.duration ?? 0;
 
     const maxDuration = this.config.maxDuration || 60000;
     const finalOutcome = duration > maxDuration ? 'failed' : outcome;
@@ -218,18 +219,19 @@ export class VitestAdapter implements TestAdapter {
       metadata: {
         framework: 'vitest',
         filepath: filepath,
-        originalStatus: result!.state,
-        isTodo: result!.state === 'todo',
+        originalStatus: result?.state ?? 'skip',
+        isTodo: result?.state === 'todo',
       },
     };
 
-    if (result!.error && (finalOutcome === 'failed' || outcome === 'failed')) {
-      let errorMessage = result!.error.message;
+    if (result?.error && (finalOutcome === 'failed' || outcome === 'failed')) {
+      let errorMessage = result?.error?.message ?? 'Test failed';
       if (this.config.stripAnsiColors) {
         errorMessage = this.stripAnsiColors(errorMessage);
       }
 
-      testResult.error = `${errorMessage}\n\n${result!.error.stack}`;
+      const errorStack = result?.error?.stack ?? '';
+      testResult.error = `${errorMessage}${errorStack ? `\n\n${errorStack}` : ''}`;
     }
 
     return testResult;
@@ -255,7 +257,7 @@ export class VitestAdapter implements TestAdapter {
 
   private normalizeTestCaseName(name: string, filepath: string | undefined): string {
     const normalized = name
-      .replace(/[\s\(\)\[\]]+/g, '-')
+      .replace(/[\s()[]+/g, '-')
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '')
       .toLowerCase();
@@ -276,6 +278,7 @@ export class VitestAdapter implements TestAdapter {
   }
 
   private stripAnsiColors(text: string): string {
+    // eslint-disable-next-line no-control-regex
     return text.replace(/\x1b\[[0-9;]*m/g, '');
   }
 }

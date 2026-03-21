@@ -293,7 +293,8 @@ export class LockFileParser {
     const sortedPaths = [...pathToNode.keys()].sort();
     for (const pkgPath of sortedPaths) {
       if (pkgPath === '') continue;
-      const node = pathToNode.get(pkgPath)!;
+      const node = pathToNode.get(pkgPath);
+      if (!node) continue;
       const parentPath = this.parentPathOf(pkgPath);
       const parent = pathToNode.get(parentPath) ?? root;
 

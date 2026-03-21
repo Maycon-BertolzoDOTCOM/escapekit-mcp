@@ -2,6 +2,15 @@
  * Retry + Circuit Breaker with Jitter and Rate Limiting
  */
 
+export interface AxiosLikeError {
+  response?: {
+    status?: number;
+    headers?: Record<string, string>;
+  };
+  headers?: Record<string, string>;
+  message?: string;
+}
+
 export interface RetryOptions {
   maxRetries: number;
   initialDelayMs: number;
@@ -9,6 +18,10 @@ export interface RetryOptions {
   backoffMultiplier: number;
   jitterFactor: number;
   retryableErrors: string[];
+}
+
+function isAxiosLikeError(e: unknown): e is AxiosLikeError {
+  return typeof e === 'object' && e !== null;
 }
 
 export interface CircuitBreakerOptions {
@@ -78,9 +91,13 @@ export class CircuitBreaker {
 /**
  * Extract retry delay from HTTP 429 response headers
  */
-export function getRetryAfterDelay(error: any): number | null {
+export function getRetryAfterDelay(error: unknown): number | null {
+  if (!isAxiosLikeError(error)) return null;
+  
   // Check Retry-After header (standard)
-  const retryAfter = error?.response?.headers?.['retry-after'] || error?.headers?.['retry-after'];
+  const retryAfter = 
+    (error.response?.headers?.['retry-after'] as string | undefined) || 
+    (error.headers?.['retry-after'] as string | undefined);
 
   if (retryAfter) {
     const parsed = parseInt(retryAfter, 10);
@@ -88,8 +105,9 @@ export function getRetryAfterDelay(error: any): number | null {
   }
 
   // Check X-RateLimit-Reset (some APIs use this)
-  const resetAt =
-    error?.response?.headers?.['x-ratelimit-reset'] || error?.headers?.['x-ratelimit-reset'];
+  const resetAt = 
+    (error.response?.headers?.['x-ratelimit-reset'] as string | undefined) || 
+    (error.headers?.['x-ratelimit-reset'] as string | undefined);
 
   if (resetAt) {
     const resetTime = parseInt(resetAt, 10);
@@ -137,27 +155,38 @@ export class RetryHandler {
     return Math.max(0, Math.round(capped + jitter));
   }
 
-  private isRetryableError(error: any): boolean {
+  private isRetryableError(error: unknown): boolean {
     if (!error) return false;
 
     // HTTP 429 is always retryable
-    if (error?.response?.status === 429) return true;
+    if (isAxiosLikeError(error) && error.response?.status === 429) return true;
 
-    const errorStr = String(error.message || error);
+    const errorStr = isAxiosLikeError(error) 
+      ? String(error.message || error)
+      : String(error);
+    
     return this.options.retryableErrors.some(retryable =>
       errorStr.toLowerCase().includes(retryable.toLowerCase())
     );
   }
 
-  private isNonRetryableError(error: any): boolean {
+  private isNonRetryableError(error: unknown): boolean {
     if (!error) return false;
-    const msg = error.message || '';
+    
+    const msg = isAxiosLikeError(error) 
+      ? (error.message || '')
+      : String(error);
+      
     if (msg.includes('Authentication')) return true;
     if (msg.includes('This field is required')) return true;
     if (msg.includes('does not exist')) return true;
+    
     // HTTP 4xx client errors (except 429)
-    const status = error?.response?.status;
-    if (status && status >= 400 && status < 500 && status !== 429) return true;
+    if (isAxiosLikeError(error)) {
+      const status = error.response?.status;
+      if (status && status >= 400 && status < 500 && status !== 429) return true;
+    }
+    
     return false;
   }
 
@@ -167,12 +196,12 @@ export class RetryHandler {
 
   async execute<T>(fn: () => Promise<T>, _context?: string): Promise<T> {
     this.history = [];
-    let lastError: any;
+    let lastError: unknown;
 
     for (let attempt = 0; attempt <= this.options.maxRetries; attempt++) {
       try {
         return await fn();
-      } catch (error: any) {
+      } catch (error: unknown) {
         lastError = error;
 
         if (this.isNonRetryableError(error)) throw error;
@@ -182,7 +211,7 @@ export class RetryHandler {
           // Check for 429 with Retry-After header
           let delay: number;
           const rateLimitDelay = getRetryAfterDelay(error);
-          if (error?.response?.status === 429 && rateLimitDelay !== null) {
+          if (isAxiosLikeError(error) && error.response?.status === 429 && rateLimitDelay !== null) {
             delay = Math.min(rateLimitDelay, this.options.maxDelayMs);
           } else {
             delay = this.calculateDelay(attempt);
@@ -191,7 +220,9 @@ export class RetryHandler {
           this.history.push({
             attempt: attempt + 1,
             delay,
-            error: error.message || String(error),
+            error: isAxiosLikeError(error) 
+              ? (error.message || String(error))
+              : String(error),
           });
 
           await new Promise(resolve => setTimeout(resolve, delay));

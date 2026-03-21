@@ -217,7 +217,9 @@ export class DeepDependencyScanner {
     const analysisPromises: Array<Promise<void>> = [];
 
     while (queue.length > 0) {
-      const [node, depth, path, directDep] = queue.shift()!;
+      const entry = queue.shift();
+      if (!entry) break;
+      const [node, depth, path, directDep] = entry;
       const nodeKey = `${node.name}@${node.version}`;
 
       if (depth > options.maxDepth) continue;
