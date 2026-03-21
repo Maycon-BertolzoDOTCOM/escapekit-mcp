@@ -111,7 +111,7 @@ jobs:
           
           if [ -f "vitest-results.json" ]; then
             echo "✓ Found vitest-results.json"
-            npx tsx scripts/kiwi-upload-enhanced.mts \
+            npx tsx scripts/kiwi-upload-rest.ts \
               --file vitest-results.json \
               --framework vitest \
               --product-id $KIWI_PRODUCT_ID \
