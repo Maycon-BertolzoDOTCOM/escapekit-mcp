@@ -262,7 +262,21 @@ export async function uploadResults(options: UploadOptions): Promise<UploadStats
   // Get or create build
   const buildName = `Auto-${options.buildMetadata?.runNumber || new Date().toISOString().split('T')[0]}`;
   const versionId = await client.getOrCreateVersion(product.id, '1.0');
-  const build = await client.getOrCreateBuild(product.id, buildName, versionId);
+  
+  // First try to find existing build with matching name and product
+  const existingBuilds = await client.listBuilds(product.id);
+  const existingBuild = existingBuilds.find(b => b.name === buildName);
+  
+  let build;
+  if (existingBuild) {
+    build = existingBuild;
+    log.debug(`Using existing build: ${build.name} (ID: ${build.id})`);
+  } else {
+    // Create new build with proper validation
+    build = await client.getOrCreateBuild(product.id, buildName, versionId);
+    log.debug(`Created new build: ${build.name} (ID: ${build.id})`);
+  }
+  
   log.info(`Build: ${build.name} (ID: ${build.id})`);
 
   // Get default category
