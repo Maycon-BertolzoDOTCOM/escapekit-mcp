@@ -11,6 +11,7 @@ jobs:
   ci:
     name: Lint, Test & Build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     strategy:
       matrix:
@@ -33,11 +34,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Verify tsc exists
+        run: ls -la node_modules/.bin/tsc || echo "tsc not found!"
+
       - name: Lint
         run: npm run lint -- --max-warnings 0
 
       - name: Type check
         run: npm run typecheck
+
+      - name: Clean build artifacts
+        run: rm -rf dist .tsbuildinfo
 
       - name: Test with coverage
         run: npm run test:ci
@@ -56,8 +63,9 @@ jobs:
           name: codecov-umbrella
           fail_ci_if_error: false
 
-      - name: Build
-        run: npm run build
+      - name: Build with tsc directly
+        run: npx tsc --outDir dist --verbose
+        timeout-minutes: 10
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
