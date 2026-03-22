@@ -254,49 +254,55 @@ export async function uploadResults(options: UploadOptions): Promise<UploadStats
   // Resolve test plan
   const testPlanId = options.testPlanId || parseInt(process.env.KIWI_TEST_PLAN_ID || '1');
   log.info(`Test Plan: ${testPlanId}`);
-  
-  // Use explicit build ID if provided
+
+  let build: any;
+
+  // 1. Se um build ID fixo foi fornecido, usa ele
   if (process.env.KIWI_BUILD_ID) {
     const buildId = parseInt(process.env.KIWI_BUILD_ID);
-    const build = await client.jsonrpc('Build.filter', [{ id: buildId }]);
-    if (build.length === 0) {
+    const builds = await client.jsonrpc<any[]>('Build.filter', [{ id: buildId }]);
+    if (builds.length === 0) {
       log.error(`Build ID ${buildId} not found`);
       process.exit(1);
     }
-    log.info(`Using predefined build: ${build[0].name} (ID: ${buildId})`);
-    return build[0];
+    build = builds[0];
+    log.info(`Using predefined build: ${build.name} (ID: ${build.id})`);
+  } else {
+    // 2. Caso contrário, tenta reutilizar ou criar um novo build
+    const buildName = `Auto-${options.buildMetadata?.runNumber || new Date().toISOString().split('T')[0]}`;
+    const versionId = await client.getOrCreateVersion(product.id, '1.0');
+
+    const existingBuilds = await client.listBuilds(product.id);
+    const existing = existingBuilds.find(b => b.name === buildName);
+    if (existing) {
+      build = existing;
+      log.debug(`Using existing build: ${build.name} (ID: ${build.id})`);
+    } else {
+      // Cria um build sem associar ao plano
+      const buildData = {
+        name: buildName,
+        product: product.id,
+        version: versionId,
+      };
+      build = await client.createBuild(buildData);
+      log.debug(`Created new build: ${build.name} (ID: ${build.id})`);
+
+      // Associa o build ao plano usando a API correta
+      try {
+        await client.jsonrpc('TestPlan.add_build', [testPlanId, build.id]);
+        log.debug(`Build ${build.id} associated with plan ${testPlanId}`);
+      } catch (err: any) {
+        log.warn(`Could not associate build with plan: ${err.message}`);
+        log.warn('You may need to set KIWI_BUILD_ID manually');
+      }
+    }
   }
+
+  log.info(`Build: ${build.name} (ID: ${build.id})`);
 
   // Get status map
   const statusMap = await client.getStatusMap();
   log.debug('Status map', statusMap);
-
-  // Get or create build
-  const buildName = `Auto-${options.buildMetadata?.runNumber || new Date().toISOString().split('T')[0]}`;
-  const versionId = await client.getOrCreateVersion(product.id, '1.0');
-  
-  // First try to find existing build with matching name and product
-  const existingBuilds = await client.listBuilds(product.id);
-  const existingBuild = existingBuilds.find(b => b.name === buildName);
-  
-  let build;
-  if (existingBuild) {
-    build = existingBuild;
-    log.debug(`Using existing build: ${build.name} (ID: ${build.id})`);
-  } else {
-    // Create new build with proper validation
-    // Create build already associated with the test plan
-    const buildData = {
-      name: buildName,
-      product: product.id,
-      version: versionId,
-      plan: testPlanId  // Associate with test plan during creation
-    };
-    build = await client.createBuild(buildData);
-    log.debug(`Created new build (associated with plan ${testPlanId}): ${build.name} (ID: ${build.id})`);
-  }
-  
-  log.info(`Build: ${build.name} (ID: ${build.id})`);
   
 
 

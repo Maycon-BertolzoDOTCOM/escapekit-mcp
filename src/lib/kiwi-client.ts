@@ -172,7 +172,7 @@ export class KiwiClient {
 
   // ─── JSON-RPC Core ─────────────────────────────────────
 
-  private async jsonrpc<T>(method: string, params?: unknown[] | Record<string, unknown>): Promise<T> {
+  async jsonrpc<T>(method: string, params?: unknown[] | Record<string, unknown>): Promise<T> {
     this.requestId++;
     const payload = {
       jsonrpc: '2.0',
