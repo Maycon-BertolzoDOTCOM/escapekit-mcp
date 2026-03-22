@@ -254,6 +254,18 @@ export async function uploadResults(options: UploadOptions): Promise<UploadStats
   // Resolve test plan
   const testPlanId = options.testPlanId || parseInt(process.env.KIWI_TEST_PLAN_ID || '1');
   log.info(`Test Plan: ${testPlanId}`);
+  
+  // Use explicit build ID if provided
+  if (process.env.KIWI_BUILD_ID) {
+    const buildId = parseInt(process.env.KIWI_BUILD_ID);
+    const build = await client.jsonrpc('Build.filter', [{ id: buildId }]);
+    if (build.length === 0) {
+      log.error(`Build ID ${buildId} not found`);
+      process.exit(1);
+    }
+    log.info(`Using predefined build: ${build[0].name} (ID: ${buildId})`);
+    return build[0];
+  }
 
   // Get status map
   const statusMap = await client.getStatusMap();
@@ -278,6 +290,14 @@ export async function uploadResults(options: UploadOptions): Promise<UploadStats
   }
   
   log.info(`Build: ${build.name} (ID: ${build.id})`);
+  
+  // Ensure build is associated with test plan
+  try {
+    await client.jsonrpc('TestPlan.add_build', [testPlanId, build.id]);
+    log.debug(`Build ${build.id} associated with plan ${testPlanId}`);
+  } catch (error) {
+    log.debug(`Build may already be associated with plan: ${error.message}`);
+  }
 
   // Get default category
   const categoryId = await client.getDefaultCategoryId(product.id);
