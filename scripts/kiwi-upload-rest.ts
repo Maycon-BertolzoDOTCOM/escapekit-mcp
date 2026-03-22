@@ -285,19 +285,20 @@ export async function uploadResults(options: UploadOptions): Promise<UploadStats
     log.debug(`Using existing build: ${build.name} (ID: ${build.id})`);
   } else {
     // Create new build with proper validation
-    build = await client.getOrCreateBuild(product.id, buildName, versionId);
-    log.debug(`Created new build: ${build.name} (ID: ${build.id})`);
+    // Create build already associated with the test plan
+    const buildData = {
+      name: buildName,
+      product: product.id,
+      version: versionId,
+      plan: testPlanId  // Associate with test plan during creation
+    };
+    build = await client.createBuild(buildData);
+    log.debug(`Created new build (associated with plan ${testPlanId}): ${build.name} (ID: ${build.id})`);
   }
   
   log.info(`Build: ${build.name} (ID: ${build.id})`);
   
-  // Ensure build is associated with test plan
-  try {
-    await client.jsonrpc('TestPlan.add_build', [testPlanId, build.id]);
-    log.debug(`Build ${build.id} associated with plan ${testPlanId}`);
-  } catch (error) {
-    log.debug(`Build may already be associated with plan: ${error.message}`);
-  }
+
 
   // Get default category
   const categoryId = await client.getDefaultCategoryId(product.id);
