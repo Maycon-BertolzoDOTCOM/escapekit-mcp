@@ -64,7 +64,7 @@ jobs:
           fail_ci_if_error: false
 
       - name: Build with tsc directly
-        run: npx tsc --outDir dist --verbose
+        run: npx tsc --outDir dist --diagnostics
         timeout-minutes: 10
 
       - name: Upload build artifacts
