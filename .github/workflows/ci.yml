@@ -52,7 +52,7 @@ jobs:
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:
-          name: vitest-results
+          name: vitest-results-${{ matrix.node-version }}
           path: vitest-results.json
 
       - name: Upload coverage to Codecov
