@@ -1,0 +1,12 @@
+name: 'EscapeKit Action'
+description: 'Run EscapeKit validation and analysis in your workflow'
+
+inputs:
+  config-path:
+    description: 'Path to EscapeKit config file'
+    required: false
+    default: './escapekit.config.json'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
