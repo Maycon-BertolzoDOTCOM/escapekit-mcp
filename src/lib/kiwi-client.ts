@@ -403,7 +403,7 @@ export class KiwiClient {
     if (cached && Date.now() < cached.expiresAt) return cached.data;
 
     try {
-      const results = await this.jsonrpc<KiwiRawResult[]>('Build.filter', [{ product: productId }]);
+      const results = await this.jsonrpc<KiwiRawResult[]>('Build.filter', [{ version__product: productId }]);
       const builds = results.map(b => ({ id: b.id, name: b.name !== undefined ? b.name : String(b.name) }));
       this.buildCache.set(productId, this.setCache(builds));
       return builds;

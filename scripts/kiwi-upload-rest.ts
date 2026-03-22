@@ -286,15 +286,14 @@ export async function uploadResults(options: UploadOptions): Promise<UploadStats
       };
       build = await client.createBuild(buildData);
       log.debug(`Created new build: ${build.name} (ID: ${build.id})`);
+    }
 
-      // Associa o build ao plano usando a API correta
-      try {
-        await client.jsonrpc('TestPlan.add_build', [testPlanId, build.id]);
-        log.debug(`Build ${build.id} associated with plan ${testPlanId}`);
-      } catch (err: any) {
-        log.warn(`Could not associate build with plan: ${err.message}`);
-        log.warn('You may need to set KIWI_BUILD_ID manually');
-      }
+    // Associa o build ao plano (idempotente)
+    try {
+      await client.jsonrpc('TestPlan.add_build', [testPlanId, build.id]);
+      log.debug(`Build ${build.id} ensured for plan ${testPlanId}`);
+    } catch (err: any) {
+      log.warn(`Could not associate build with plan: ${err.message}`);
     }
   }
 
