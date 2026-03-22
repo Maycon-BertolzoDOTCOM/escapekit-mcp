@@ -103,7 +103,7 @@ jobs:
       - name: Download test results
         uses: actions/download-artifact@v4
         with:
-          name: vitest-results-20.x-20.x-20.x
+          name: vitest-results-20.x-20.x-20.x-20.x
           path: .
 
       - name: Upload results to Kiwi TCMS
