@@ -8,8 +8,10 @@ echo "🔍 Running EscapeKit Validation on $PROJECT_PATH ..."
 
 # Run validation and capture output, while also saving to the expected output file
 # We use cli/index.ts validate as it provides the canDeploy and confidence fields
+set +e
 OUTPUT=$(npx tsx cli/index.ts validate "$PROJECT_PATH" --level standard --json 2>&1)
 EXIT_CODE=$?
+set -e
 
 # Save the JSON part to the output file for subsequent workflow steps
 echo "$OUTPUT" | grep -v "DeprecationWarning" | grep -v "🔍" | grep -v "✅" | grep "{" -A 1000 > "$OUTPUT_FILE" || true
