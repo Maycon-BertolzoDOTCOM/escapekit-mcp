@@ -135,6 +135,7 @@ escapekit validate ./my-app --env local --level standard
 - **Dependency Validation**: Detects ghost packages and outdated dependencies
 - **Auto-Fix**: Automatically fixes detected issues (ghost imports, missing polyfills, outdated configs)
 - **Multi-Environment Support**: Local, Docker, and Browser environments
+- **Kiwi TCMS Integration**: Automated test result tracking and reporting ([Docs: KIWI_TCMS_FIX.md](docs/KIWI_TCMS_FIX.md))
 
 #### Validation CLI Commands
 
