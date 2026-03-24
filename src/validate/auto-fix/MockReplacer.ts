@@ -13,7 +13,7 @@ import { logger } from '../../logger.js';
 import type { Fix, Issue, Fixer } from '../types.js';
 import type { KnowledgeBase } from '../../resolvers/KnowledgeBase.js';
 import type { SemanticMatcher } from '../../resolvers/SemanticMatcher.js';
-import type { NPMRegistry } from '../../resolvers/NPMRegistry.js';
+import type { NPMRegistry } from '../../services/NPMRegistry.js';
 
 interface MockReplacerDeps {
   knowledgeBase?: KnowledgeBase;
@@ -94,7 +94,7 @@ export class MockReplacer implements Fixer {
 
       // Try to resolve replacement using dynamic resolution chain
       const resolution = await this.resolveReplacement(ghostImport);
-      
+
       // Handle special case where package exists in registry but we don't want to auto-replace
       if (resolution?.strategy === 'npm-registry-verified') {
         return {
@@ -107,7 +107,13 @@ export class MockReplacer implements Fixer {
       }
 
       if (resolution) {
-        return await this.applyReplacement(projectPath, issue, ghostImport, resolution.realPackage, resolution.strategy);
+        return await this.applyReplacement(
+          projectPath,
+          issue,
+          ghostImport,
+          resolution.realPackage,
+          resolution.strategy
+        );
       }
 
       return {
@@ -128,45 +134,30 @@ export class MockReplacer implements Fixer {
     }
   }
 
-    const filePath = join(projectPath, issue.file);
-
-    try {
-      await access(filePath);
-    } catch {
-      return {
-        issueType: issue.type,
-        description: `File not found: ${issue.file}`,
-        applied: false,
-        error: 'File not found',
-      };
-    }
-
-    try {
-      let content = await readFile(filePath, 'utf-8');
-      let changed = false;
-
   private extractGhostImport(message: string): string | null {
-    // Message format: "Ghost import detected: \"fake-api\" in file.ts:5"
     const importMatch = message.match(/["']([^"']+)["']/);
     return importMatch ? importMatch[1] : null;
   }
-
-      const ghostImport = this.extractGhostImport(issue.message);
-      if (ghostImport) {
-        const replacement = this.replacements[ghostImport];
 
   private async applyReplacement(
     projectPath: string,
     issue: Issue,
     ghostImport: string,
     realPackage: string,
-    strategy: string
+    _strategy: string
   ): Promise<Fix> {
-    const filePath = join(projectPath, issue.file!);
+    if (!issue.file) {
+      return {
+        issueType: issue.type,
+        description: 'No file specified for replacement',
+        applied: false,
+        error: 'Missing file path',
+      };
+    }
+    const filePath = join(projectPath, issue.file);
     let content = await readFile(filePath, 'utf-8');
     let changed = false;
 
-    // Replace the import statement
     const oldImport = `from '${ghostImport}'`;
     const newImport = `from '${realPackage}'`;
     const oldImportDouble = `from "${ghostImport}"`;
@@ -227,32 +218,6 @@ export class MockReplacer implements Fixer {
     };
   }
 
-        if (replacement) {
-          const fix = await this.applyReplacement(projectPath, issue, ghostImport, replacement, 'hardcoded');
-          if (fix.applied) {
-            return fix;
-          }
-        }
-      }
-
-      return {
-        issueType: issue.type,
-        description: 'Could not determine replacement for this import',
-        file: issue.file,
-        applied: false,
-        error: 'No matching replacement found',
-      };
-    } catch (err) {
-      return {
-        issueType: issue.type,
-        description: `Failed to fix: ${err instanceof Error ? err.message : String(err)}`,
-        file: issue.file,
-        applied: false,
-        error: err instanceof Error ? err.message : String(err),
-      };
-    }
-  }
-
   private async updatePackageJson(
     projectPath: string,
     ghostDep: string,
@@ -283,7 +248,9 @@ export class MockReplacer implements Fixer {
     }
   }
 
-  private async resolveReplacement(ghostImport: string): Promise<{ realPackage: string; strategy: string } | null> {
+  private async resolveReplacement(
+    ghostImport: string
+  ): Promise<{ realPackage: string; strategy: string } | null> {
     // Step 1: Check KnowledgeBase
     if (this.knowledgeBase && !this.kbInitialized) {
       try {
@@ -292,7 +259,7 @@ export class MockReplacer implements Fixer {
         this.log.info('Successfully loaded knowledge-base.json');
       } catch (err) {
         this.log.warn('Failed to load knowledge-base.json', {
-          error: err instanceof Error ? err.message : String(err)
+          error: err instanceof Error ? err.message : String(err),
         });
       }
     }
@@ -303,11 +270,11 @@ export class MockReplacer implements Fixer {
         this.log.info('Found replacement in KnowledgeBase', {
           ghostImport,
           realPackage: mapping.realPackages[0],
-          confidence: mapping.confidence
+          confidence: mapping.confidence,
         });
         return {
           realPackage: mapping.realPackages[0],
-          strategy: 'knowledge-base'
+          strategy: 'knowledge-base',
         };
       }
     }
@@ -317,24 +284,24 @@ export class MockReplacer implements Fixer {
       try {
         const results = await this.semanticMatcher.findSimilar(ghostImport, {
           minSimilarity: 0.7,
-          maxResults: 1
+          maxResults: 1,
         });
 
         if (results.length > 0) {
           this.log.info('Found semantic match', {
             ghostImport,
             realPackage: results[0].realPackages[0],
-            confidence: results[0].confidence
+            confidence: results[0].confidence,
           });
           return {
             realPackage: results[0].realPackages[0],
-            strategy: 'semantic-match'
+            strategy: 'semantic-match',
           };
         }
       } catch (err) {
         this.log.warn('SemanticMatcher failed', {
           ghostImport,
-          error: err instanceof Error ? err.message : String(err)
+          error: err instanceof Error ? err.message : String(err),
         });
       }
     }
@@ -347,13 +314,13 @@ export class MockReplacer implements Fixer {
           this.log.info('Package exists in NPM registry', { ghostImport });
           return {
             realPackage: ghostImport,
-            strategy: 'npm-registry-verified'
+            strategy: 'npm-registry-verified',
           };
         }
       } catch (err) {
         this.log.warn('NPMRegistry check failed', {
           ghostImport,
-          error: err instanceof Error ? err.message : String(err)
+          error: err instanceof Error ? err.message : String(err),
         });
       }
     }
@@ -363,14 +330,15 @@ export class MockReplacer implements Fixer {
     if (replacement) {
       this.log.info('Using hardcoded replacement', {
         ghostImport,
-        realPackage: replacement
+        realPackage: replacement,
       });
       return {
         realPackage: replacement,
-        strategy: 'hardcoded'
+        strategy: 'hardcoded',
       };
     }
 
     this.log.warn('No replacement found for ghost import', { ghostImport });
     return null;
+  }
 }
