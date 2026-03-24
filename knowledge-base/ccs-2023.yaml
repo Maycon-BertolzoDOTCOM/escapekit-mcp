@@ -1,0 +1,38 @@
+source:
+  title: "Malicious Post-install Scripts in npm Packages"
+  authors: "Zimmermann et al."
+  year: 2023
+  doi: "10.1145/3576915.3623200"
+
+facts:
+  - id: "F001"
+    statement: "Post-install scripts in npm packages can execute arbitrary code during installation."
+    type: "empirical"
+    relevance: "Motivates detection of suspicious postinstall hooks."
+  - id: "F002"
+    statement: "Malicious post-install scripts commonly use network calls, file system writes, and process spawning."
+    type: "empirical"
+    relevance: "Defines the pattern signatures for PostInstallDetector."
+
+rules:
+  - id: "R001"
+    principle: "Detect packages with postinstall scripts that perform network calls or spawn processes"
+    derived_from: ["F001", "F002"]
+    action: "implement_detector"
+    detector_name: "PostInstallDetector"
+    paperRef: "CCS-2023"
+    priority: "high"
+
+traceability:
+  R001:
+    implementation: "src/security/PostInstallDetector.ts"
+    tests: "tests/security/PostInstallDetector.test.ts"
+    status: "implemented"
+  F001:
+    implementation: "src/security/PostInstallDetector.ts"
+    tests: "tests/security/PostInstallDetector.test.ts"
+    status: "implemented"
+  F002:
+    implementation: "src/security/PostInstallDetector.ts"
+    tests: "tests/security/PostInstallDetector.test.ts"
+    status: "implemented"

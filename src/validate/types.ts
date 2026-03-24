@@ -28,6 +28,7 @@ export interface ValidationOptions {
   autoFix: boolean;
   timeout: number; // ms
   fuzzyThreshold?: number;
+  maxIterations?: number; // Optional max iterations for auto-fix
 }
 
 /** A fix applied during auto-fix */
@@ -47,6 +48,7 @@ export interface Issue {
   file?: string;
   line?: number;
   suggestion?: string;
+  detector?: string;
 }
 
 /** Build validation result */
@@ -155,6 +157,7 @@ export interface ValidationResult {
   fixesApplied: Fix[];
   remainingIssues: Issue[];
   recommendations: string[];
+  iterationCount: number; // Number of auto-fix iterations performed
 }
 
 /** Fixer interface for auto-fix implementations */

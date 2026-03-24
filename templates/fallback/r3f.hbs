@@ -1,0 +1,39 @@
+// templates/fallback/r3f.hbs
+function checkWebGLSupport() {
+  return !!window.WebGLRenderingContext && 
+         !!document.createElement('canvas').getContext('webgl');
+}
+
+function setupFallback(containerSelector, width, height, projectName) {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  container.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  function render() {
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, width, height);
+    
+    ctx.font = '24px Arial';
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    ctx.fillText(`${projectName} (WebGL not supported)`, width/2, height/2);
+    
+    requestAnimationFrame(render);
+  }
+  render();
+
+  return {
+    destroy: () => {
+      container.removeChild(canvas);
+    }
+  };
+}
+
+export { checkWebGLSupport, setupFallback };

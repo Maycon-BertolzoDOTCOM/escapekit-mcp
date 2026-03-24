@@ -1,0 +1,38 @@
+source:
+  title: "Automated Configuration Repair for JavaScript Projects"
+  authors: "Li et al."
+  year: 2023
+  doi: "10.1109/ASE56229.2023.00089"
+
+facts:
+  - id: "F001"
+    statement: "Outdated or misconfigured build tool configurations are a common source of deployment failures."
+    type: "empirical"
+    relevance: "Motivates automated configuration repair."
+  - id: "F002"
+    statement: "Configuration repair can be automated by comparing project configs against known-good templates."
+    type: "technique"
+    relevance: "Defines the approach for ConfigUpdater."
+
+rules:
+  - id: "R001"
+    principle: "Detect outdated configurations and suggest or apply repairs automatically"
+    derived_from: ["F001", "F002"]
+    action: "implement_updater"
+    detector_name: "ConfigUpdater"
+    paperRef: "ASE-2023-Config"
+    priority: "medium"
+
+traceability:
+  R001:
+    implementation: "src/transformers/ConfigUpdater.ts"
+    tests: "tests/transformers/ConfigUpdater.test.ts"
+    status: "pending"
+  F001:
+    implementation: "src/transformers/ConfigUpdater.ts"
+    tests: "tests/transformers/ConfigUpdater.test.ts"
+    status: "pending"
+  F002:
+    implementation: "src/transformers/ConfigUpdater.ts"
+    tests: "tests/transformers/ConfigUpdater.test.ts"
+    status: "pending"

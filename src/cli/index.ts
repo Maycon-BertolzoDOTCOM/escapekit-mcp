@@ -10,19 +10,16 @@ import { Command } from 'commander';
 import { readFileSync, existsSync } from 'fs';
 import { resolve } from 'path';
 import { dirname, join } from 'path';
-import { generateId } from '../src/models/schemas.js';
-import { CodeAnalyzer } from '../src/analyzers/CodeAnalyzer.js';
-import { LockFileParser } from '../src/security/LockFileParser.js';
-import { RateLimiter } from '../src/ratelimit/RateLimiter.js';
-import { PatternMatcher } from '../src/security/PatternMatcher.js';
-import { RiskScorer } from '../src/security/RiskScorer.js';
-import { IssueGenerator } from '../src/security/IssueGenerator.js';
-import { PackageJsonParser } from '../src/security/PackageJsonParser.js';
-import { PostInstallDetector } from '../src/security/PostInstallDetector.js';
-import { DeepDependencyScanner } from '../src/security/DeepDependencyScanner.js';
-import { NPMRegistry } from '../src/services/NPMRegistry.js';
-import { RecommendationEngine } from '../src/recommendations/RecommendationEngine.js';
-import { auditCommand } from '../src/commands/audit.js';
+import { CodeAnalyzer } from '../analyzers/CodeAnalyzer.js';
+import { LockFileParser } from '../security/LockFileParser.js';
+import { RateLimiter } from '../ratelimit/RateLimiter.js';
+import { PatternMatcher } from '../security/PatternMatcher.js';
+import { RiskScorer } from '../security/RiskScorer.js';
+import { IssueGenerator } from '../security/IssueGenerator.js';
+import { PackageJsonParser } from '../security/PackageJsonParser.js';
+import { PostInstallDetector } from '../security/PostInstallDetector.js';
+import { DeepDependencyScanner } from '../security/DeepDependencyScanner.js';
+import { NPMRegistry } from '../services/NPMRegistry.js';
 
 const program = new Command();
 
@@ -207,7 +204,7 @@ program
   .option('--json', 'Output results as JSON')
   .action(async (analysisFile, options) => {
     try {
-      let analysisResult: import('../src/models/schemas.js').AnalysisResult | null = null;
+      let analysisResult: import('../models/schemas.js').AnalysisResult | null = null;
       let sourceCode = '';
 
       // ── Load or create AnalysisResult ──────────────────────────────────────
@@ -255,8 +252,8 @@ program
       }
 
       // ── Run generation pipeline ────────────────────────────────────────────
-      const { generateEscapeKit } = await import('../src/tools/generate.js');
-      type EscapeKit = import('../src/models/schemas.js').EscapeKit;
+      const { generateEscapeKit } = await import('../tools/generate.js');
+      type EscapeKit = import('../models/schemas.js').EscapeKit;
 
       if (!options.dryRun) {
         console.log('\n🚀 Generating escape kit...');
@@ -340,6 +337,7 @@ program
   .option('--timeout <ms>', 'Timeout in milliseconds', '300000')
   .option('--json', 'Output results as JSON')
   .option('--quiet', 'Suppress verbose output', false)
+  .option('--academic', 'Show academic paper references for each issue', false)
   .action(async (projectPath, options) => {
     try {
       const { resolve } = await import('path');
@@ -359,7 +357,7 @@ program
         process.stdout.write = () => true;
       }
 
-      const { ValidationEngine } = await import('../src/validate/ValidationEngine.js');
+      const { ValidationEngine } = await import('../validate/ValidationEngine.js');
 
       const engine = new ValidationEngine();
 
@@ -373,14 +371,127 @@ program
       // Restore stdout
       process.stdout.write = originalWrite;
 
+      // Task 8.3: Enrich issues with academic references (both JSON and terminal modes)
+      if (options.academic) {
+        const { KnowledgeBase } = await import('../resolvers/KnowledgeBase.js');
+        const { enrichIssues } = await import('../academic/IssueEnricher.js');
+        const kb = new KnowledgeBase();
+        await kb.loadPaperContracts('knowledge-base/registry.yaml');
+        // Cast to schemas.Issue[] for enrichment (structurally compatible)
+        type SchemasIssue = import('../models/schemas.js').Issue;
+        const enriched = enrichIssues(result.remainingIssues as unknown as SchemasIssue[], kb);
+        result.remainingIssues = enriched as unknown as typeof result.remainingIssues;
+      }
+
       if (options.json) {
         process.stdout.write(JSON.stringify(result, null, 2) + '\n');
+      }
+
+      // Task 8.1: Display academic references in terminal mode
+      if (options.academic && !options.json) {
+        type SchemasIssue = import('../models/schemas.js').Issue;
+        const enriched = result.remainingIssues as unknown as SchemasIssue[];
+        if (enriched.some(i => i.academicReference)) {
+          console.log('\n📚 Academic References:');
+          for (const issue of enriched) {
+            if (issue.academicReference) {
+              const ref = issue.academicReference;
+              console.log(`  [${issue.type}] 📄 Ref: ${ref.title} (${ref.venue}, ${ref.year}) — Regra ${ref.ruleId}`);
+            }
+          }
+        }
       }
 
       process.exit(result.canDeploy ? 0 : 1);
     } catch (error) {
       // Restore stdout in case of error
       process.stdout.write = process.stdout.write.bind(process.stdout);
+      console.error('Error:', error instanceof Error ? error.message : error);
+      process.exit(1);
+    }
+  });
+
+/**
+ * Audit command
+ */
+program
+  .command('audit')
+  .description('Audit an escape.json file and generate a report')
+  .option('-f, --file <path>', 'Path to escape.json file', './escape.json')
+  .option('--format <format>', 'Output format (markdown, html, json, terminal)', 'terminal')
+  .option('--output <path>', 'Output file path')
+  .option('--academic', 'Show academic paper references', false)
+  .option('--verbose', 'Verbose output', false)
+  .action(async (options) => {
+    try {
+      const { auditCommand } = await import('../commands/audit.js');
+      const report = await auditCommand({
+        file: options.file,
+        format: options.format,
+        output: options.output,
+        verbose: options.verbose,
+        academic: options.academic,
+      });
+      if (!options.output) {
+        console.log(report);
+      }
+    } catch (error) {
+      console.error('Error:', error instanceof Error ? error.message : error);
+      process.exit(1);
+    }
+  });
+
+/**
+ * Coverage command
+ */
+program
+  .command('coverage')
+  .description('Show academic paper coverage report for knowledge-base contracts')
+  .option('--registry <path>', 'Path to registry.yaml', 'knowledge-base/registry.yaml')
+  .option('--output <path>', 'Write Markdown report to file')
+  .action(async (options) => {
+    try {
+      const { readFile } = await import('fs/promises');
+      const { parse: parseYaml } = await import('yaml');
+      const { dirname, join, resolve } = await import('path');
+      const { CoverageValidator } = await import('../academic/CoverageValidator.js');
+      const { existsSync } = await import('fs');
+
+      const registryPath = resolve(options.registry);
+      if (!existsSync(registryPath)) {
+        console.error(`Error: Registry not found: ${registryPath}`);
+        process.exit(1);
+      }
+
+      const registryContent = await readFile(registryPath, 'utf-8');
+      const registry = parseYaml(registryContent) as { papers: Array<{ contractFile: string; paperId: string }> };
+      const registryDir = dirname(registryPath);
+
+      const contracts = [];
+      for (const paper of registry.papers ?? []) {
+        const contractPath = join(registryDir, paper.contractFile);
+        if (!existsSync(contractPath)) {
+          console.warn(`Warning: Contract not found: ${contractPath}`);
+          continue;
+        }
+        const content = await readFile(contractPath, 'utf-8');
+        const contract = parseYaml(content) as import('../models/academic.js').ContratoYAML;
+        // Attach paperId via metadata for CoverageValidator
+        contract.metadata = { ...contract.metadata, paperId: paper.paperId, contractFile: paper.contractFile };
+        contracts.push(contract);
+      }
+
+      const validator = new CoverageValidator();
+      const report = validator.validate(contracts);
+
+      console.log(validator.formatReport(report));
+
+      if (options.output) {
+        const { writeFile } = await import('fs/promises');
+        await writeFile(resolve(options.output), validator.formatMarkdown(report), 'utf-8');
+        console.log(`\n✅ Markdown report written to: ${options.output}`);
+      }
+    } catch (error) {
       console.error('Error:', error instanceof Error ? error.message : error);
       process.exit(1);
     }

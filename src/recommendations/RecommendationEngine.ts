@@ -4,14 +4,16 @@
  * Generates contextual recommendations for detected issues
  */
 
-import { existsSync, readFileSync, readdirSync } from 'fs';
-import { resolve } from 'path';
-import YAML from 'yaml';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { resolve } from 'node:path';
+import * as YAML from 'yaml';
+import { logger } from '../logger.js';
 
 import type { Recommendation, RecommendationContext, RecommendationEngineOptions, RecommendationTemplate } from './types.js';
 
 export class RecommendationEngine {
   private templateCache: Map<string, RecommendationTemplate> = new Map();
+  private readonly log = logger.child('RecommendationEngine');
 
   constructor() {
     this.loadTemplates();
@@ -21,10 +23,10 @@ export class RecommendationEngine {
    * Load all recommendation templates from templates directory
    */
   private loadTemplates(): void {
-    const templatesDir = resolve(__dirname, 'templates');
+    const templatesDir = resolve(new URL('.', import.meta.url).pathname, 'templates');
     
     if (!existsSync(templatesDir)) {
-      console.warn(`Templates directory not found: ${templatesDir}`);
+      this.log.warn('Templates directory not found', { templatesDir });
       return;
     }
 
@@ -41,9 +43,9 @@ export class RecommendationEngine {
         }
       }
       
-      console.log(`RecommendationEngine: Loaded ${this.templateCache.size} templates`);
+      this.log.info('Templates loaded', { count: this.templateCache.size });
     } catch (error) {
-      console.warn('Error loading recommendation templates:', error);
+      this.log.warn('Error loading recommendation templates', { error });
     }
   }
 

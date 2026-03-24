@@ -29,6 +29,10 @@ export class ValidationEngine {
   private readonly buildValidator: BuildValidator;
   private readonly dependencyValidator: DependencyValidator;
   private readonly autoFixEngine: AutoFixEngine;
+  
+  private static readonly DEFAULT_MAX_ITERATIONS = 3;
+  private static readonly MIN_ITERATIONS_LIMIT = 1;
+  private static readonly MAX_ITERATIONS_LIMIT = 10;
 
   constructor() {
     this.buildValidator = new BuildValidator();
@@ -49,13 +53,14 @@ export class ValidationEngine {
 
     const buildResult = await this.buildValidator.validate(projectPath);
     for (const err of buildResult.errors) {
-      issues.push(err);
+      issues.push({ ...err, detector: 'BuildValidator' });
     }
 
     const dependencyResult = await this.dependencyValidator.validate(projectPath);
     for (const ghost of dependencyResult.ghostPackages) {
       issues.push({
         type: 'GHOST_IMPORT',
+        detector: 'DependencyValidator',
         severity: 'error',
         message: `Ghost package detected: ${ghost.name} (suggested: ${ghost.suggestedReplacement || 'none'})`,
         file: ghost.file,
@@ -68,6 +73,7 @@ export class ValidationEngine {
     for (const vuln of dependencyResult.vulnerabilities) {
       issues.push({
         type: vuln.severity === 'critical' ? 'SECURITY_VULNERABILITY' : 'SECURITY_WARNING',
+        detector: 'DependencyValidator',
         severity: vuln.severity === 'critical' ? 'error' : 'warning',
         message: `${vuln.severity}: ${vuln.title} (${vuln.name})`,
         suggestion: vuln.fixAvailable ? 'Run npm audit fix' : undefined,
@@ -81,6 +87,7 @@ export class ValidationEngine {
         if (!envResult.passed) {
           issues.push({
             type: 'BUILD_ERROR',
+            detector: 'BuildValidator',
             severity: 'error',
             message: `Runtime test failed: ${envResult.error || 'server did not start'}`,
           });
@@ -91,12 +98,29 @@ export class ValidationEngine {
     }
 
     if (opts.autoFix && issues.length > 0) {
-      const fixes = await this.autoFixEngine.fix(projectPath, issues);
-      fixesApplied.push(...fixes.filter(f => f.applied));
-      issues.length = 0;
-
-      const appliedFixes = fixes.filter(f => f.applied);
-      if (appliedFixes.length > 0) {
+      const maxIter = this.clampIterations(opts.maxIterations);
+      let iterationCount = 0;
+      
+      while (iterationCount < maxIter) {
+        iterationCount++;
+        this.log.info({
+          iteration: iterationCount,
+          maxIterations: maxIter,
+          remainingErrors: issues.filter(i => i.severity === 'error').length,
+          totalIssues: issues.length
+        }, `Auto-fix iteration ${iterationCount}/${maxIter} - ${issues.filter(i => i.severity === 'error').length} error issues (${issues.length} total)`);
+        
+        const fixes = await this.autoFixEngine.fix(projectPath, issues);
+        const appliedFixes = fixes.filter(f => f.applied);
+        fixesApplied.push(...appliedFixes);
+        issues.length = 0;
+        
+        if (appliedFixes.length === 0) {
+          this.log.warn('Stopping auto-fix - no fixes applied in this iteration');
+          break;
+        }
+        
+        // Revalidate after fixes
         const reDep = await this.dependencyValidator.validate(projectPath);
         for (const ghost of reDep.ghostPackages) {
           issues.push({
@@ -111,6 +135,22 @@ export class ValidationEngine {
         for (const err of reBuild.errors) {
           issues.push(err);
         }
+        
+        this.log.info({
+          iteration: iterationCount,
+          fixesApplied: appliedFixes.length,
+          remainingErrors: issues.filter(i => i.severity === 'error').length,
+          totalIssues: issues.length
+        }, `Iteration ${iterationCount} complete - applied ${appliedFixes.length} fixes, ${issues.filter(i => i.severity === 'error').length} error issues (${issues.length} total) remaining`);
+        
+        if (issues.filter(i => i.severity === 'error').length === 0) {
+          this.log.info('All error issues resolved');
+          break;
+        }
+      }
+      
+      if (iterationCount === maxIter && issues.filter(i => i.severity === 'error').length > 0) {
+        this.log.warn(`Reached max iterations (${maxIter}) with ${issues.filter(i => i.severity === 'error').length} error issues remaining`);
       }
     }
 
@@ -136,6 +176,7 @@ export class ValidationEngine {
       fixesApplied,
       remainingIssues: issues,
       recommendations: this.generateRecommendations(issues),
+      iterationCount: opts.autoFix ? iterationCount : 0,
     };
 
     return result;
@@ -167,6 +208,14 @@ export class ValidationEngine {
     return issues
       .filter(i => i.severity !== 'error')
       .map(i => i.suggestion || `Consider fixing: ${i.message}`);
+  }
+  
+  private clampIterations(value: number | undefined): number {
+    if (value === undefined) return ValidationEngine.DEFAULT_MAX_ITERATIONS;
+    return Math.max(
+      ValidationEngine.MIN_ITERATIONS_LIMIT, 
+      Math.min(ValidationEngine.MAX_ITERATIONS_LIMIT, value)
+    );
   }
 
   canFix(issueType: string): boolean {

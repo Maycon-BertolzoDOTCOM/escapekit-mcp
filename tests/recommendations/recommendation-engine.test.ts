@@ -2,7 +2,7 @@
  * Recommendation Engine Tests
  */
 
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { RecommendationEngine } from '../../src/recommendations/RecommendationEngine.js';
 
 describe('RecommendationEngine', () => {
@@ -163,6 +163,42 @@ describe('RecommendationEngine', () => {
       expect(ids).toContain('ghost-import');
       expect(ids).toContain('phantom-dependency');
       expect(ids).toContain('mock-api');
+    });
+  });
+
+  describe('ESM compatibility and correctness properties', () => {
+    it('should not throw when constructing new RecommendationEngine', () => {
+      expect(() => new RecommendationEngine()).not.toThrow();
+    });
+
+    it('should return non-empty array from getLoadedTemplateIds() after construction', () => {
+      const engine = new RecommendationEngine();
+      const ids = engine.getLoadedTemplateIds();
+      expect(ids).toBeDefined();
+      expect(ids.length).toBeGreaterThan(0);
+    });
+
+    it('should handle gracefully when templates directory does not exist', () => {
+      const spy = vi.spyOn(require('fs'), 'existsSync').mockReturnValue(false);
+      const engine = new RecommendationEngine();
+      const ids = engine.getLoadedTemplateIds();
+      expect(ids).toBeDefined();
+      expect(ids.length).toBe(0);
+      spy.mockRestore();
+    });
+
+    it('should generate recommendation with defined id for ghost-import', async () => {
+      const recommendation = await engine.generate({ problemType: 'ghost-import' });
+      expect(recommendation.id).toBeDefined();
+      expect(recommendation.id).not.toBeUndefined();
+    });
+
+    it('should have all standard templates loaded', () => {
+      const ids = engine.getLoadedTemplateIds();
+      expect(ids).toContain('framework-mix');
+      expect(ids).toContain('ghost-import');
+      expect(ids).toContain('mock-api');
+      expect(ids).toContain('phantom-dependency');
     });
   });
 });

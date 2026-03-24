@@ -1,0 +1,41 @@
+// templates/fallback/babylon.hbs
+function checkWebGLSupport() {
+  return !!window.WebGLRenderingContext && 
+         !!document.createElement('canvas').getContext('webgl');
+}
+
+function setupFallback(containerSelector, width, height, projectName) {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  container.appendChild(canvas);
+
+  const engine = new BABYLON.NullEngine();
+  const scene = new BABYLON.Scene(engine);
+  const camera = new BABYLON.FreeCamera('camera', new BABYLON.Vector3(0, 0, -5), scene);
+  
+  const textPlane = BABYLON.MeshBuilder.CreatePlane('textPlane', {size: 5}, scene);
+  const advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(textPlane);
+  const textBlock = new BABYLON.GUI.TextBlock();
+  textBlock.text = `${projectName} (WebGL not supported)`;
+  textBlock.color = 'white';
+  textBlock.fontSize = 24;
+  advancedTexture.addControl(textBlock);
+
+  engine.runRenderLoop(() => {
+    scene.render();
+    textPlane.rotation.y += 0.01;
+  });
+
+  return {
+    destroy: () => {
+      container.removeChild(canvas);
+      engine.dispose();
+    }
+  };
+}
+
+export { checkWebGLSupport, setupFallback };

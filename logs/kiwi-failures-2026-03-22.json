@@ -1,0 +1,5014 @@
+[
+  {
+    "name": "refactoring-validation-moderate-level-property-2:-error-handling-equivalence-should-handle-empty-string-consistently",
+    "error": "No test execution found for run=33, case=6"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-1:-parse-result-equivalence-should-produce-consistent-results-for-mixed-code",
+    "error": "No test execution found for run=33, case=5"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-7:-output-structure-validation-should-produce-valid-analysisresult-structure",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-6:-method-signature-stability-should-maintain-codeanalyzer-public-api",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-4:-sandbox-detection-equivalence-should-detect-ai-studio-pattern-consistently",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-1:-parse-result-equivalence-should-produce-consistent-results-for-es6-imports",
+    "error": "No test execution found for run=33, case=1"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-5:-confidence-score-consistency-should-calculate-confidence-score-for-mock-apis-within-expected-range",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-1:-parse-result-equivalence-should-produce-consistent-results-for-mock-api-calls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "createerrorresponse-should-create-error-response-with-default-severity",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-4:-sandbox-detection-equivalence-should-detect-no-sandbox-consistently",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-6:-method-signature-stability-should-maintain-javascriptanalyzer-public-api",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-2:-error-handling-equivalence-should-handle-code-with-no-detectable-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-5:-confidence-score-consistency-should-calculate-confidence-score-for-no-issues-within-expected-range",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-5:-confidence-score-consistency-should-produce-consistent-confidence-scores-for-identical-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-4:-sandbox-detection-equivalence-should-detect-replit-pattern-consistently",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-1:-parse-result-equivalence-should-produce-consistent-results-for-commonjs-requires",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-1:-parse-result-equivalence-should-produce-consistent-results-for-webgl-usage",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "refactoring-validation-moderate-level-property-3:-performance-validation-should-parse-large-code-within-acceptable-time-<100ms",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "generateid-should-handle-different-prefixes",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "generateid-should-generate-unique-ids-with-prefix",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "createerrorresponse-should-create-error-response-with-custom-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "createerrorresponse-should-create-error-response-with-custom-severity",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "createerrorresponse-should-have-no-data-in-error-response",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "createsuccessresponse-should-create-success-response-with-data",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "createsuccessresponse-should-have-no-errors-in-success-response",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "createsuccessresponse-should-handle-complex-data-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-generate-deve-gerar-boilerplate-de-código-com-contrato-válido",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-generate-deve-gerar-código-de-testes-quando-solicitado",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-generate-deve-extrair-nome-do-detector-das-regras-do-contrato",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-generate-deve-gerar-nome-padrão-se-detector_name-não-existir",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-extractdetectorname-deve-extrair-nome-da-primeira-regra-com-implement_detector",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-extractdetectorname-deve-gerar-nome-baseado-no-título-se-não-houver-detector_name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-extractdetectorname-deve-lidar-com-título-vazio",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-generatedetectorcode-deve-gerar-código-typescript-válido",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-generatedetectorcode-deve-incluir-instruções-para-regras-do-contrato",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-generatedetectorcode-deve-incluir-casos-para-cobrir",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-generatetestcode-deve-gerar-testes-usando-vitest",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-generatetestcode-deve-incluir-testes-unitários-e-de-integração",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-extractcode-deve-extrair-código-de-bloco-typescript",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-extractcode-deve-extrair-código-de-bloco-ts",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-extractcode-deve-extrair-código-de-bloco-genérico",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-extractcode-deve-retornar-resposta-direta-se-não-houver-blocos",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-extractcode-deve-trimar-espaços-em-branco",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-callollama-deve-chamar-api-do-ollama-com-parâmetros-corretos",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-callollama-deve-usar-temperatura-baixa-para-código",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "boilerplategenerator-callollama-deve-usar-timeout-de-3-minutos",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractgenerator-checkollama-deve-verificar-se-ollama-está-rodando",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractgenerator-checkollama-deve-lançar-erro-se-ollama-não-estiver-rodando",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractgenerator-generate-deve-gerar-contrato-yaml-válido-com-metadados",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractgenerator-generate-deve-usar-modelo-configurado",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractgenerator-generate-deve-extrair-yaml-de-bloco-de-código-markdown",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractgenerator-generate-deve-lançar-erro-se-ia-retornar-formato-inesperado",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractgenerator-generate-deve-lançar-erro-se-resposta-estiver-vazia",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractgenerator-generate-deve-incluir-metadados-no-prompt",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractgenerator-generate-deve-usar-temperatura-configurada",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractgenerator-buildprompt-deve-construir-prompt-estruturado-com-todos-os-metadados",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractgenerator-buildprompt-deve-lidar-com-metadados-ausentes",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractgenerator-extractyaml-deve-extrair-yaml-de-bloco-```yaml",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractgenerator-extractyaml-deve-extrair-yaml-de-bloco-```-genérico",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractgenerator-extractyaml-deve-retornar-null-se-não-encontrar-yaml",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractgenerator-extractyaml-deve-retornar-resposta-direta-se-parecer-yaml",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-validate-deve-validar-contrato-bem-formado-e-completo",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-validate-deve-apontar-erros-para-yaml-com-campos-faltando",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-validate-deve-lançar-exceção-tratada-para-yaml-mal-formatado",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-validate-deve-validar-estrutura-de-facts",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-validate-deve-validar-tipos-de-fact",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-validate-deve-validar-relevância-de-fact",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-validate-deve-validar-estrutura-de-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-validate-deve-validar-estrutura-de-rules",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-validate-deve-validar-ação-de-rule",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-validate-deve-validar-prioridade-de-rule",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-validate-deve-validar-estrutura-de-cases",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-validate-deve-validar-consistência-de-referências-cruzadas-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-validate-deve-validar-consistência-de-referências-cruzadas-facts",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-validate-deve-validar-múltiplos-erros-simultaneamente",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-validate-deve-retornar-warnings-para-campos-opcionais-faltando",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "contractvalidator-cenários-de-uso-real-deve-validar-contrato-do-exemplo-do-readme",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sourceresolver-resolvefromdoi-deve-retornar-metadados-corretos-para-doi-válido",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sourceresolver-resolvefromdoi-deve-lançar-erro-para-doi-inválido",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sourceresolver-resolvefromdoi-deve-delegar-para-arxiv-quando-doi-começar-com-arxiv:",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sourceresolver-resolvefromarxiv-deve-lidar-com-erro-quando-arxiv-não-retorna-dados",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sourceresolver-resolvefromurl-deve-extrair-título-de-url-genérica",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sourceresolver-resolvefromurl-deve-detectar-doi-em-url-doi.org",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sourceresolver-resolvefromurl-deve-lançar-erro-para-url-inacessível",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sourceresolver-resolvefrompdf-deve-lidar-com-erro-quando-pdf-não-existe",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sourceresolver-detectação-automática-de-tipo-de-fonte-deve-detectar-doi-puro-10.xxxx/yyyy",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sourceresolver-detectação-automática-de-tipo-de-fonte-deve-detectar-url-do-doi.org",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sourceresolver-detectação-automática-de-tipo-de-fonte-deve-detectar-url-genérica",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sourceresolver-tratamento-de-erros-deve-fornecer-mensagem-de-erro-amigável-para-api-indisponível",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sourceresolver-tratamento-de-erros-deve-lidar-com-resposta-vazia-da-api",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "codeanalyzer-integration-mocked-analyze-should-analyze-code-with-imports-and-detect-ghost-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "codeanalyzer-integration-mocked-analyze-should-detect-mock-api-calls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "codeanalyzer-integration-mocked-analyze-should-detect-webgl-usage",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "codeanalyzer-integration-mocked-analyze-should-detect-sandbox-type",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "codeanalyzer-integration-mocked-analyze-should-calculate-confidence-score",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "codeanalyzer-integration-mocked-analyze-should-handle-empty-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "codeanalyzer-integration-mocked-analyze-should-use-provided-sandbox-type",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "codeanalyzer-integration-mocked-analyze-should-perform-security-analysis-when-enabled",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "codeanalyzer-integration-mocked-analyze-should-skip-security-analysis-when-disabled",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "codeanalyzer-integration-mocked-analyze-should-default-to-security-analysis-disabled",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "codeanalyzer-integration-mocked-clearcache-should-clear-npm-registry-cache",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "javascriptanalyzer-parse-should-parse-valid-javascript-code-with-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "javascriptanalyzer-parse-should-parse-code-with-mock-api-calls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "javascriptanalyzer-parse-should-parse-code-with-webgl-usage",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "javascriptanalyzer-parse-should-handle-empty-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "javascriptanalyzer-parse-should-include-error-context-when-parseerror-is-thrown",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "javascriptanalyzer-getpackagenames-should-extract-package-names-from-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "javascriptanalyzer-getpackagenames-should-handle-scoped-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "javascriptanalyzer-languagename-should-return-correct-language-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "audit-command-should-generate-markdown-report-by-default",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "audit-command-should-generate-html-report-when-format-is-html",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "audit-command-should-generate-json-report-when-format-is-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "audit-command-should-generate-terminal-report-when-format-is-terminal",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "audit-command-should-include-kiwi-tcms-details-when-requested",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "audit-command-should-write-report-to-file-when-output-is-specified",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "audit-command-should-throw-error-when-file-does-not-exist",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "audit-command-should-throw-error-for-invalid-escape.json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "property-1:-es6-import-detection-invariance-detect-returns-results-with-type=\"es6\"-for-es6-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "property-2:-relative-import-classification-invariance-detect-correctly-identifies-relative-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "property-3:-commonjs-require-detection-invariance-detect-returns-results-with-type=\"commonjs\"-for-require-statements",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "property-4:-package-name-extraction-invariance-extractpackagename-returns-correct-package-name-for-non-scoped-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "property-5:-pattern-clearing-invariance-clearpatterns-prevents-detection-of-subsequent-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-detect-should-detect-es6-named-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-detect-should-detect-es6-default-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-detect-should-detect-es6-wildcard-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-detect-should-detect-es6-imports-without-from-clause",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-detect-should-detect-commonjs-requires",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-detect-should-detect-relative-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-detect-should-detect-scoped-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-detect-should-detect-multiple-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-detect-should-capture-line-and-column-positions",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-getpackagenames-should-extract-package-names-from-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-getpackagenames-should-handle-scoped-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-getpackagenames-should-extract-main-package-from-scoped-package-with-subpath",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-getpackagenames-should-return-unique-package-names",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-getpackagenames-should-return-empty-array-when-no-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-getimportsbytype-should-filter-es6-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-getrelativeimports-should-filter-relative-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-getexternalimports-should-filter-external-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-isrelativeimport-should-identify-relative-imports-starting-with-./",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-isrelativeimport-should-identify-relative-imports-starting-with-../",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-isrelativeimport-should-identify-absolute-imports-starting-with-/",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-isrelativeimport-should-identify-external-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-extractpackagename-should-extract-package-name-from-simple-import",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-extractpackagename-should-extract-package-name-with-subpath",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-extractpackagename-should-extract-scoped-package-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-extractpackagename-should-extract-scoped-package-with-subpath",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-extractpackagename-should-handle-multiple-slashes",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-getstatistics-should-return-correct-statistics",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-getstatistics-should-handle-empty-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-addpattern-should-add-custom-pattern",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-clearpatterns-should-clear-all-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-getpatterns-should-return-all-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-detect-should-detect-mockapi.io-calls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-detect-should-detect-jsonplaceholder-calls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-detect-should-detect-localhost-urls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-detect-should-detect-127.0.0.1-urls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-detect-should-return-empty-array-when-no-mock-apis-are-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-detect-should-detect-multiple-mock-api-calls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-detect-should-capture-line-and-column-positions",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-addpattern-should-add-custom-pattern",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-clearpatterns-should-clear-all-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-getpatterns-should-return-all-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-ismockapi-should-return-true-for-mock-api-urls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-ismockapi-should-return-false-for-real-api-urls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-getmockapitype-should-return-correct-mock-api-type",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-getmockapitype-should-return-null-for-non-mock-apis",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-detect-ai-studio-from-@google/generative-ai-import",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-detect-ai-studio-from-@google/ai-protos-import",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-detect-ai-studio-from-gemini-references",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-detect-ai-studio-from-google.ai.generativelanguage-api",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-detect-bolt.new",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-detect-replit-from-@replit-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-detect-replit-from-internal-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-detect-codesandbox",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-detect-stackblitz",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-return-unknown-when-no-pattern-matches",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detectall-should-detect-all-sandbox-types-in-mixed-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detectall-should-return-unknown]-when-no-patterns-match",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detectdetailed-should-return-detailed-detection-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detectdetailed-should-return-multiple-detailed-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detectdetailed-should-return-empty-array-when-no-patterns-match",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-isfromsandbox-should-return-true-for-matching-sandbox",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-isfromsandbox-should-return-false-for-unknown-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-getconfidence-should-return-high-confidence-for-single-sandbox",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-getconfidence-should-return-0-for-non-matching-sandbox",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-getconfidence-should-return-0.5-for-unknown-with-no-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-getconfidence-should-handle-mixed-code-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-getpatternsfortype-should-return-patterns-for-ai-studio",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-getpatternsfortype-should-return-empty-array-for-unknown-type",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-getpatternsfortype-should-return-patterns-for-bolt.new",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-getpatternsfortype-should-return-patterns-for-replit",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-addpattern-should-add-custom-pattern",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-clearpatterns-should-clear-all-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-getpatterns-should-return-all-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-getpatterns-should-include-patterns-for-all-sandboxes",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-detect-should-detect-three.js-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-detect-should-detect-three.js-object-creation",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-detect-should-detect-react-three-fiber-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-detect-should-detect-webglrenderingcontext",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-detect-should-detect-canvas-getcontext-calls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-detect-should-detect-canvas-element-creation",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-detect-should-return-empty-array-when-no-webgl-is-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-detect-should-detect-multiple-webgl-usages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-detect-should-capture-line-and-column-positions",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-usesthreejs-should-return-true-for-three.js-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-usesthreejs-should-return-true-for-react-three-fiber",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-usesthreejs-should-return-true-for-react-three-drei",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-usesthreejs-should-return-false-for-non-three.js-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-useswebgl-should-return-true-for-webgl-context",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-useswebgl-should-return-true-for-webgl2",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-useswebgl-should-return-true-for-webglrenderingcontext",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-useswebgl-should-return-false-for-non-webgl-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-getwebgltypes-should-return-unique-webgl-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-getwebgltypes-should-return-empty-array-when-no-webgl-is-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-getfallbackrecommendations-should-provide-three.js-recommendations",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-getfallbackrecommendations-should-provide-webgl-recommendations",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-getfallbackrecommendations-should-provide-canvas-recommendations",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-getfallbackrecommendations-should-return-empty-array-when-no-webgl-is-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-addpattern-should-add-custom-pattern",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-clearpatterns-should-clear-all-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-getpatterns-should-return-all-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-parse-should-parse-simple-javascript-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-parse-should-parse-es6-module-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-parse-should-parse-typescript-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-generate-should-generate-code-from-ast",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-generate-should-preserve-formatting-when-enabled",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-findimports-should-find-es6-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-findimports-should-find-commonjs-requires",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "auditlogger-constructor-should-create-logger",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "auditlogger-logrequest-should-log-request",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "auditlogger-getstatistics-should-return-statistics-for-empty-logger",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "auditlogger-getstatistics-should-calculate-statistics-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "auditlogger-clear-should-clear-all-entries",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "baseparser-isrelativeimport-should-identify-relative-imports-starting-with-./",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "baseparser-isrelativeimport-should-identify-relative-imports-starting-with-../",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "baseparser-isrelativeimport-should-identify-relative-imports-starting-with-/",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "baseparser-isrelativeimport-should-return-false-for-non-relative-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "baseparser-extractpackagename-should-extract-regular-package-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "baseparser-extractpackagename-should-extract-scoped-package-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "codeanalyzer-constructor-should-create-analyzer-with-dependencies",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "codeanalyzer-analyze-should-analyze-simple-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-calculate-should-return-perfect-score-with-no-issues",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-calculate-should-decrease-score-with-error-issues",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-calculate-should-decrease-score-with-warning-issues",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-calculate-should-return-medium-level-for-medium-scores",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-calculate-should-return-low-level-for-low-scores",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-default-npm-registry-config-should-have-default-registry-url-defined",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-default-npm-registry-config-should-have-default-cache-ttl-defined",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-default-npm-registry-config-should-have-default-timeouts-defined",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-default-npm-registry-config-should-have-retry-enabled-by-default",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-default-analyzer-config-should-have-default-max-file-size-defined",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-default-analyzer-config-should-have-verbose-logging-disabled-by-default",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-default-analyzer-config-should-have-default-sandbox-type",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-default-analyzer-config-should-have-confidence-score-weights-defined",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-npm-registry-config-validation-should-validate-valid-npm-registry-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-npm-registry-config-validation-should-throw-error-for-invalid-registry-url",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-npm-registry-config-validation-should-throw-error-for-negative-cache-ttl",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-npm-registry-config-validation-should-throw-error-for-negative-timeouts",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-npm-registry-config-validation-should-throw-error-for-negative-max-retries",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-analyzer-config-validation-should-validate-valid-analyzer-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-analyzer-config-validation-should-throw-error-for-negative-max-file-size",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-analyzer-config-validation-should-throw-error-for-negative-error-weight",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-basic-tests-analyzer-config-validation-should-throw-error-for-negative-warning-weight",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "deepdependencyscanner-constructor-should-create-scanner-with-dependencies",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyresolver-constructor-should-create-resolver-with-dependencies",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyresolver-constructor-should-create-resolver-with-custom-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyresolver-getcachestats-should-return-cache-statistics",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyresolver-getnpmquerystats-should-return-npm-query-statistics",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-expanded-constructor-should-create-transformer-with-default-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-expanded-applydiff-should-return-a-result-object",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-expanded-applydiff-should-handle-simple-text-insertion",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-expanded-applydiff-should-handle-text-patch-format",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-expanded-applydiff-should-create-backup-when-requested",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-expanded-applydiff-should-handle-non-existent-files-gracefully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-expanded-applydiff-should-validate-diff-format-before-applying",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-expanded-validatediff-should-return-true-for-valid-insert-diff",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-expanded-validatediff-should-return-true-for-valid-delete-diff",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-expanded-validatediff-should-return-true-for-valid-replace-diff",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-expanded-validatediff-should-return-false-for-invalid-diff-format",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-expanded-validatediff-should-return-false-for-empty-diff",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-expanded-validatediff-should-return-false-for-diff-without-headers",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-constructor-should-create-transformer",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-validatediff-should-validate-empty-diff-format",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "e2evalidator-expanded-constructor-should-create-validator-with-default-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "e2evalidator-expanded-validate-should-return-a-result-object",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "e2evalidator-expanded-validate-should-handle-different-option-combinations",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "e2evalidator-constructor-should-use-default-options",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "e2evalidator-constructor-should-use-custom-options",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "e2evalidator-validate-should-return-invalid-result-for-non-existent-url",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-constructor-should-create-writer",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-generate-should-generate-contract-from-params",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-expanded-detect-should-detect-multiple-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-expanded-detect-should-detect-es6-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-expanded-detect-should-detect-commonjs-requires",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-expanded-detect-should-identify-relative-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-expanded-detect-should-handle-empty-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-expanded-detect-should-handle-code-without-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-expanded-importstatement-structure-should-include-line-and-column-information",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-expanded-importstatement-structure-should-include-source-information",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-detect-should-detect-es6-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-detect-should-detect-commonjs-requires",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-detect-should-detect-multiple-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-detect-should-detect-relative-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-detect-should-detect-scoped-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-getpackagenames-should-extract-unique-package-names",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-getpackagenames-should-exclude-relative-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-getimportsbytype-should-filter-es6-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importdetector-getstatistics-should-calculate-import-statistics",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-expanded-constructor-should-create-replacer-with-default-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-expanded-replaceimports-should-handle-simple-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-expanded-replaceimports-should-handle-code-with-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-expanded-replaceimports-should-handle-empty-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-expanded-replaceimports-should-handle-code-with-multiple-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-should-replace-ghost-import-with-real-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-should-handle-multiple-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-should-preserve-code-formatting",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "issuegenerator-expanded-constructor-should-create-issue-generator-with-default-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "issuegenerator-expanded-createissue-should-create-basic-issue-with-minimal-parameters",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "issuegenerator-expanded-createissue-should-create-issue-with-detailed-description-for-different-pattern-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "issuegenerator-expanded-createissue-should-handle-different-risk-scores-appropriately",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "issuegenerator-expanded-createissue-should-include-package-context-in-message-when-available",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "issuegenerator-expanded-createissue-should-generate-meaningful-remediation-suggestions",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "issuegenerator-expanded-createissue-should-handle-legitimate-build-script-flag",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "issuegenerator-expanded-createissue-should-include-publish-date-information-when-available",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "issuegenerator-createissue-should-create-issue-from-script-analysis-result",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "issuegenerator-createissue-should-format-message-with-package-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "javascriptanalyzer-constructor-should-create-analyzer-with-detectors",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "javascriptanalyzer-languagename-should-return-correct-language-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "javascriptanalyzer-parse-should-parse-simple-javascript-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "javascriptanalyzer-parse-should-detect-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-expanded-constructor-should-create-knowledge-base-with-default-mappings",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-expanded-getmapping-should-return-null-for-package-not-in-knowledge-base",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-expanded-getmapping-should-handle-package-names-with-different-cases",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-expanded-getmapping-should-return-consistent-result-for-same-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-expanded-addmapping-should-add-new-mapping-to-knowledge-base",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-expanded-addmapping-should-return-correct-mapping-after-adding",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-expanded-file-operations-should-handle-non-existent-files-gracefully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-final-tests-mapping-management-should-retrieve-exact-matches-from-knowledge-base",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-final-tests-mapping-management-should-return-null-for-unknown-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-final-tests-mapping-management-should-add-multiple-mappings-to-knowledge-base",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-final-tests-mapping-management-should-handle-multiple-real-packages-in-mapping",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-final-tests-knowledge-base-size-and-clear-should-return-correct-size",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-final-tests-knowledge-base-size-and-clear-should-clear-all-mappings",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-final-tests-metadata-handling-should-store-metadata-in-mapping",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-final-tests-metadata-handling-should-handle-mappings-without-metadata",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-getmapping-should-return-null-for-unknown-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-getmapping-should-return-mapping-for-known-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-addmapping-should-add-new-mapping",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-addmapping-should-overwrite-existing-mapping",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-clear-should-clear-all-mappings",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-size-should-return-number-of-mappings",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "lockfilegenerator-constructor-should-create-generator",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "lockfilegenerator-generate-should-generate-lock-file-from-dependencies",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "lockfilegenerator-generate-should-generate-lock-file-for-empty-dependencies",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "lockfilegenerator-calculateintegrity-should-calculate-integrity-hash",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "lockfilegenerator-calculateintegrity-should-generate-consistent-hashes",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "lockfilegenerator-validate-should-return-invalid-for-non-existent-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "lockfileparser-constructor-should-create-parser",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "lockfileparser-parse-should-return-error-for-non-existent-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "lockfileparser-parsecontent-should-return-error-for-empty-content",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "logger-basic-tests-child-method-should-create-child-logger-with-context",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "logger-basic-tests-log-levels-should-have-all-standard-log-methods",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "logger-basic-tests-log-levels-should-accept-string-messages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "logger-basic-tests-log-levels-should-accept-object-context",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mirrorregistry-constructor-should-create-registry-with-default-mirrors",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mirrorregistry-constructor-should-create-registry-with-chinese-mirrors-disabled",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mirrorregistry-getmirrors-should-return-mirrors-sorted-by-priority",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mirrorregistry-checkmirror-should-return-false-for-non-existent-mirror",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-expanded-detect-should-detect-jsonplaceholder-urls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-expanded-detect-should-detect-mockapi-urls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-expanded-detect-should-detect-localhost-references",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-expanded-detect-should-detect-127.0.0.1-references",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-expanded-detect-should-handle-multiple-api-calls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-expanded-detect-should-handle-code-without-mock-apis",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-expanded-ismockapi-should-identify-jsonplaceholder",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-expanded-ismockapi-should-identify-mockapi",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-expanded-ismockapi-should-identify-localhost",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-expanded-ismockapi-should-identify-127.0.0.1",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-expanded-ismockapi-should-ignore-real-apis",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-detect-should-detect-mock-apis",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-detect-should-handle-multiple-mock-apis",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-detect-should-not-detect-real-apis",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-detect-should-detect-localhost-urls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-addpattern-should-add-custom-pattern",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockapidetector-ismockapi-should-identify-mock-apis",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-constructor-should-use-default-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-constructor-should-use-custom-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-isnodebuiltin-should-identify-node.js-built-in-modules",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-isnodebuiltin-should-return-false-for-non-built-in-modules",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-packageexists-should-return-true-for-node.js-built-in-modules",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-packageexists-should-return-false-for-non-existent-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-packageexists-should-use-cache-for-repeated-calls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "offlinepackagecache-constructor-should-create-cache-with-default-directory",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "offlinepackagecache-constructor-should-create-cache-with-custom-directory",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "offlinepackagecache-getcached-should-return-null-for-non-existent-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "offlinepackagecache-getcached-should-return-cached-package-info",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "offlinepackagecache-size-should-return-zero-for-empty-cache",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "offlinepackagecache-size-should-return-count-after-populate",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "offlinepackagecache-clear-should-clear-cache",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "packagejsonparser-constructor-should-create-parser",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "packagejsonparser-parse-should-parse-valid-package.json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "packagejsonparser-parse-should-throw-error-for-invalid-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "packagejsonparser-extractscripts-should-return-empty-array-for-no-scripts",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "packagejsonparser-extractscripts-should-extract-postinstall-scripts",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "packagejsonparser-extractdependencies-should-return-empty-array-for-no-dependencies",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "packagejsonparser-extractdependencies-should-extract-dependencies",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "patternmatcher-detectpatterns-should-detect-network-requests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "patternmatcher-detectpatterns-should-detect-environment-variable-access",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "patternmatcher-detectpatterns-should-detect-code-execution",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "patternmatcher-detectpatterns-should-detect-obfuscation",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "patternmatcher-detectpatterns-should-detect-file-system-operations",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "patternmatcher-islegitimatepattern-should-detect-build-tools",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "patternmatcher-islegitimatepattern-should-detect-package-managers",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "postinstalldetector-constructor-should-create-detector-with-dependencies",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "projectgenerator-constructor-should-create-generator",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "projectgenerator-generate-should-generate-project-structure",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "projectvalidator-expanded-constructor-should-create-validator-with-default-configuration",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "projectvalidator-expanded-basic-validation-structure-should-have-validate-method-that-returns-expected-structure",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "projectvalidator-expanded-basic-validation-structure-should-return-boolean-valid-flag",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "projectvalidator-expanded-basic-validation-structure-should-return-array-of-checks",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "projectvalidator-expanded-file-extension-validation-should-have-default-source-extensions-defined",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "projectvalidator-expanded-file-extension-validation-should-have-default-required-files-defined",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "projectvalidator-expanded-ghost-import-patterns-should-have-default-ghost-import-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "projectvalidator-expanded-ghost-import-patterns-should-include-common-ghost-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "projectvalidator-constructor-should-create-validator",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "projectvalidator-validate-should-return-invalid-result-for-non-existent-path",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-expanded-tests-constructor-and-defaults-should-create-with-default-unlimited-configuration",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-expanded-tests-constructor-and-defaults-should-accept-custom-configuration",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-expanded-tests-basic-functionality-should-throttle-resolve-immediately-for-unlimited-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-expanded-tests-basic-functionality-should-execute-function-with-rate-limiting",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-expanded-tests-getrequestcount-method-should-count-requests-within-current-window",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-expanded-tests-getrequestcount-method-should-return-0-when-no-recent-requests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-expanded-tests-getstats-method-should-return-correct-stats-for-unlimited-configuration",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-expanded-tests-getstats-method-should-show-remaining-requests-for-limited-configuration",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-expanded-tests-reset-method-should-clear-all-internal-state",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-expanded-tests-edge-cases-should-handle-infinity-values-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-expanded-tests-edge-cases-should-handle-zero-values-in-configuration",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-final-tests-concurrent-limit-enforcement-should-respect-maxconcurrent-limit",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-final-tests-concurrent-limit-enforcement-should-queue-tasks-when-concurrent-limit-reached",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-final-tests-error-handling-should-handle-function-failures-gracefully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-final-tests-error-handling-should-continue-processing-after-failures",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-final-tests-configuration-validation-should-validate-negative-values-in-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-final-tests-configuration-validation-should-validate-zero-values-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-constructor-should-create-limiter-with-default-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-constructor-should-create-limiter-with-custom-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-throttle-should-allow-first-request-immediately",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-throttle-should-respect-maxrequests-limit",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-getrequestcount-should-return-0-for-new-limiter",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-getrequestcount-should-count-requests-within-window",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-execute-should-execute-function-and-return-result",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-execute-should-execute-async-function",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "riskscorer-calculatescore-should-return-0-for-no-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "riskscorer-calculatescore-should-calculate-score-for-network-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "riskscorer-calculatescore-should-deduplicate-pattern-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "riskscorer-calculatescore-should-cap-score-at-100",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "riskscorer-getseverity-should-return-error-for-scores->-70",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "riskscorer-getseverity-should-return-warning-for-scores-40-70",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "riskscorer-getseverity-should-return-info-for-scores-<-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "runtimevalidator-expanded-constructor-should-create-validator-with-default-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "runtimevalidator-expanded-validate-should-handle-basic-validation-request-async",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "runtimevalidator-expanded-validate-should-handle-validation-with-specific-rules-async",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "runtimevalidator-expanded-validate-should-return-consistent-result-structure-async",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "runtimevalidator-expanded-validate-should-handle-different-timeout-values-async",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "runtimevalidator-expanded-validate-should-handle-validation-failures-gracefully-async",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "runtimevalidator-constructor-should-use-default-timeouts",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "runtimevalidator-constructor-should-use-custom-timeouts",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "runtimevalidator-validate-should-return-validation-result",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-expanded-detect-should-detect-replit-references",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-expanded-detect-should-detect-replit-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-expanded-detect-should-detect-replit-authentication",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-expanded-detect-should-detect-replit-user-id",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-expanded-detect-should-detect-replit-api-url",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-expanded-detect-should-handle-multiple-replit-references",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-expanded-detect-should-handle-code-without-sandbox-dependencies",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-expanded-constructor-should-create-detector-with-default-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-detect-google-ai-studio",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-detect-bolt.new",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-detect-replit",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-detect-codesandbox",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-detect-stackblitz",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detect-should-return-unknown-for-no-sandbox",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detectall-should-detect-multiple-sandbox-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-isfromsandbox-should-return-true-for-ai-studio-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-isfromsandbox-should-return-false-for-wrong-sandbox",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-getconfidence-should-return-confidence-for-ai-studio",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-getconfidence-should-return-0-for-no-match",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sandboxdetector-detectdetailed-should-return-detailed-detection-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-constructor-should-create-validator-with-default-options",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-constructor-should-create-validator-with-custom-options",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-checkvulnerabilities-should-return-empty-array-for-safe-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-checkvulnerabilities-should-return-vulnerabilities-for-known-vulnerable-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-checklicense-should-return-true-for-mit-license",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-checklicense-should-return-true-for-undefined-license",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-checklicense-should-return-false-for-proprietary-license",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-validate-should-validate-safe-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-validate-should-validate-vulnerable-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-constructor-should-create-matcher-with-npmregistry",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-findsimilar-should-return-empty-array-for-non-existent-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-findsimilar-should-respect-minsimilarity-option",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-findsimilar-should-respect-maxresults-option",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-analyze-should-detect-typosquatting",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-analyze-should-detect-hallucination-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-analyze-should-detect-high-entropy-names",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-analyze-should-return-null-for-legitimate-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-analyze-should-consider-recency-in-risk-assessment",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-constructor-should-create-engine-with-built-in-helpers",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-should-render-simple-variable",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-should-render-nested-property",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-should-handle-missing-variable",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-should-render-empty-template",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "transformationpipeline-constructor-should-create-pipeline",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "transformationpipeline-processanalysisresult-should-process-analysis-result",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "unicodeanalyzer-analyze-should-detect-invisible-characters",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "unicodeanalyzer-analyze-should-detect-bidi-characters",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "unicodeanalyzer-analyze-should-detect-mixed-script-homoglyph",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "unicodeanalyzer-analyze-should-not-flag-clean-package-names",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "unicodeanalyzer-analyze-should-handle-script-context",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-expanded-constructor-should-create-scorer-with-default-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-expanded-score-should-return-a-score-result-object",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-expanded-score-should-handle-perfect-validation-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-expanded-score-should-handle-basic-validation-level",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-expanded-score-should-handle-validation-failures",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-expanded-score-should-provide-recommendations-for-improvements",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-score-should-calculate-score-for-perfect-validation",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-score-should-calculate-score-with-runtime-validation",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-score-should-calculate-score-with-e2e-validation",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-score-should-generate-recommendations-for-failed-checks",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-expanded-detect-should-detect-webgl-import",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-expanded-detect-should-detect-webgl2-import",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-expanded-detect-should-detect-three.js-import",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-expanded-detect-should-detect-@types/three-import",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-expanded-detect-should-handle-code-without-webgl",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-expanded-constructor-should-create-detector-with-default-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-detect-should-detect-three.js-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-detect-should-detect-react-three-fiber-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-detect-should-detect-webgl-context-usage",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-detect-should-detect-three.js-constructor-usage",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-detect-should-detect-canvas-element-creation",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-usesthreejs-should-return-true-for-three.js-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-usesthreejs-should-return-false-for-non-three.js-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-useswebgl-should-return-true-for-webgl-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-useswebgl-should-return-false-for-non-webgl-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-getwebgltypes-should-return-unique-webgl-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "webgldetector-getfallbackrecommendations-should-provide-recommendations-for-three.js",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "analyzecode-parameter-validation-should-return-error-for-missing-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "analyzecode-parameter-validation-should-return-error-for-undefined-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "analyzecode-analyze-should-analyze-valid-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "analyzecode-analyze-should-analyze-code-with-sandbox-type",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-default_npm_registry_config-should-have-valid-default-values",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-default_analyzer_config-should-have-valid-default-values",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-validatenpmregistryconfig-should-validate-valid-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-validatenpmregistryconfig-should-throw-error-for-invalid-registryurl",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "config-validatenpmregistryconfig-should-throw-error-for-invalid-cachettl",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapekiterror-should-create-base-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapekiterror-should-include-context",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapekiterror-should-serialize-to-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "parseerror-should-create-parse-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "networkerror-should-create-network-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistryerror-should-create-npm-registry-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistryerror-should-include-package-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "packagenotfounderror-should-create-package-not-found-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "timeouterror-should-create-timeout-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "generateescapekit-parameter-validation-should-handle-basic-options",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "generateescapekit-parameter-validation-should-handle-force-option",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "generateescapekit-parameter-validation-should-handle-all-options",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "logger-constructor-should-create-logger-with-default-level",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "logger-constructor-should-create-logger-with-info-level",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "logger-constructor-should-create-logger-with-prefix",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "logger-setlevel-should-change-log-level",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "logger-log-methods-should-call-debug-method",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "logger-log-methods-should-call-info-method",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "logger-log-methods-should-call-warn-method",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "logger-log-methods-should-call-error-method",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "logger-log-methods-should-log-with-context",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "logger-child-should-create-child-logger",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "schemas-createsuccessresponse-should-create-success-response",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "schemas-createsuccessresponse-should-create-success-response-with-metadata",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "schemas-createerrorresponse-should-create-error-response",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "schemas-createerrorresponse-should-create-error-response-with-severity",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "schemas-generateid-should-generate-unique-ids",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "schemas-generateid-should-generate-ids-with-prefix",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "schemas-errorseverity-type-should-accept-valid-severity-values",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "schemas-issuetype-type-should-accept-valid-issue-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "server-mcp-server-instance-listtools-should-return-available-tools",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "server-mcp-server-instance-listtools-should-include-analyze_sandbox_code-tool",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "server-mcp-server-instance-listtools-should-include-generate_escape_kit-tool",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "server-mcp-server-instance-listtools-should-include-validate_reality-tool",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mappingstrategy-should-have-exact_match-value",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mappingstrategy-should-have-semantic_match-value",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mappingstrategy-should-have-manual_override-value",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mappingstrategy-should-have-fallback-value",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "resolutionmethod-should-have-knowledge_base-value",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "resolutionmethod-should-have-npm_search-value",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "resolutionmethod-should-have-semantic_analysis-value",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "resolutionmethod-should-have-user_provided-value",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "transformationtype-should-have-import_replacement-value",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "transformationtype-should-have-polyfill_injection-value",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "transformationtype-should-have-api_migration-value",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "transformationtype-should-have-configuration_generation-value",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validatereality-parameter-validation-should-return-error-for-missing-project-path",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validatereality-parameter-validation-should-return-error-for-undefined-project-path",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validatereality-validation-levels-should-handle-basic-validation-level",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validatereality-validation-levels-should-handle-standard-validation-level",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validatereality-validation-levels-should-handle-thorough-validation-level",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validatereality-validation-levels-should-default-to-standard-validation-level",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-calculatecodehash-returns-a-sha256:-prefixed-hash",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-calculatecodehash-returns-consistent-hash-for-same-input",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-calculatecodehash-returns-different-hashes-for-different-inputs",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-calculatecodehash-handles-empty-string",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-validate-returns-true-for-a-valid-contract",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-validate-returns-false-for-null",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-validate-returns-false-for-missing-contractid",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-validate-returns-false-for-missing-analysisid",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-validate-returns-false-for-missing-origin",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-generate-creates-a-contract-with-correct-analysisid",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-generate-sets-validationstatus-to-pending",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-generate-calculates-code-hash-when-originalcode-provided",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-generate-adds-low-confidence-assumption",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-generate-sets-sandboxtype-from-analysisresult",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-writetofile-and-parsefromfile-round-trips-a-contract-through-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-writetofile-and-parsefromfile-throws-filesystemerror-when-write-path-is-invalid",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-writetofile-and-parsefromfile-throws-filesystemerror-when-read-path-does-not-exist",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escapecontractwriter-writetofile-and-parsefromfile-throws-on-invalid-json-content",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-variable-interpolation-replaces-a-simple-variable",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-variable-interpolation-replaces-multiple-variables",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-variable-interpolation-resolves-nested-dot-notation-paths",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-variable-interpolation-returns-empty-string-for-undefined-variables",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-variable-interpolation-returns-empty-string-for-null-variables",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-variable-interpolation-renders-numeric-values",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-variable-interpolation-renders-boolean-values",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-variable-interpolation-leaves-non-template-text-unchanged",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#if}}-blocks-renders-block-when-condition-is-true",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#if}}-blocks-hides-block-when-condition-is-false",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#if}}-blocks-hides-block-when-condition-is-undefined",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#if}}-blocks-hides-block-when-condition-is-empty-array",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#if}}-blocks-shows-block-when-condition-is-non-empty-array",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#if}}-blocks-renders-else-branch-when-condition-is-false",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#if}}-blocks-renders-if-branch-when-condition-is-true-with-else",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#if}}-blocks-evaluates-nested-dot-notation-condition",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#unless}}-blocks-renders-block-when-condition-is-false",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#unless}}-blocks-hides-block-when-condition-is-true",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#unless}}-blocks-renders-block-when-condition-is-undefined",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#each}}-blocks-iterates-over-an-array",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#each}}-blocks-provides-@index-for-array-items",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#each}}-blocks-iterates-over-object-properties",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#each}}-blocks-spreads-object-item-properties-into-context",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#each}}-blocks-returns-empty-string-for-empty-array",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-{{#each}}-blocks-returns-empty-string-for-null/undefined-value",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-built-in-helpers-camelcase-converts-kebab-case-to-camelcase",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-built-in-helpers-camelcase-converts-space-separated-to-camelcase",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-built-in-helpers-camelcase-converts-snake_case-to-camelcase",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-built-in-helpers-camelcase-lowercases-the-first-character",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-built-in-helpers-kebabcase-converts-camelcase-to-kebab-case",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-built-in-helpers-kebabcase-converts-spaces-to-hyphens",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-built-in-helpers-kebabcase-lowercases-the-result",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-built-in-helpers-uppercase-converts-camelcase-to-upper_case",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-built-in-helpers-uppercase-converts-spaces-to-underscores-and-uppercases",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-built-in-helpers-uppercase-converts-hyphens-to-underscores-and-uppercases",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-built-in-helpers-json-serializes-an-object-to-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-built-in-helpers-json-serializes-an-array-to-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-built-in-helpers-json-serializes-a-string-to-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-addhelpers-registers-and-uses-a-custom-helper",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-addhelpers-custom-helper-overrides-built-in-with-same-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-compiletemplate-returns-a-function-that-renders-the-template",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-compiletemplate-returns-the-same-function-for-the-same-template-cache-hit",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-compiletemplate-returns-different-functions-for-different-templates",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-compiletemplate-clearcache-removes-cached-templates",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-loadtemplate-loads-a-template-file-successfully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-loadtemplate-throws-filesystemerror-when-file-does-not-exist",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-loadtemplate-filesystemerror-has-correct-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-real-template-integration-renders-package.json.hbs-template",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-real-template-integration-renders-tsconfig.json.hbs-template",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "templateengine-render-real-template-integration-renders-readme.md.hbs-template",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "transformationpipeline-processanalysisresult-extracts-ghost-import-issues",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "transformationpipeline-processanalysisresult-ignores-non-ghost-import-issues",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "transformationpipeline-processanalysisresult-skips-non-autofixable-issues-by-default",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "transformationpipeline-processanalysisresult-includes-non-autofixable-issues-when-force=true",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "transformationpipeline-processanalysisresult-sets-requiresmanualreview=true-when-confidencescore-<-0.5",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "transformationpipeline-processanalysisresult-sets-requiresmanualreview=false-when-confidencescore->=-0.5",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "transformationpipeline-processanalysisresult-preserves-analysisid-from-input",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "transformationpipeline-processanalysisresult-returns-empty-ghostimports-for-no-ghost-import-issues",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "transformationpipeline-processanalysisresult-adds-warning-for-skipped-non-autofixable-issues",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escape.json-generation-should-skip-escape.json-when-generateescapejson-is-false",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "escape.json-generation-should-handle-generateescapejson=true-gracefully-when-escapejsonwriter-is-disabled",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "roo-code-integration-diffapplytransformer-fluxo-completo-should-validate-and-apply-diff-successfully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "roo-code-integration-diffapplytransformer-fluxo-completo-should-handle-multiple-hunks-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "roo-code-integration-diffapplytransformer-fluxo-completo-should-generate-diff-between-files",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "roo-code-integration-diffapplytransformer-fluxo-completo-should-reject-invalid-diffs",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "roo-code-integration-transformationpipeline-integração-com-diffs-should-process-analysis-with-diff-options",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "roo-code-integration-transformationpipeline-integração-com-diffs-should-support-applydifftofile-method",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "roo-code-integration-transformationpipeline-integração-com-diffs-should-support-generatediff-method",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "roo-code-integration-transformationpipeline-integração-com-diffs-should-support-validatediff-method",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "roo-code-integration-fuzzy-matching-aplicação-robusta-should-apply-diff-with-minor-content-variations",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "roo-code-integration-fuzzy-matching-aplicação-robusta-should-reject-diff-with-low-similarity-threshold",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "roo-code-integration-tratamento-de-erros-e-edge-cases-should-handle-non-existent-file-gracefully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "roo-code-integration-tratamento-de-erros-e-edge-cases-should-preserve-file-encoding-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "roo-code-integration-tratamento-de-erros-e-edge-cases-should-handle-empty-diff-gracefully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "roo-code-integration-tratamento-de-erros-e-edge-cases-should-handle-diff-with-no-changes",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "roo-code-integration-múltiplas-aplicações-consecutivas-should-apply-multiple-diffs-in-sequence",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-cache-test-case-cache-should-cache-test-case-lookups",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-cache-test-case-cache-should-cache-created-test-cases",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-cache-product-cache-should-cache-product-list",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-cache-build-cache-should-cache-builds-per-product",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-cache-build-cache-should-invalidate-build-cache-on-create",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-cache-clearcache-should-clear-all-caches",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-cache-getcachestats-should-return-cache-statistics",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-validation-validateproduct-should-throw-when-product-not-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-validation-validateproduct-should-return-product-when-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-validation-validateproduct-should-skip-validation-on-repeated-calls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-validation-validatecategory-should-throw-when-category-not-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-validation-validatecategory-should-return-category-when-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-validation-getorcreatetestcase-with-validation-should-validate-product-and-category-before-creating",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-validation-getorcreatetestcase-with-validation-should-fail-if-product-is-invalid",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-authenticate-should-authenticate-and-store-token",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-authenticate-should-return-false-on-auth-failure",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-circuit-breaker-should-expose-circuit-breaker-state",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-circuit-breaker-should-reset-circuit-breaker",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-http→https-auto-upgrade-should-normalize-http://host:443-to-https://host",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-http→https-auto-upgrade-should-keep-https://-urls-unchanged",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwiclient-http→https-auto-upgrade-should-keep-http://-non-443-urls-unchanged",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-ingestlogline-should-parse-a-valid-upload_complete-event",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-ingestlogline-should-ignore-non-json-lines",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-ingestlogline-should-ignore-non-upload-events",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-toprometheustext-should-return-placeholder-when-no-data",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-toprometheustext-should-generate-valid-prometheus-format",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-toprometheustext-should-include-timestamp",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-toprometheustext-should-include-all-test-outcome-counters",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-getlatest-should-return-null-when-no-data",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-getlatest-should-return-latest-snapshot",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "metricscollector-multiple-ingestions-should-keep-only-the-latest-snapshot-for-prometheus-output",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slacknotifier-should-send-summary-to-slack",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slacknotifier-should-send-failure-alert",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slacknotifier-should-return-false-on-slack-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jiranotifier-should-add-comment-to-jira-issue",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jiranotifier-should-return-false-on-jira-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "notificationmanager-should-detect-slack-configured",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "notificationmanager-should-detect-jira-configured",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "notificationmanager-should-notify-all-channels",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "loadnotificationconfig-should-load-slack-config-from-env",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "loadnotificationconfig-should-load-jira-config-from-env",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "loadnotificationconfig-should-return-empty-config-when-no-env-vars-set",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "retryhandler-jitter-should-add-jitter-to-delay-delays-vary",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "retryhandler-jitter-should-respect-maxdelayms-cap",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "retryhandler-rate-limiting-429-should-retry-on-http-429",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "retryhandler-rate-limiting-429-should-use-retry-after-header-when-present",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "retryhandler-rate-limiting-429-should-not-retry-4xx-errors-other-than-429",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "getretryafterdelay-should-parse-retry-after-header-in-seconds",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "getretryafterdelay-should-parse-x-ratelimit-reset-as-unix-timestamp",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "getretryafterdelay-should-return-null-when-no-headers-present",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "circuitbreaker-should-open-after-threshold-failures",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "circuitbreaker-should-transition-to-half-open-after-timeout",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "property-1:-window-count-invariant-getrequestcount-equals-n-after-n-sequential-throttle-calls-within-one-window",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "property-2:-token-bucket-invariant-no-more-than-r-calls-resolve-within-any-w-ms-interval-without-waiting",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "property-3:-concurrency-invariant-active-in-flight-count-never-exceeds-maxconcurrent",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "property-4:-reset-invariant-getrequestcount-returns-0-immediately-after-reset-regardless-of-prior-state",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "property-5:-error-release-invariant-after-execute-throwingfn-,-a-subsequent-execute-successfn-completes-successfully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "recommendationengine-generate-should-generate-recommendation-for-framework-mix",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "recommendationengine-generate-should-generate-recommendation-for-ghost-import",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "recommendationengine-generate-should-generate-recommendation-for-phantom-dependency",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "recommendationengine-generate-should-generate-recommendation-for-mock-api",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "recommendationengine-generate-should-generate-generic-recommendation-for-unknown-problem-type",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "recommendationengine-formatasmarkdown-should-format-recommendation-as-markdown",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "recommendationengine-formatasmarkdown-should-include-severity-icon",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "recommendationengine-getquickfixcommands-should-return-quick-fix-commands",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "recommendationengine-getquickfixcommands-should-return-empty-array-if-no-commands",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "recommendationengine-hastemplate-should-return-true-for-known-problem-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "recommendationengine-hastemplate-should-return-false-for-unknown-problem-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "recommendationengine-getloadedtemplateids-should-return-list-of-loaded-template-ids",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-canhandle-should-identify-custom-json-files-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-canhandle-should-reject-invalid-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-canhandle-should-accept-any-json-as-the-parser-is-now-more-permissive",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-getframeworkname-should-return-correct-framework-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-getframeworkname-should-return-custom-framework-name-if-schema-provided",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-load-should-parse-custom-json-with-passed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-load-should-parse-custom-json-with-failed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-load-should-parse-custom-json-with-skipped-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-load-should-filter-out-skipped-tests-when-configured",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-load-should-normalize-test-case-names-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-load-should-support-custom-transform-function",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-load-should-load-from-file-path",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-status-mapping-should-map-various-status-values-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-edge-cases-should-handle-empty-test-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-edge-cases-should-handle-malformed-json-gracefully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "customtestparser-edge-cases-should-mark-tests-as-failed-if-they-exceed-max-duration",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "helper-functions-createcustomtestresult-should-create-a-valid-custom-test-result-object",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "helper-functions-exampletransform-should-transform-a-custom-test-case-to-test-result",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "helper-functions-exampletransform-should-transform-a-failed-test-case",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-canhandle-should-identify-cypress-json-with-browsername",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-canhandle-should-identify-cypress-json-with-results-array",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-canhandle-should-reject-non-cypress-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-getframeworkname-should-return-cypress",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-parse-cypress-json-with-passed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-parse-cypress-json-with-failed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-parse-nested-suites",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-join-title-array-for-test-case-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-map-pending-state-to-skipped",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-handle-empty-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-load-from-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "cypressadapter-load-should-get-error-from-attempt-if-no-direct-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-canhandle-should-identify-jest-json-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-canhandle-should-reject-non-jest-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-canhandle-should-reject-invalid-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-getframeworkname-should-return-jest",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-parse-jest-json-with-passed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-parse-jest-json-with-failed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-parse-jest-json-with-skipped-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-filter-skipped-when-configured",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-normalize-test-case-names",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-load-from-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-handle-empty-test-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "jestadapter-load-should-handle-nested-suites",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-canhandle-should-identify-mocha-xml-files-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-canhandle-should-reject-non-mocha-xml-files",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-canhandle-should-reject-non-xml-files",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-canhandle-should-identify-xml-content-directly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-getframeworkname-should-return-correct-framework-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-load-should-parse-mocha-xml-output-with-passed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-load-should-parse-mocha-xml-output-with-failed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-load-should-parse-mocha-xml-output-with-skipped-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-load-should-filter-out-skipped-tests-when-configured",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-load-should-normalize-test-case-names-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-load-should-handle-test-errors",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-load-should-load-from-file-path",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-edge-cases-should-handle-empty-test-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-edge-cases-should-handle-malformed-xml-gracefully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mochaadapter-edge-cases-should-handle-single-testsuite-without-testsuites-wrapper",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-canhandle-should-identify-playwright-json-with-suites",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-canhandle-should-identify-playwright-json-with-config",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-canhandle-should-reject-non-playwright-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-getframeworkname-should-return-playwright",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-load-should-parse-playwright-json-with-passed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-load-should-parse-playwright-json-with-failed-tests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-load-should-handle-nested-suites",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-load-should-include-duration-from-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-load-should-normalize-test-case-names",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-load-should-handle-empty-suites",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "playwrightadapter-load-should-load-from-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyresolver-integration-npm-registry-mocked-npm-registry-validation-should-mark-resolution-as-verified-when-package-exists",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyresolver-integration-npm-registry-mocked-npm-registry-validation-should-mark-resolution-as-unverified-when-package-does-not-exist",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyresolver-integration-npm-registry-mocked-offline-mode-should-work-in-offline-mode-with-cached-data",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyresolver-integration-npm-registry-mocked-npm-query-statistics-should-track-npm-query-statistics",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyresolver-integration-npm-registry-mocked-npm-query-statistics-should-track-cache-hits-and-misses",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyresolver-integration-npm-registry-mocked-rate-limiting-should-apply-rate-limiting-between-requests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyresolver-integration-npm-registry-mocked-rate-limiting-should-work-without-rate-limiting-when-disabled",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyresolver-integration-npm-registry-mocked-batch-resolution-should-resolve-multiple-packages-and-track-statistics",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyresolver-integration-npm-registry-mocked-validation-status-in-reasoning-should-include-unverified-status-in-reasoning-text",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyresolver-integration-npm-registry-mocked-validation-status-in-reasoning-should-not-include-unverified-in-reasoning-for-verified-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-should-load-at-least-10-mappings-from-knowledge-base.json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-should-have-mapping-for-three.js",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-should-have-mapping-for-mockapi.io",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-should-have-mapping-for-fake-api-client",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-should-have-mapping-for-mock-database",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-should-have-mapping-for-sandbox-canvas",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-should-have-mapping-for-test-utils",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-should-have-mapping-for-fake-fetch",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-should-have-mapping-for-mock-websocket",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-should-have-mapping-for-sandbox-crypto",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-should-have-mapping-for-fake-storage",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-should-have-mapping-for-mock-auth",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-should-have-mapping-for-sandbox-dom",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-should-have-mapping-for-fake-router",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-should-have-mapping-for-mock-logger",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-all-mappings-should-have-confidence-between-0.0-and-1.0",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-integration-all-mappings-should-have-at-least-one-real-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-getmapping-should-return-null-for-non-existent-ghost-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-getmapping-should-return-mapping-for-existing-ghost-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-addmapping-should-add-a-new-mapping",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-addmapping-should-overwrite-existing-mapping-with-same-ghost-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-loadfromfile-should-load-mappings-from-valid-json-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-loadfromfile-should-throw-error-for-invalid-json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-loadfromfile-should-throw-error-for-missing-mappings-field",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-loadfromfile-should-throw-error-for-non-existent-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-exporttofile-should-export-mappings-to-json-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-exporttofile-should-export-empty-knowledge-base",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-size-should-return-0-for-empty-knowledge-base",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-size-should-return-correct-count-after-adding-mappings",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-clear-should-remove-all-mappings",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "knowledgebase-round-trip-should-preserve-data-through-export-and-load",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-integration-should-find-\"three\"-as-alternative-for-\"three-js\"",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-integration-should-find-\"axios\"-as-alternative-for-\"axios-client\"",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-integration-should-respect-minimum-similarity-threshold",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-integration-should-limit-results-to-maxresults",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-integration-should-rank-results-by-confidence-descending",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-integration-should-cache-package-metadata-for-performance",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-integration-should-handle-non-existent-packages-gracefully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-integration-should-calculate-similarity-with-real-package-metadata",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-findsimilar-should-find-similar-packages-with-confidence-scores",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-findsimilar-should-rank-results-by-confidence-score-descending",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-findsimilar-should-apply-minimum-similarity-threshold",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-findsimilar-should-limit-results-to-maxresults",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-findsimilar-should-exclude-deprecated-packages-by-default",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-findsimilar-should-return-empty-array-when-no-packages-meet-threshold",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-findsimilar-should-handle-errors-gracefully-and-continue",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-calculatesimilarity-should-return-1.0-for-identical-names-with-full-metadata",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-calculatesimilarity-should-return-high-similarity-for-substring-matches",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-calculatesimilarity-should-return-low-similarity-for-very-different-names",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-calculatesimilarity-should-weight-name-similarity-at-40%",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-calculatesimilarity-should-consider-keyword-overlap",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-calculatesimilarity-should-consider-download-count",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-calculatesimilarity-should-consider-maintenance-status",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-calculatesimilarity-should-return-score-between-0.0-and-1.0",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-analyzepackage-should-fetch-and-cache-package-metadata",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-analyzepackage-should-extract-keywords-from-package-name",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-analyzepackage-should-handle-errors-gracefully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-analyzepackage-should-mark-package-as-not-deprecated-by-default",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-levenshtein-distance-should-calculate-correct-distance-for-identical-strings",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-levenshtein-distance-should-calculate-correct-distance-for-single-character-difference",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-levenshtein-distance-should-calculate-correct-distance-for-completely-different-strings",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-levenshtein-distance-should-handle-empty-strings",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-levenshtein-distance-should-be-case-insensitive",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-levenshtein-distance-should-handle-special-characters",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-candidate-generation-should-generate-candidates-by-removing-suffixes",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-candidate-generation-should-generate-candidates-by-removing-hyphens",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-clearcache-should-clear-metadata-cache",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-edge-cases-should-handle-very-long-package-names",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-edge-cases-should-handle-package-names-with-special-characters",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-edge-cases-should-handle-package-names-with-numbers",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-edge-cases-should-handle-concurrent-findsimilar-calls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-scoring-weights-should-apply-correct-weights-to-similarity-components",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "semanticmatcher-scoring-weights-should-combine-all-factors-for-total-score",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "deepdependencyscanner-—-postmark-mcp-regression-deep-mode-maxdepth=3-detects-evil-pkg-at-depth=2-with-severity-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "deepdependencyscanner-—-postmark-mcp-regression-deep-mode-maxdepth=3-includes-depth=2-in-the-issue-description-for-evil-pkg",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "deepdependencyscanner-—-postmark-mcp-regression-deep-mode-maxdepth=3-detects-deep-evil-at-depth=3-with-severity-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "deepdependencyscanner-—-postmark-mcp-regression-deep-mode-maxdepth=3-includes-depth=3-in-the-issue-description-for-deep-evil",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "deepdependencyscanner-—-postmark-mcp-regression-deep-mode-maxdepth=3-does-not-flag-postmark-itself-no-suspicious-scripts",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "deepdependencyscanner-—-postmark-mcp-regression-shallow-mode-—-validates-blindness-to-transitive-attack-does-not-detect-evil-pkg-in-shallow-mode",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "shai-hulud-attack-pattern-curl-piped-to-bash-detects-network_request-pattern-requirement-2.1",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "shai-hulud-attack-pattern-curl-piped-to-bash-detects-env_access-pattern-requirement-2.4",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "shai-hulud-attack-pattern-curl-piped-to-bash-matches-the-curl-command-in-the-script",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "shai-hulud-attack-pattern-curl-piped-to-bash-scores-above-70-requirement-3.8",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "shai-hulud-attack-pattern-curl-piped-to-bash-assigns-severity-\"error\"-or-\"warning\"-score->=-70",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "shai-hulud-attack-pattern-curl-piped-to-bash-generates-a-remediation-suggestion-for-network-requests-requirement-8.1",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "shai-hulud-attack-pattern-curl-piped-to-bash-creates-an-issue-with-type-postinstall_risk",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "shai-hulud-attack-pattern-curl-piped-to-bash-issue-message-includes-the-risk-score",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "shai-hulud-attack-pattern-curl-piped-to-bash-issue-is-not-auto-fixable-requirement-6.7",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "postmark-mcp-attack-pattern-eval-with-base64-env-variable-detects-code_execution-pattern-requirement-2.7",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "postmark-mcp-attack-pattern-eval-with-base64-env-variable-detects-obfuscation-pattern-requirement-2.9",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "postmark-mcp-attack-pattern-eval-with-base64-env-variable-detects-env_access-pattern-requirement-2.4",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "postmark-mcp-attack-pattern-eval-with-base64-env-variable-detects-all-three-expected-pattern-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "postmark-mcp-attack-pattern-eval-with-base64-env-variable-scores-above-70-requirement-3.8",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "postmark-mcp-attack-pattern-eval-with-base64-env-variable-assigns-severity-\"error\"-requirement-3.8",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "postmark-mcp-attack-pattern-eval-with-base64-env-variable-generates-remediation-suggestion-for-code-execution-requirement-8.3",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "postmark-mcp-attack-pattern-eval-with-base64-env-variable-generates-remediation-suggestion-for-obfuscation-requirement-8.4",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "postmark-mcp-attack-pattern-eval-with-base64-env-variable-generates-remediation-suggestion-for-environment-access-requirement-8.2",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "postmark-mcp-attack-pattern-eval-with-base64-env-variable-creates-an-issue-with-type-postinstall_risk",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "postmark-mcp-attack-pattern-eval-with-base64-env-variable-issue-message-includes-the-risk-score",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "postmark-mcp-attack-pattern-eval-with-base64-env-variable-issue-is-not-auto-fixable-requirement-6.7",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "glassworm-attack-pattern-child_process.exec-with-aws-credentials-detects-code_execution-pattern-requirement-2.8",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "glassworm-attack-pattern-child_process.exec-with-aws-credentials-detects-env_access-pattern-for-aws-credentials-requirement-2.4",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "glassworm-attack-pattern-child_process.exec-with-aws-credentials-detects-both-expected-pattern-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "glassworm-attack-pattern-child_process.exec-with-aws-credentials-matches-child_process.exec-in-the-script",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "glassworm-attack-pattern-child_process.exec-with-aws-credentials-matches-aws_secret_access_key-in-the-script",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "glassworm-attack-pattern-child_process.exec-with-aws-credentials-scores-above-70-requirement-3.8",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "glassworm-attack-pattern-child_process.exec-with-aws-credentials-assigns-severity-\"error\"-requirement-3.8",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "glassworm-attack-pattern-child_process.exec-with-aws-credentials-generates-remediation-suggestion-for-code-execution-requirement-8.3",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "glassworm-attack-pattern-child_process.exec-with-aws-credentials-generates-remediation-suggestion-for-environment-access-requirement-8.2",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "glassworm-attack-pattern-child_process.exec-with-aws-credentials-creates-an-issue-with-type-postinstall_risk",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "glassworm-attack-pattern-child_process.exec-with-aws-credentials-issue-message-includes-the-risk-score",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "glassworm-attack-pattern-child_process.exec-with-aws-credentials-issue-is-not-auto-fixable-requirement-6.7",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "all-malicious-attacks-score-at-or-above-70-high-severity-shai-hulud:-riskscore->=-70-high-risk",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "all-malicious-attacks-score-at-or-above-70-high-severity-shai-hulud:-severity-is-\"warning\"-or-\"error\"",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "all-malicious-attacks-score-at-or-above-70-high-severity-postmark-mcp:-riskscore->-70",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "all-malicious-attacks-score-at-or-above-70-high-severity-postmark-mcp:-severity-is-\"error\"",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "all-malicious-attacks-score-at-or-above-70-high-severity-glassworm:-riskscore->-70",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "all-malicious-attacks-score-at-or-above-70-high-severity-glassworm:-severity-is-\"error\"",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-4.6-–-dependency-analysis-within-5-seconds-for-50-deps-analyzes-50-dependencies-in-<-5000ms",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-4.6-–-dependency-analysis-within-5-seconds-for-50-deps-postinstalldetector.analyzedependencies-completes-in-<-5000ms-for-50-deps",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "parallel-npmregistry-queries-via-promise.all-all-50-package-queries-are-initiated-concurrently-not-sequentially",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "parallel-npmregistry-queries-via-promise.all-checkpackages-resolves-faster-with-parallel-execution-than-sequential-would",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-caching-reduces-repeat-query-time-second-checkpackages-call-is-faster-due-to-cache-hits",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-caching-reduces-repeat-query-time-npmregistry-internal-cache-stores-results-after-first-query",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "analysis-timing-for-various-project-sizes-analyzes-10-dependencies-and-logs-timing",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "analysis-timing-for-various-project-sizes-analyzes-25-dependencies-and-logs-timing",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "analysis-timing-for-various-project-sizes-analyzes-50-dependencies-and-logs-timing",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "analysis-timing-for-various-project-sizes-50-dep-analysis-is-within-5s-budget-requirement-4.6",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.1-–-zero-false-positives-on-popular-packages-axios:-installation-scripts-produce-no-false-positive-issues-score-<-40-or-no-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.1-–-zero-false-positives-on-popular-packages-react:-installation-scripts-produce-no-false-positive-issues-score-<-40-or-no-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.1-–-zero-false-positives-on-popular-packages-lodash:-installation-scripts-produce-no-false-positive-issues-score-<-40-or-no-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.1-–-zero-false-positives-on-popular-packages-express:-installation-scripts-produce-no-false-positive-issues-score-<-40-or-no-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.1-–-zero-false-positives-on-popular-packages-axios:-no-suspicious-patterns-detected-in-installation-scripts",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.1-–-zero-false-positives-on-popular-packages-react:-no-suspicious-patterns-detected-in-installation-scripts",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.1-–-zero-false-positives-on-popular-packages-lodash:-no-suspicious-patterns-detected-in-installation-scripts",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.1-–-zero-false-positives-on-popular-packages-express:-no-suspicious-patterns-detected-in-installation-scripts",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-typescript-compilation-scripts-plain-tsc-command-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-typescript-compilation-scripts-tsc-with-project-flag-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-typescript-compilation-scripts-tsc-&&-tsc-project-tsconfig.esm.json-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-typescript-compilation-scripts-tsc-p-tsconfig.build.json-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-typescript-compilation-scripts-node-e-\"require-'tsc'-\"-style-compile-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-node-gyp-rebuild-scripts-node-gyp-rebuild-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-node-gyp-rebuild-scripts-node-gyp-configure-&&-node-gyp-build-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-node-gyp-rebuild-scripts-node-gyp-rebuild-with-flags-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-node-gyp-rebuild-scripts-prebuild-install-fallback-to-node-gyp-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-webpack-build-scripts-webpack-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-webpack-build-scripts-webpack-config-webpack.config.js-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-webpack-build-scripts-webpack-mode-production-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-webpack-build-scripts-node_modules/.bin/webpack-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-other-legitimate-build-tools-husky-install-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-other-legitimate-build-tools-npm-run-build-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.2-–-legitimate-build-scripts-score-below-40-other-legitimate-build-tools-yarn-build-scores-below-40",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.3-–-legitimate-patterns-are-recognised-islegitimatepattern-returns-true-for-tsc",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.3-–-legitimate-patterns-are-recognised-islegitimatepattern-returns-true-for-node-gyp-rebuild",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.3-–-legitimate-patterns-are-recognised-islegitimatepattern-returns-true-for-webpack",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.3-–-legitimate-patterns-are-recognised-islegitimatepattern-returns-true-for-husky-install",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.3-–-legitimate-patterns-are-recognised-islegitimatepattern-returns-false-for-curl-command",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "requirement-11.3-–-legitimate-patterns-are-recognised-legitimate-pattern-reduces-score-compared-to-suspicious-only-script",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-findtyposquattarget-detects-1-character-typos-of-popular-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-findtyposquattarget-ignores-exact-matches-of-popular-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-findtyposquattarget-ignores-legitimate-prefixed/suffixed-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-matcheshallucinationpattern-detects-extreme-compound-hallucinated-names",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-matcheshallucinationpattern-detects-generic-hallucinated-specific-formats",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-matcheshallucinationpattern-passes-legitimate-non-hallucinated-names",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-calculateshannonentropy-flags-highly-random-strings-with-high-entropy",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-calculateshannonentropy-gives-lower-entropy-to-normal-package-names",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-analyze-returns-null-for-safe-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-analyze-flags-typosquatting-as-an-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-analyze-flags-extreme-hallucination-patterns-as-a-warning",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "slopsquatdetector-analyze-considers-recency-metadata-as-amplifying-factor",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "unicodeanalyzer-analyze-returns-empty-array-for-clean-ascii-package-names",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "unicodeanalyzer-analyze-returns-empty-array-for-clean-ascii-scripts",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "unicodeanalyzer-analyze-detects-invisible-characters-zero-width-joiner",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "unicodeanalyzer-analyze-detects-bidi-control-characters-trojan-source",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "unicodeanalyzer-analyze-detects-mixed-script-homoglyph-attacks-cyrillic-mixed-with-latin",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "unicodeanalyzer-analyze-flags-multiple-issues-if-multiple-attack-types-are-combined",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-packageexists-should-return-true-for-existing-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-packageexists-should-return-false-for-non-existing-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-packageexists-should-handle-node.js-built-in-modules",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-packageexists-should-return-false-when-network-error-occurs-after-retries",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-packageexists-should-handle-timeout-errors-gracefully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-packageexists-should-cache-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-getlatestversion-should-return-version-for-existing-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-getlatestversion-should-return-\"unknown\"-when-network-error-occurs-after-retries",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-getlatestversion-should-handle-timeout-errors-gracefully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-getlatestversion-should-handle-404-responses-gracefully",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-getlatestversion-should-return-\"builtin\"-for-node.js-built-in-modules",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-getlatestversion-should-cache-version-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-checkpackages-should-check-multiple-packages-and-return-packageinfo-with-status",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-checkpackages-should-handle-network-errors-and-mark-packages-as-unverified_network_error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-checkpackages-should-handle-node.js-built-ins-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-http-500-error-handling-should-handle-http-500-errors-and-retry-with-exponential-backoff",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-http-500-error-handling-should-handle-http-500-errors-and-mark-as-unverified_network_error-after-retries",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-http-500-error-handling-should-handle-mixed-http-500-and-network-errors",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-retry-logic-should-implement-exponential-backoff-delay",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-retry-logic-should-not-retry-when-enableretry-is-false",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-fetchpackagescripts-should-return-scripts-object-when-scripts-field-is-present",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-fetchpackagescripts-should-return-{}-when-scripts-field-is-absent",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-fetchpackagescripts-should-return-null-on-404",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-fetchpackagescripts-should-cache-null-on-404-and-not-re-fetch",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-fetchpackagescripts-should-cache-successful-result-and-not-re-fetch",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-fetchpackagescripts-should-return-null-on-network-error-after-retries-no-caching",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-fetchpackagescripts-should-return-null-on-timeout-no-caching",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-fetchpackagescripts-should-use-separate-cache-from-packageinfo-cache",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-cache-management-should-clear-cache-when-clearcache-is-called",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "npmregistry-cache-management-should-respect-cache-ttl",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sovereignty-integration-tests-自主创新-1.-complete-offline-flow-validates-packages-from-cache-without-network,-logging-all-operations",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sovereignty-integration-tests-自主创新-2.-security-+-audit-integration-reflects-correct-counts-after-validating-safe-and-unsafe-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sovereignty-integration-tests-自主创新-3.-mirror-fallback-+-audit-logs-a-failed-audit-entry-when-offline-mode-blocks-network-fetch",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sovereignty-integration-tests-自主创新-4.-lock-file-+-cache-integration-generates-a-valid-lock-file-from-cached-packages-with-integrity-hashes",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sovereignty-integration-tests-自主创新-5.-rate-limiter-+-audit-integration-throttles-requests-and-audit-statistics-reflect-correct-counts-and-timing",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sovereignty-integration-tests-自主创新-5.-rate-limiter-+-audit-integration-waits-when-window-is-exhausted-before-allowing-more-requests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "sovereignty-integration-tests-自主创新-6.-full-sovereignty-pipeline-air-gapped-resolves,-validates,-audits,-and-locks-packages-entirely-offline",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-should-return-safe=true-for-a-clean-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-should-detect-known-cve-vulnerabilities",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-should-mark-deprecated-packages-as-unsafe",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-should-check-license-compatibility",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-should-check-maintenance-status",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-should-warn-on-stale-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-should-check-maintainer-count",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-should-use-issafe-helper",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "securityvalidator-should-respect-custom-allowed-licenses",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "auditlogger-should-log-requests-and-retrieve-entries",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "auditlogger-should-calculate-statistics-correctly",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "auditlogger-should-return-zero-stats-when-empty",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "auditlogger-should-export-logs-to-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "auditlogger-should-clear-entries",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mirrorregistry-should-include-chinese-mirrors-by-default",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mirrorregistry-should-prioritize-chinese-mirrors-lower-priority-number-=-higher-priority",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mirrorregistry-should-exclude-chinese-mirrors-when-disabled",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mirrorregistry-should-throw-in-offline-mode",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mirrorregistry-should-include-custom-mirrors",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mirrorregistry-should-have-correct-timeouts:-5s-for-chinese,-10s-for-global",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mirrorregistry-default_mirrors-should-have-3-entries",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "offlinepackagecache-should-return-null-for-uncached-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "offlinepackagecache-should-populate-and-retrieve-packages",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "offlinepackagecache-should-export-cache-to-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "offlinepackagecache-should-clear-memory-cache",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "offlinepackagecache-should-load-from-disk-after-populate",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "lockfilegenerator-should-generate-a-lock-file-with-correct-structure",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "lockfilegenerator-should-include-resolved-urls-for-each-package",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "lockfilegenerator-should-calculate-integrity-hashes",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "lockfilegenerator-should-write-and-validate-lock-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "lockfilegenerator-should-detect-invalid-lock-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "lockfilegenerator-should-handle-empty-dependencies",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-should-allow-requests-within-limit",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-should-enforce-minimum-delay-between-requests",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-should-reset-state",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-should-track-request-count-in-window",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "ratelimiter-should-work-with-no-mindelay",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-parse-should-parse-es6-import-statements",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-parse-should-parse-typescript-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-parse-should-parse-jsx-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-parse-should-parse-commonjs-require",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-parse-should-parse-dynamic-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-generate-should-generate-code-from-ast",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-generate-should-preserve-formatting-by-default",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-generate-should-respect-quote-style-option",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-traverse-should-traverse-ast-with-visitor-pattern",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-traverse-should-visit-multiple-node-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-findimports-should-find-es6-import-statements",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-findimports-should-find-commonjs-require-calls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-findimports-should-find-dynamic-import-calls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-findimports-should-find-mixed-import-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-findimports-should-find-typescript-type-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-findimports-should-not-find-non-import-function-calls",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-replaceimport-should-replace-es6-import-source",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-replaceimport-should-replace-commonjs-require-source",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-replaceimport-should-replace-dynamic-import-source",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-replaceimport-should-preserve-import-specifiers-when-replacing",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-replaceimport-should-preserve-default-imports-when-replacing",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-replaceimport-should-preserve-namespace-imports-when-replacing",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-parsewithrecast-should-parse-code-with-recast-for-formatting-preservation",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-parsewithrecast-should-preserve-formatting-when-using-recast",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "asttransformer-integration-should-handle-complete-transformation-workflow",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-validatediff-returns-true-for-valid-unified-diff",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-validatediff-returns-false-for-empty-diff",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-validatediff-returns-false-for-diff-without-header",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-validatediff-returns-false-for-diff-without-+++-header",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-validatediff-returns-false-for-diff-without-hunk",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-validatediff-returns-false-for-diff-with-invalid-hunk-header",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-validatediff-returns-true-for-diff-with-multiple-hunks",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-validatediff-handles-empty-lines-between-hunks",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-validatediff-rejects-invalid-line-prefixes-in-hunk",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applydiff-basic-scenarios-applies-simple-line-replacement",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applydiff-basic-scenarios-throws-for-invalid-diff-format",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applydiff-basic-scenarios-throws-for-non-existent-file",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applydiff-basic-scenarios-creates-backup-when-requested",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applydiff-basic-scenarios-does-not-create-backup-when-not-requested",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applydiff-basic-scenarios-handles-empty-file-content-with-addition",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applydiff-edge-cases-applies-diff-with-multiple-hunks",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applydiff-edge-cases-handles-diff-with-only-additions",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applydiff-edge-cases-handles-diff-with-only-deletions",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applydiff-edge-cases-handles-diff-with-no-changes-idempotent",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applydiff-edge-cases-reports-partial-success-when-some-hunks-fail-to-apply",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applydiff-edge-cases-handles-large-files->1000-lines",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applydiff-edge-cases-handles-utf-8-characters",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-generatediff-generates-diff-for-simple-change",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-generatediff-returns-empty-string-for-identical-content",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-generatediff-generates-diff-for-multiple-changes",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-generatediff-handles-empty-strings",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applyfuzzydiff-applies-with-high-threshold-when-content-matches",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applyfuzzydiff-applies-with-fuzzy-matching-for-slight-differences",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applyfuzzydiff-may-apply-with-fuzzy-matching-despite-content-differences",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applyfuzzydiff-clamps-threshold-to-valid-range-0.0,-1.0]",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-applyfuzzydiff-uses-default-threshold-of-0.8",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-integration-tests-handles-complex-multi-file-diff-scenario",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "diffapplytransformer-integration-tests-recovers-from-backup-if-write-fails",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-es6-imports-replaces-a-default-es6-import",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-es6-imports-replaces-named-es6-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-es6-imports-replaces-namespace-es6-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-es6-imports-replaces-typescript-type-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-es6-imports-preserves-import-specifiers-after-replacement",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-commonjs-require-replaces-a-commonjs-require-call",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-commonjs-require-preserves-the-variable-binding-after-require-replacement",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-dynamic-imports-replaces-a-dynamic-import",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-dynamic-imports-replaces-dynamic-import-inside-async-function",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-multiple-resolutions-replaces-multiple-imports-in-one-pass",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-multiple-resolutions-records-one-applied-rule-per-replaced-import",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-multiple-resolutions-returns-a-valid-codetransformation-object",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-unresolved-imports-unchanged-leaves-imports-not-in-resolutions-list-unchanged",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-unresolved-imports-unchanged-returns-empty-appliedrules-when-no-imports-match",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-comment-and-formatting-preservation-preserves-inline-comments-on-import-lines",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-comment-and-formatting-preservation-preserves-block-comments-above-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-comment-and-formatting-preservation-preserves-blank-lines-between-import-groups",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-replaceimports-–-comment-and-formatting-preservation-preserves-indentation-spaces-in-function-body",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-validatesyntax-returns-true-for-valid-javascript",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-validatesyntax-returns-true-for-valid-typescript",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-validatesyntax-returns-true-for-empty-string",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-validatesyntax-returns-false-for-invalid-syntax",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-validatesyntax-returns-false-for-unclosed-brackets",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-validatesyntax-returns-true-for-commonjs-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-generatediff-returns-empty-string-when-code-is-identical",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-generatediff-returns-a-non-empty-diff-when-code-differs",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-generatediff-diff-contains-and-+++-headers",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-generatediff-diff-contains-@@-hunk-header",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-generatediff-diff-shows-removed-lines-with-prefix",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-generatediff-diff-shows-added-lines-with-+-prefix",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-generatediff-metadata.diff-is-populated-on-replaceimports-result",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-error-handling-throws-transformationerror-for-completely-invalid-source-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-error-handling-transformationerror-has-operation-context",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-error-handling-handles-empty-resolutions-array-without-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-error-handling-handles-empty-source-code-without-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-task-5.3-–-babel-+-recast-formatting-preservation-preserves-single-quotes",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-task-5.3-–-babel-+-recast-formatting-preservation-preserves-quote-style-for-unchanged-code",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-task-5.3-–-babel-+-recast-formatting-preservation-preserves-semicolons",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-task-5.3-–-babel-+-recast-formatting-preservation-preserves-trailing-commas-in-named-imports",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-task-5.3-–-babel-+-recast-formatting-preservation-preserves-jsdoc-comments",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "importreplacer-task-5.3-–-babel-+-recast-formatting-preservation-transformed-code-is-syntactically-valid",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-logger-createlogger-should-create-logger-with-default-level",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-logger-createlogger-should-accept-custom-level",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "kiwi-logger-createlogger-should-accept-prefix",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-calculate-should-handle-security-risk-critical",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-calculate-should-return-perfect-score-for-no-issues",
+    "error": "No test execution found for run=33, case=1114"
+  },
+  {
+    "name": "confidencecalculator-calculate-should-calculate-score-decreasing-with-more-issues",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-calculate-should-handle-single-ghost-import-critical-issue",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-getrecommendations-should-provide-critical-recommendations",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-calculate-should-handle-single-webgl-usage-warning",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-calculate-should-calculate-correct-confidence-levels",
+    "error": "No test execution found for run=33, case=1122"
+  },
+  {
+    "name": "confidencecalculator-getrecommendations-should-provide-low-confidence-recommendations",
+    "error": "No test execution found for run=33, case=1124"
+  },
+  {
+    "name": "confidencecalculator-calculate-should-have-higher-penalty-for-errors-than-warnings",
+    "error": "No test execution found for run=33, case=1120"
+  },
+  {
+    "name": "confidencecalculator-calculate-should-correctly-count-issues-by-type",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-calculate-should-handle-single-mock-api-warning",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-getrecommendations-should-provide-medium-confidence-recommendations",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-getrecommendations-should-provide-high-confidence-recommendations",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-getrecommendations-should-provide-excellent-confidence-recommendations",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-getdescription-should-return-description-for-critical-level",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-getdescription-should-return-description-for-low-level",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-getdescription-should-return-description-for-medium-level",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-getdescription-should-return-description-for-high-level",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "confidencecalculator-getdescription-should-return-description-for-excellent-level",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationengine-validate-should-return-candeploy=false-for-non-existent-path",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationengine-validate-should-pass-basic-validation-for-clean-project",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationengine-validate-should-calculate-confidence-from-all-check-results",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationengine-validate-should-report-duration",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationengine-canfix-should-return-true-for-supported-issue-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationengine-canfix-should-return-false-for-unsupported-issue-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "buildvalidator-should-return-errors-for-missing-package.json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "buildvalidator-should-measure-installtime-and-buildtime",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyvalidator-should-detect-ghost-packages-matching-patterns",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "dependencyvalidator-should-return-empty-ghosts-for-clean-project",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "autofixengine-should-fix-ghost_import-via-mockreplacer",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "autofixengine-should-report-canfix-for-supported-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "autofixengine-should-return-failure-for-unknown-issue-types",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockreplacer-should-replace-fake-api-with-axios",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockreplacer-should-replace-claude-sdk-with-@anthropic-ai/sdk",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockreplacer-should-also-update-package.json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "mockreplacer-should-not-modify-file-when-no-match-found",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "configupdater-should-add-missing-fields-to-tsconfig.json",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "e2evalidator-validates-a-successful-page-load-without-errors",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "e2evalidator-fails-validation-on-http-error",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "e2evalidator-fails-validation-if-network-times-out",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "e2evalidator-collects-js-errors-and-fails-validation-if-present",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "e2evalidator-collects-console-errors-but-does-not-necessarily-fail-on-them-alone",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "runtimevalidator-validates-a-successful-install-and-boot",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "runtimevalidator-fails-validation-if-npm-install-fails",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "runtimevalidator-fails-validation-if-npm-run-dev-exits-prematurely",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "runtimevalidator-fails-validation-if-dev-server-boot-times-out",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-calculates-perfect-score-for-thorough-validation",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-calculates-0.8-score-for-standard-validation-with-perfect-dependencies-and-sets-readyforproduction",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-calculates-0.4-score-for-basic-validation-and-is-not-ready-for-production",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-penalizes-score-if-npm-install-fails",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-penalizes-score-if-dev-server-boot-fails",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-recommends-investigation-of-console-errors-from-e2e-validation",
+    "error": "Circuit breaker is open"
+  },
+  {
+    "name": "validationscorer-penalizes-score-for-fatal-e2e-js-errors-and-marks-unsafe",
+    "error": "Circuit breaker is open"
+  }
+]

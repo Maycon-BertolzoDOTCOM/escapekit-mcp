@@ -11,18 +11,21 @@
 
 > **✅ Kiwi TCMS Integrated** - 1,168 tests uploaded with 100% success rate (TestRun ID: 8)
 
+[![Run with npx](https://img.shields.io/badge/Run%20with-npx-blue?logo=npm)](https://www.npmjs.com/package/escapekit)
 
 ## 🚀 Quick Deploy to Railway
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=YOUR_TEMPLATE_ID)
 
 **Features**:
+
 - ✅ One-click Railway deployment
 - ✅ Automated CI/CD with GitHub Actions
 - ✅ Comprehensive test coverage
 - ✅ Kiwi TCMS integration for test tracking
 - ✅ Multi-environment support (dev, staging, prod)
 - ✅ Zero-configuration setup
+
 ## 🎯 What is EscapeKit?
 
 EscapeKit MCP is a Model Context Protocol (MCP) server that helps developers break free from AI sandbox dependencies. It analyzes, transforms, and validates code generated in AI sandboxes (Google AI Studio, Bolt.new, Replit) to work in real production environments.
@@ -34,6 +37,7 @@ AI-generated code often contains **"ghost dependencies"** – packages and APIs 
 ### The Solution
 
 EscapeKit automatically:
+
 - 🔍 **Detects** ghost imports, mock APIs, and sandbox-specific patterns
 - 🔄 **Transforms** code with real dependencies and polyfills
 - ✅ **Validates** that code runs in production environments
@@ -45,7 +49,14 @@ EscapeKit automatically:
 
 ```bash
 npm install -g escapekit-mcp
+# Or run instantly without installing
+npx escapekit
 ```
+
+### 🎬 CLI Demo
+
+[![asciicast](https://asciinema.org/a/YOUR-ID.svg)](https://asciinema.org/a/YOUR-ID)
+_(Replace YOUR-ID with the ID after running `asciinema upload escapekit-demo.cast`)_
 
 ### Analyze Code
 
@@ -63,6 +74,7 @@ echo "import * as THREE from 'three.js';" | escapekit analyze
 ```
 
 Example output:
+
 ```
 🔍 Analyzing code...
    Analysis ID: analysis-1234567890-abc123
@@ -156,6 +168,37 @@ escapekit validate ./my-project --env docker
 escapekit validate ./my-project --level thorough
 ```
 
+### Academic Traceability
+
+Each detector in EscapeKit is linked to a peer-reviewed scientific paper via YAML contracts in `knowledge-base/papers/`. This provides full traceability from issue detection back to academic research.
+
+#### Commands
+
+```bash
+# Audit with academic references for each issue
+escapekit audit -f escape.json --academic
+
+# Show coverage of paper contracts vs implemented detectors
+escapekit coverage
+```
+
+#### Example: `audit --academic` output
+
+```
+📊 Analysis
+   Issues: 3
+   Academic Traceability:
+      - [slopsquat_risk] 📄 Typosquatting in Package Repositories (2024) — Rule R001 — DOI: https://doi.org/10.1109/SP54263.2024.00123
+      - [postinstall_risk] 📄 Malicious Post-install Scripts in npm Packages (2023) — Rule R001 — DOI: https://doi.org/10.1145/3576915.3623109
+```
+
+#### How it works
+
+1. **YAML Contracts** — Each paper has a contract in `knowledge-base/` defining facts, rules, and traceability entries.
+2. **Registry** — `knowledge-base/registry.yaml` maps paper IDs to contract files and detectors.
+3. **Enrichment** — When `--academic` is passed, the `IssueEnricher` attaches `AcademicReference` (title, year, DOI, URL) to each detected issue.
+4. **Coverage** — The `coverage` command compares implemented detectors against contract rules to report gaps.
+
 ### Knowledge Base Engine
 
 - **Paper to Contract**: Transforma papers acadêmicos em contratos factuais YAML usando IA local (Ollama + Qwen 2.5)
@@ -166,18 +209,22 @@ escapekit validate ./my-project --level thorough
 ## 📋 CLI Commands
 
 ### `analyze [options] [file]`
+
 Analyze AI-generated code to identify sandbox dependencies and issues.
 
 **Options**:
+
 - `--code <string>` - Code string to analyze (alternative to file)
 - `--from <sandbox>` - Source sandbox type (ai-studio, bolt, replit)
 - `--to <platform>` - Target platform (nextjs, vercel, node)
 - `--json` - Output results as JSON
 
 ### `generate [options] <analysis_id>`
+
 Generate a portable project based on analysis results.
 
 **Options**:
+
 - `--target <platform>` - Target platform (nextjs, vercel, node) [default: nextjs]
 - `--output <dir>` - Output directory [default: ./escape_output]
 - `--include-docker` - Include Dockerfile
@@ -185,25 +232,31 @@ Generate a portable project based on analysis results.
 - `--json` - Output results as JSON
 
 ### `validate [options] <project_path_or_kit_id>`
+
 Validate generated code in real environment.
 
 **Options**:
+
 - `--env <environment>` - Validation environment (docker, local) [default: local]
 - `--level <level>` - Validation level (basic, standard, thorough) [default: standard]
 - `--json` - Output results as JSON
 
 ### `monitor [options] <production_url>`
+
 Monitor production deployment (Enterprise feature - coming soon).
 
 **Options**:
+
 - `--kit-id <id>` - Escape Kit ID
 
 ### `diff [command]` (NEW!)
+
 Manipula diffs unificados (aplicar, gerar, validar) com suporte a fuzzy matching.
 
 **Subcommands**:
 
 #### `diff apply <file> <diff>`
+
 Aplica um diff unificado a um arquivo.
 
 ```bash
@@ -211,10 +264,12 @@ qwen-escapekit diff apply source.ts changes.patch --fuzzy 0.8 --backup
 ```
 
 **Options**:
+
 - `-f, --fuzzy <number>` - Threshold de fuzzy matching (0.0-1.0) [default: 0.8]
 - `-b, --backup` - Criar backup do arquivo original [default: false]
 
 #### `diff generate <original> <modified>`
+
 Gera um diff unificado entre dois arquivos.
 
 ```bash
@@ -222,9 +277,11 @@ qwen-escapekit diff generate original.ts modified.ts -o changes.patch
 ```
 
 **Options**:
+
 - `-o, --output <file>` - Caminho de saída do diff [default: diff.patch]
 
 #### `diff validate <diff>`
+
 Valida um arquivo de diff.
 
 ```bash
@@ -239,17 +296,21 @@ qwen-escapekit diff validate changes.patch
 EscapeKit provides three MCP tools that can be used with Claude Desktop and other MCP-compatible clients:
 
 ### `analyze_sandbox_code`
+
 Analyzes AI-generated code to identify sandbox dependencies and issues.
 
 **Parameters**:
+
 - `code` (required): The code to analyze
 - `sandbox_type` (optional): The source sandbox type
 - `target_runtime` (optional): The target runtime (default: javascript)
 
 ### `generate_escape_kit`
+
 Generates a portable project based on analysis results.
 
 **Parameters**:
+
 - `analysis_id` (required): The analysis ID from `analyze_sandbox_code`
 - `target_platform` (optional): Target platform (default: nextjs)
 - `output_dir` (optional): Output directory (default: ./escape_output)
@@ -259,9 +320,11 @@ Generates a portable project based on analysis results.
 - `dry_run` (optional): Preview transformations without writing files
 
 ### `validate_reality`
+
 Validates generated code in real environment with runtime tests.
 
 **Parameters**:
+
 - `project_path` (required): Path to the project
 - `validation_level` (optional): Validation level (default: standard)
 
@@ -360,16 +423,16 @@ npm run health-check
 
 ## 📊 Progress
 
-| Phase | Status | Completion |
-|-------|--------|------------|
-| Phase 1: Project Init | ✅ Complete | 100% |
-| Phase 2: Analysis Engine | ✅ Complete | 100% |
-| Phase 3: Transformation Engine | ✅ Complete | 100% |
-| Phase 4: Knowledge Base Engine | ✅ Complete | 100% |
-| Phase 5: qwen-escapekit CLI | ✅ Complete | 100% |
-| Phase 6: Validation Engine | ✅ Complete | 100% |
-| Phase 7: Docs & Testing | ⏳ In Progress | 70% |
-| Phase 8: MVP Release | ⏳ Not Started | 0% |
+| Phase                          | Status         | Completion |
+| ------------------------------ | -------------- | ---------- |
+| Phase 1: Project Init          | ✅ Complete    | 100%       |
+| Phase 2: Analysis Engine       | ✅ Complete    | 100%       |
+| Phase 3: Transformation Engine | ✅ Complete    | 100%       |
+| Phase 4: Knowledge Base Engine | ✅ Complete    | 100%       |
+| Phase 5: qwen-escapekit CLI    | ✅ Complete    | 100%       |
+| Phase 6: Validation Engine     | ✅ Complete    | 100%       |
+| Phase 7: Docs & Testing        | ⏳ In Progress | 70%        |
+| Phase 8: MVP Release           | ⏳ Not Started | 0%         |
 
 **Overall Progress**: ~80% (Phase 6 complete)
 
@@ -400,6 +463,7 @@ The "Ralph Loop Inverso" is a phenomenon where developers become trapped in AI p
 ### Collaborate
 
 We invite researchers to:
+
 - Use EscapeKit in their studies on AI-assisted programming
 - Contribute to empirical evaluations (contact us for study design)
 - Collaborate on theoretical work on platform dependency

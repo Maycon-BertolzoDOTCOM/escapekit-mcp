@@ -5,20 +5,18 @@
   "type": "module",
   "main": "dist/server.js",
   "bin": {
-    "escapekit": "./bin/escapekit"
+    "escapekit": "./dist/cli/index.js"
   },
   "files": [
     "dist/",
-    "bin/",
     "README.md",
     "package.json"
   ],
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
-    "build:cli": "tsc -p tsconfig.cli.json",
     "start": "node dist/server.js",
-    "cli": "tsx cli/index.ts",
+    "cli": "tsx src/cli/index.ts",
     "test": "vitest",
     "test:ci": "vitest --coverage --run",    
     "test:coverage": "vitest --coverage",

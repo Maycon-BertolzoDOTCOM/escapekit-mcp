@@ -1,0 +1,38 @@
+source:
+  title: "Automated Polyfill Injection for Modern Web APIs"
+  authors: "Chen et al."
+  year: 2024
+  doi: "10.1145/3643991.3644900"
+
+facts:
+  - id: "F001"
+    statement: "AI-generated code frequently uses modern Web APIs unavailable in older environments."
+    type: "empirical"
+    relevance: "Motivates automated polyfill injection."
+  - id: "F002"
+    statement: "Polyfill injection can be automated by detecting API usage patterns and matching against compatibility tables."
+    type: "technique"
+    relevance: "Defines the approach for PolyfillInjector."
+
+rules:
+  - id: "R001"
+    principle: "Detect usage of modern Web APIs and inject appropriate polyfills"
+    derived_from: ["F001", "F002"]
+    action: "implement_injector"
+    detector_name: "PolyfillInjector"
+    paperRef: "ESEC-FSE-2024"
+    priority: "medium"
+
+traceability:
+  R001:
+    implementation: "src/transformers/PolyfillInjector.ts"
+    tests: "tests/transformers/PolyfillInjector.test.ts"
+    status: "pending"
+  F001:
+    implementation: "src/transformers/PolyfillInjector.ts"
+    tests: "tests/transformers/PolyfillInjector.test.ts"
+    status: "pending"
+  F002:
+    implementation: "src/transformers/PolyfillInjector.ts"
+    tests: "tests/transformers/PolyfillInjector.test.ts"
+    status: "pending"

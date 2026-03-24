@@ -21,7 +21,8 @@
     },
     "issues": [
       {
-        "type": "GHOST_IMPORT",
+        "type": "slopsquat_risk",
+        "detector": "SlopsquatDetector",
         "severity": "high",
         "line": 0,
         "message": "Test failures indicate potential ghost imports or deprecated patterns",
@@ -45,7 +46,7 @@
     "applied": [
       {
         "type": "import_replacement",
-        "description": "Replaced deprecated imports with current versions"
+        "reason": "Replaced deprecated imports with current versions"
       }
     ],
     "totalTransformations": 1,

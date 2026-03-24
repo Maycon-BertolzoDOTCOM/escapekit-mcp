@@ -214,6 +214,16 @@ export interface DetectedIssue {
    * How the issue was fixed
    */
   fixMethod?: FixMethod;
+
+  /**
+   * Name of the detector that produced this issue, e.g. "SlopsquatDetector"
+   */
+  detector?: string;
+
+  /**
+   * Optional academic paper reference that underpins this issue's detection rule
+   */
+  academicReference?: import('./academic.js').AcademicReference;
 }
 
 /**

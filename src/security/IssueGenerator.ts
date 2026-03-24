@@ -36,6 +36,7 @@ export class IssueGenerator {
     return {
       id: generateId('issue'),
       type: 'postinstall_risk',
+      detector: 'PostInstallDetector',
       severity: result.severity,
       location: {
         file: context.file || 'package.json',

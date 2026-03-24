@@ -1,0 +1,38 @@
+source:
+  title: "Ghost Dependencies: A Threat to Software Supply Chain Security"
+  authors: "Zimmermann et al."
+  year: 2023
+  doi: "10.1109/ASE56229.2023.00045"
+
+facts:
+  - id: "F001"
+    statement: "Ghost dependencies are packages used in code but not declared in package.json."
+    type: "definition"
+    relevance: "Core concept motivating the DependencyValidator."
+  - id: "F002"
+    statement: "Ghost dependencies can be resolved by hoisting in monorepos, making them invisible to standard audits."
+    type: "empirical"
+    relevance: "Explains why static analysis is needed beyond npm audit."
+
+rules:
+  - id: "R001"
+    principle: "Detect imports of packages not declared in package.json dependencies"
+    derived_from: ["F001", "F002"]
+    action: "implement_validator"
+    detector_name: "DependencyValidator"
+    paperRef: "ASE-2023-Ghost"
+    priority: "high"
+
+traceability:
+  R001:
+    implementation: "src/resolvers/DependencyValidator.ts"
+    tests: "tests/resolvers/DependencyValidator.test.ts"
+    status: "pending"
+  F001:
+    implementation: "src/resolvers/DependencyValidator.ts"
+    tests: "tests/resolvers/DependencyValidator.test.ts"
+    status: "pending"
+  F002:
+    implementation: "src/resolvers/DependencyValidator.ts"
+    tests: "tests/resolvers/DependencyValidator.test.ts"
+    status: "pending"

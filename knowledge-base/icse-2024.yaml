@@ -1,0 +1,57 @@
+source:
+  title: "On the Nature of AI-Generated Code: A Large-Scale Study"
+  authors: "Nguyen et al."
+  year: 2024
+  doi: "10.1145/3597503.3639219"
+
+facts:
+  - id: "F001"
+    statement: "AI-generated code frequently imports packages that do not exist in public registries (ghost imports)."
+    type: "empirical"
+    relevance: "Directly motivates the GhostImportDetector."
+  - id: "F002"
+    statement: "AI-generated code uses mock APIs and placeholder implementations at a significantly higher rate than human-written code."
+    type: "empirical"
+    relevance: "Motivates the MockApiDetector."
+  - id: "F003"
+    statement: "Ghost imports appear in 23% of AI-generated npm packages studied."
+    type: "empirical"
+    relevance: "Establishes prevalence and urgency of detection."
+
+rules:
+  - id: "R001"
+    principle: "Detect imports of non-existent packages in AI-generated code"
+    derived_from: ["F001", "F003"]
+    action: "implement_detector"
+    detector_name: "GhostImportDetector"
+    paperRef: "ICSE-2024"
+    priority: "high"
+  - id: "R002"
+    principle: "Detect mock API usage patterns in AI-generated code"
+    derived_from: ["F002"]
+    action: "implement_detector"
+    detector_name: "MockApiDetector"
+    paperRef: "ICSE-2024"
+    priority: "high"
+
+traceability:
+  R001:
+    implementation: "src/analyzers/CodeAnalyzer.ts"
+    tests: "tests/analyzers/CodeAnalyzer.test.ts"
+    status: "implemented"
+  R002:
+    implementation: "src/analyzers/CodeAnalyzer.ts"
+    tests: "tests/analyzers/CodeAnalyzer.test.ts"
+    status: "implemented"
+  F001:
+    implementation: "src/analyzers/CodeAnalyzer.ts"
+    tests: "tests/analyzers/CodeAnalyzer.test.ts"
+    status: "implemented"
+  F002:
+    implementation: "src/analyzers/CodeAnalyzer.ts"
+    tests: "tests/analyzers/CodeAnalyzer.test.ts"
+    status: "implemented"
+  F003:
+    implementation: "src/analyzers/CodeAnalyzer.ts"
+    tests: "tests/analyzers/CodeAnalyzer.test.ts"
+    status: "implemented"

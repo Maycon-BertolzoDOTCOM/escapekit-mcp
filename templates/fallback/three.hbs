@@ -1,0 +1,38 @@
+// templates/fallback/three.hbs
+function checkWebGLSupport() {
+  return !!window.WebGLRenderingContext && 
+         !!document.createElement('canvas').getContext('webgl');
+}
+
+function setupFallback(containerSelector, width, height, projectName) {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  const renderer = new THREE.CSS2DRenderer();
+  renderer.setSize(width, height);
+  container.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+
+  const label = new THREE.CSS2DObject(document.createElement('div'));
+  label.element.textContent = `${projectName} (WebGL not supported)`;
+  label.element.style.color = 'white';
+  label.position.z = -5;
+  scene.add(label);
+
+  function animate() {
+    requestAnimationFrame(animate);
+    label.rotation.y += 0.01;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  return {
+    destroy: () => {
+      container.removeChild(renderer.domElement);
+    }
+  };
+}
+
+export { checkWebGLSupport, setupFallback };

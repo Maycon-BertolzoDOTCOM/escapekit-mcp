@@ -56,32 +56,45 @@ export class Logger {
     };
   }
 
-  /**
-   * Output log entry
-   */
   private output(entry: LogEntry): void {
-    const output = JSON.stringify(entry);
+    const isJson = process.env.ESCAPEKIT_JSON_LOGS === '1';
+    let output: string;
+    
+    if (isJson) {
+      output = JSON.stringify(entry);
+    } else {
+      const time = entry.timestamp.split('T')[1].split('.')[0];
+      const prefix = this.prefix ? `[${this.prefix}] ` : '';
+      const contextStr = entry.context && Object.keys(entry.context).length > 0
+        ? `\n    ${JSON.stringify(entry.context)}`
+        : '';
+        
+      const colors = {
+        debug: '\x1b[90m', // gray
+        info: '\x1b[36m',  // cyan
+        warn: '\x1b[33m',  // yellow
+        error: '\x1b[31m', // red
+        reset: '\x1b[0m'
+      };
+      
+      const color = colors[entry.level as keyof typeof colors] || colors.reset;
+      const levelUpper = entry.level.toUpperCase().padEnd(5);
+      
+      output = `${colors.debug}${time}${colors.reset} ${color}${levelUpper}${colors.reset} ${prefix}${entry.message}${contextStr}`;
+    }
     
     switch (entry.level) {
       case LogLevel.DEBUG:
-        if (this.shouldLog(LogLevel.DEBUG)) {
-          console.debug(output);
-        }
+        if (this.shouldLog(LogLevel.DEBUG)) console.debug(output);
         break;
       case LogLevel.INFO:
-        if (this.shouldLog(LogLevel.INFO)) {
-          console.info(output);
-        }
+        if (this.shouldLog(LogLevel.INFO)) console.info(output);
         break;
       case LogLevel.WARN:
-        if (this.shouldLog(LogLevel.WARN)) {
-          console.warn(output);
-        }
+        if (this.shouldLog(LogLevel.WARN)) console.warn(output);
         break;
       case LogLevel.ERROR:
-        if (this.shouldLog(LogLevel.ERROR)) {
-          console.error(output);
-        }
+        if (this.shouldLog(LogLevel.ERROR)) console.error(output);
         break;
     }
   }

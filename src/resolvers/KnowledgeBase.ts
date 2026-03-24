@@ -10,8 +10,11 @@
  */
 
 import { promises as fs } from 'fs';
+import * as path from 'path';
 import { PackageMapping, MappingStrategy } from '../models/transformation.js';
 import { logger } from '../logger.js';
+import type { AcademicReference, ContratoYAML, PaperRegistry } from '../models/academic.js';
+import { parse as parseYaml } from 'yaml';
 
 /**
  * JSON structure for knowledge base file
@@ -43,10 +46,12 @@ interface KnowledgeBaseJSON {
  */
 export class KnowledgeBase {
   private mappings: Map<string, PackageMapping>;
+  private academicRefs: Map<string, AcademicReference[]>;
   private log = logger.child('KnowledgeBase');
 
   constructor() {
     this.mappings = new Map();
+    this.academicRefs = new Map();
   }
 
   /**
@@ -221,5 +226,128 @@ export class KnowledgeBase {
   clear(): void {
     this.mappings.clear();
     this.log.debug('Cleared all mappings from knowledge base');
+  }
+
+  /**
+   * Load paper contracts from a registry YAML file and build the TraceabilityIndex.
+   *
+   * @param registryPath - Path to `registry.yaml`
+   */
+  async loadPaperContracts(registryPath: string): Promise<void> {
+    const registryDir = path.dirname(registryPath);
+
+    let registryContent: string;
+    try {
+      registryContent = await fs.readFile(registryPath, 'utf-8');
+    } catch {
+      this.log.warn('Paper registry not found, academicRefs will be empty', { registryPath });
+      return;
+    }
+
+    let registry: PaperRegistry;
+    try {
+      registry = parseYaml(registryContent) as PaperRegistry;
+    } catch {
+      this.log.warn('Failed to parse registry YAML', { registryPath });
+      return;
+    }
+
+    if (!registry?.papers || !Array.isArray(registry.papers)) {
+      this.log.warn('Registry has no papers array', { registryPath });
+      return;
+    }
+
+    for (const paper of registry.papers) {
+      if (!paper.contractFile) {
+        this.log.warn('Registry entry missing contractFile', { paperId: paper.paperId });
+        continue;
+      }
+
+      const contractPath = path.join(registryDir, paper.contractFile);
+      let contractContent: string;
+      try {
+        contractContent = await fs.readFile(contractPath, 'utf-8');
+      } catch {
+        this.log.warn('Contract file not found', { contractPath, paperId: paper.paperId });
+        continue;
+      }
+
+      let contract: ContratoYAML;
+      try {
+        contract = parseYaml(contractContent) as ContratoYAML;
+      } catch {
+        this.log.warn('Failed to parse contract YAML', { contractPath });
+        continue;
+      }
+
+      if (!contract?.source || !contract?.rules || !Array.isArray(contract.rules)) {
+        this.log.warn('Contract missing required fields (source, rules)', { contractPath });
+        continue;
+      }
+
+      for (const rule of contract.rules) {
+        if (!rule.paperRef || !rule.detector_name) continue;
+        if (contract.traceability?.[rule.id]?.status !== 'implemented') continue;
+
+        const ref: AcademicReference = {
+          paperId: rule.paperRef,
+          title: contract.source.title,
+          venue: paper.venue,
+          year: contract.source.year,
+          ruleId: rule.id,
+          factIds: rule.derived_from ?? [],
+          doi: contract.source.doi,
+          url: contract.source.url,
+        };
+
+        const existing = this.academicRefs.get(rule.detector_name) ?? [];
+        existing.push(ref);
+        this.academicRefs.set(rule.detector_name, existing);
+      }
+    }
+  }
+
+  /**
+   * Look up academic references for a given issue type.
+   *
+   * @param issueType - The detector name / issue type to look up
+   * @returns Array of AcademicReference, or undefined if not found
+   */
+  getAcademicReference(issueType: string): AcademicReference[] | undefined {
+    return this.academicRefs.get(issueType);
+  }
+
+  /**
+   * Load contracts synchronously from an in-memory array (for testing only — no I/O).
+   * Resets academicRefs before building the index.
+   *
+   * @param contracts - Array of ContratoYAML objects
+   */
+  loadContractsSync(contracts: ContratoYAML[]): void {
+    this.academicRefs = new Map();
+
+    for (const contract of contracts) {
+      if (!contract?.source || !contract?.rules || !Array.isArray(contract.rules)) continue;
+
+      for (const rule of contract.rules) {
+        if (!rule.paperRef || !rule.detector_name) continue;
+        if (contract.traceability?.[rule.id]?.status !== 'implemented') continue;
+
+        const ref: AcademicReference = {
+          paperId: rule.paperRef,
+          title: contract.source.title,
+          venue: contract.source.title, // no registry available in sync mode; use title as fallback
+          year: contract.source.year,
+          ruleId: rule.id,
+          factIds: rule.derived_from ?? [],
+          doi: contract.source.doi,
+          url: contract.source.url,
+        };
+
+        const existing = this.academicRefs.get(rule.detector_name) ?? [];
+        existing.push(ref);
+        this.academicRefs.set(rule.detector_name, existing);
+      }
+    }
   }
 }

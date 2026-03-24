@@ -1,0 +1,42 @@
+// templates/fallback/pixi.hbs
+function checkWebGLSupport() {
+  return !!window.WebGLRenderingContext && 
+         !!document.createElement('canvas').getContext('webgl');
+}
+
+function setupFallback(containerSelector, width, height, projectName) {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  const app = new PIXI.Application({
+    width: width,
+    height: height,
+    backgroundColor: 0x000000,
+    antialias: true
+  });
+  container.appendChild(app.view);
+
+  const text = new PIXI.Text(`${projectName} (WebGL not supported)`, {
+    fontFamily: 'Arial',
+    fontSize: 24,
+    fill: 0xffffff,
+    align: 'center'
+  });
+  text.anchor.set(0.5);
+  text.x = app.screen.width / 2;
+  text.y = app.screen.height / 2;
+  app.stage.addChild(text);
+
+  app.ticker.add(() => {
+    text.rotation += 0.01;
+  });
+
+  return {
+    destroy: () => {
+      container.removeChild(app.view);
+      app.destroy(true);
+    }
+  };
+}
+
+export { checkWebGLSupport, setupFallback };

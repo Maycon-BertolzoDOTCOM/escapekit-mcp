@@ -1,0 +1,60 @@
+# EscapeKit Academic Paper Registry
+# Maps scientific papers to their YAML contracts and detector implementations
+
+papers:
+  - paperId: "IEEE-SP-2024"
+    title: "Typosquatting in Package Repositories: A Large-Scale Study"
+    venue: "IEEE S&P"
+    year: 2024
+    contractFile: "ieee-sp-2024.yaml"
+    detectors:
+      - "SlopsquatDetector"
+
+  - paperId: "CCS-2023"
+    title: "Malicious Post-install Scripts in npm Packages"
+    venue: "CCS"
+    year: 2023
+    contractFile: "ccs-2023.yaml"
+    detectors:
+      - "PostInstallDetector"
+
+  - paperId: "ESEC-FSE-2024"
+    title: "Automated Polyfill Injection for Modern Web APIs"
+    venue: "ESEC/FSE"
+    year: 2024
+    contractFile: "esec-fse-2024.yaml"
+    detectors:
+      - "PolyfillInjector"
+
+  - paperId: "ICWE-2024"
+    title: "WebGL Fallback Strategies: A Systematic Study"
+    venue: "ICWE"
+    year: 2024
+    contractFile: "icwe-2024.yaml"
+    detectors:
+      - "WebGLDetector"
+
+  - paperId: "ASE-2023-Config"
+    title: "Automated Configuration Repair for JavaScript Projects"
+    venue: "ASE"
+    year: 2023
+    contractFile: "ase-2023-config.yaml"
+    detectors:
+      - "ConfigUpdater"
+
+  - paperId: "ASE-2023-Ghost"
+    title: "Ghost Dependencies: A Threat to Software Supply Chain Security"
+    venue: "ASE"
+    year: 2023
+    contractFile: "ase-2023-ghost.yaml"
+    detectors:
+      - "DependencyValidator"
+
+  - paperId: "ICSE-2024"
+    title: "On the Nature of AI-Generated Code: A Large-Scale Study"
+    venue: "ICSE"
+    year: 2024
+    contractFile: "icse-2024.yaml"
+    detectors:
+      - "GhostImportDetector"
+      - "MockApiDetector"

@@ -224,6 +224,19 @@ rules:
     principle: \"[regra derivada para implementação]\"
     derived_from: [\"P001\"]
     action: \"[ação concreta: ex: implementar detector X]\"
+    detector_name: \"[nome do detector que implementa esta regra, ex: SlopsquatDetector]\"
+    paperRef: \"$citekey\"
+    priority: \"high\"
+
+traceability:
+  R001:
+    implementation: \"[caminho para o arquivo de implementação]\"
+    tests: \"[caminho para o arquivo de testes]\"
+    status: \"pending\"
+  F001:
+    implementation: \"[caminho para o arquivo de implementação]\"
+    tests: \"[caminho para o arquivo de testes]\"
+    status: \"pending\"
 
 cases:
   - id: \"C001\"
@@ -308,12 +321,15 @@ rules:
     derived_from: ["P001"]
     action: "implement_detector"  # ação concreta: implement_detector, add_test, create_polyfill
     detector_name: "[Nome do detector se aplicável]"
+    paperRef: "$citekey"
     priority: "high"  # high, medium, low
 
   - id: "R002"
     principle: "[Outro princípio]"
     derived_from: ["P002"]
     action: "create_polyfill"
+    detector_name: "[Nome do detector se aplicável]"
+    paperRef: "$citekey"
     priority: "medium"
 
 # Casos de aplicação/ataque
@@ -325,6 +341,26 @@ cases:
     mitigation: "[Mitigação proposta]"
     related_facts: ["F001"]
     related_rules: ["R001"]
+
+# Rastreabilidade de implementação
+# Registra quais arquivos implementam cada fato e regra
+traceability:
+  R001:
+    implementation: "src/[caminho]/[Detector].ts"
+    tests: "tests/[caminho]/[Detector].test.ts"
+    status: "pending"  # pending, implemented, not_applicable
+  R002:
+    implementation: "src/[caminho]/[Detector].ts"
+    tests: "tests/[caminho]/[Detector].test.ts"
+    status: "pending"
+  F001:
+    implementation: "src/[caminho]/[Detector].ts"
+    tests: "tests/[caminho]/[Detector].test.ts"
+    status: "pending"
+  F002:
+    implementation: "src/[caminho]/[Detector].ts"
+    tests: "tests/[caminho]/[Detector].test.ts"
+    status: "pending"
 
 # Metadados do contrato
 metadata:

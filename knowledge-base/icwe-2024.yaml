@@ -1,0 +1,38 @@
+source:
+  title: "WebGL Fallback Strategies: A Systematic Study"
+  authors: "Müller et al."
+  year: 2024
+  doi: "10.1007/978-3-031-60131-1_15"
+
+facts:
+  - id: "F001"
+    statement: "WebGL is unavailable in server-side rendering and many CI environments."
+    type: "empirical"
+    relevance: "Motivates detection and fallback generation for WebGL usage."
+  - id: "F002"
+    statement: "Canvas 2D API provides a viable fallback for most WebGL use cases in non-3D contexts."
+    type: "technique"
+    relevance: "Defines the fallback strategy for WebGLDetector."
+
+rules:
+  - id: "R001"
+    principle: "Detect WebGL usage and generate Canvas 2D fallbacks for non-3D contexts"
+    derived_from: ["F001", "F002"]
+    action: "implement_detector"
+    detector_name: "WebGLDetector"
+    paperRef: "ICWE-2024"
+    priority: "medium"
+
+traceability:
+  R001:
+    implementation: "src/detectors/WebGLDetector.ts"
+    tests: "tests/detectors/WebGLDetector.test.ts"
+    status: "pending"
+  F001:
+    implementation: "src/detectors/WebGLDetector.ts"
+    tests: "tests/detectors/WebGLDetector.test.ts"
+    status: "pending"
+  F002:
+    implementation: "src/detectors/WebGLDetector.ts"
+    tests: "tests/detectors/WebGLDetector.test.ts"
+    status: "pending"

@@ -75,9 +75,11 @@ export class MarkdownGenerator {
     lines.push('');
     lines.push('- **Sandbox Type:** ' + (escapeJson.provenance.sandbox || 'unknown'));
     lines.push('- **Source Hash:** `' + (escapeJson.provenance.sourceHash || 'N/A') + '`');
-    lines.push('- **Detection Date:** ' + new Date(escapeJson.provenance.detectedAt).toLocaleString());
+    lines.push(
+      '- **Detection Date:** ' + new Date(escapeJson.provenance.detectedAt).toLocaleString()
+    );
     lines.push('');
-    
+
     if (escapeJson.provenance.files.length > 0) {
       lines.push('### Files Analyzed');
       lines.push('');
@@ -102,7 +104,10 @@ export class MarkdownGenerator {
     lines.push('- **Target Platform:** ' + escapeJson.analysis.config.targetPlatform);
     lines.push('- **Target Runtime:** ' + escapeJson.analysis.config.targetRuntime);
     lines.push('- **Strictness Level:** ' + escapeJson.analysis.config.strictness);
-    lines.push('- **Chinese Mirrors:** ' + (escapeJson.analysis.config.useChineseMirrors ? '✅ Enabled' : '❌ Disabled'));
+    lines.push(
+      '- **Chinese Mirrors:** ' +
+        (escapeJson.analysis.config.useChineseMirrors ? '✅ Enabled' : '❌ Disabled')
+    );
     lines.push('');
 
     // Issues
@@ -111,11 +116,25 @@ export class MarkdownGenerator {
     if (escapeJson.analysis.issues.length === 0) {
       lines.push('✅ No issues detected.');
     } else {
-      lines.push('| Type | Severity | File | Line | Message |');
-      lines.push('|------|----------|------|------|---------|');
+      lines.push('| Type | Severity | File | Line | Message | Academic Ref |');
+      lines.push('|------|----------|------|------|---------|--------------|');
       for (const issue of escapeJson.analysis.issues) {
-        const severityEmoji = issue.severity === 'error' ? '❌' : issue.severity === 'warning' ? '⚠️' : 'ℹ️';
-        lines.push(`| ${issue.type} | ${severityEmoji} ${issue.severity} | ${issue.filePath || 'N/A'} | ${issue.line} | ${issue.message.substring(0, 60)}... |`);
+        const severityEmoji =
+          issue.severity === 'error' ? '❌' : issue.severity === 'warning' ? '⚠️' : 'ℹ️';
+        let academicRef = 'N/A';
+        if (issue.academicReference) {
+          const ref = issue.academicReference;
+          if (ref.doi) {
+            academicRef = `[${ref.title}](https://doi.org/${ref.doi})`;
+          } else if (ref.url) {
+            academicRef = `[${ref.title}](${ref.url})`;
+          } else {
+            academicRef = `${ref.title} (${ref.year})`;
+          }
+        }
+        lines.push(
+          `| ${issue.type} | ${severityEmoji} ${issue.severity} | ${issue.filePath || 'N/A'} | ${issue.line} | ${issue.message.substring(0, 60)}... | ${academicRef} |`
+        );
       }
     }
     lines.push('');
@@ -125,24 +144,34 @@ export class MarkdownGenerator {
     lines.push('');
     const breakdown = escapeJson.analysis.issueBreakdown;
     const totalIssues = escapeJson.analysis.totalIssues;
-    
+
     if (totalIssues > 0) {
       lines.push('| Issue Type | Count | Percentage |');
       lines.push('|-----------|-------|------------|');
       if (breakdown.ghostImports > 0) {
-        lines.push(`| Ghost Imports | ${breakdown.ghostImports} | ${((breakdown.ghostImports / totalIssues) * 100).toFixed(1)}% |`);
+        lines.push(
+          `| Ghost Imports | ${breakdown.ghostImports} | ${((breakdown.ghostImports / totalIssues) * 100).toFixed(1)}% |`
+        );
       }
       if (breakdown.mockApis > 0) {
-        lines.push(`| Mock APIs | ${breakdown.mockApis} | ${((breakdown.mockApis / totalIssues) * 100).toFixed(1)}% |`);
+        lines.push(
+          `| Mock APIs | ${breakdown.mockApis} | ${((breakdown.mockApis / totalIssues) * 100).toFixed(1)}% |`
+        );
       }
       if (breakdown.sandboxApis > 0) {
-        lines.push(`| Sandbox APIs | ${breakdown.sandboxApis} | ${((breakdown.sandboxApis / totalIssues) * 100).toFixed(1)}% |`);
+        lines.push(
+          `| Sandbox APIs | ${breakdown.sandboxApis} | ${((breakdown.sandboxApis / totalIssues) * 100).toFixed(1)}% |`
+        );
       }
       if (breakdown.securityRisks > 0) {
-        lines.push(`| Security Risks | ${breakdown.securityRisks} | ${((breakdown.securityRisks / totalIssues) * 100).toFixed(1)}% |`);
+        lines.push(
+          `| Security Risks | ${breakdown.securityRisks} | ${((breakdown.securityRisks / totalIssues) * 100).toFixed(1)}% |`
+        );
       }
       if (breakdown.unrealisticAssumptions > 0) {
-        lines.push(`| Unrealistic Assumptions | ${breakdown.unrealisticAssumptions} | ${((breakdown.unrealisticAssumptions / totalIssues) * 100).toFixed(1)}% |`);
+        lines.push(
+          `| Unrealistic Assumptions | ${breakdown.unrealisticAssumptions} | ${((breakdown.unrealisticAssumptions / totalIssues) * 100).toFixed(1)}% |`
+        );
       }
     } else {
       lines.push('✅ No issues to break down.');
@@ -155,7 +184,10 @@ export class MarkdownGenerator {
     lines.push('### Summary');
     lines.push('');
     lines.push('- **Total Transformations:** ' + escapeJson.transformations.totalTransformations);
-    lines.push('- **Transformation Date:** ' + new Date(escapeJson.transformations.transformedAt).toLocaleString());
+    lines.push(
+      '- **Transformation Date:** ' +
+        new Date(escapeJson.transformations.transformedAt).toLocaleString()
+    );
     lines.push('');
 
     if (escapeJson.transformations.applied.length > 0) {
@@ -165,14 +197,16 @@ export class MarkdownGenerator {
       lines.push('|------|------|--------|--------------|');
       for (const transform of escapeJson.transformations.applied) {
         const reason = transform.reason ? transform.reason.substring(0, 50) : 'N/A';
-        lines.push(`| ${transform.type} | ${transform.filePath || 'N/A'} | ${reason}... | ${transform.packageUsed || 'N/A'} |`);
+        lines.push(
+          `| ${transform.type} | ${transform.filePath || 'N/A'} | ${reason}... | ${transform.packageUsed || 'N/A'} |`
+        );
       }
       lines.push('');
 
       // Transformation Breakdown
       const tBreakdown = escapeJson.transformations.breakdown;
       const totalTrans = escapeJson.transformations.totalTransformations;
-      
+
       if (totalTrans > 0) {
         lines.push('### Transformation Breakdown');
         lines.push('');
@@ -202,8 +236,12 @@ export class MarkdownGenerator {
     lines.push('');
     lines.push('### Overall Status');
     lines.push('');
-    const statusEmoji = escapeJson.validations.overallStatus === 'passed' ? '✅' : 
-                       escapeJson.validations.overallStatus === 'failed' ? '❌' : '⚠️';
+    const statusEmoji =
+      escapeJson.validations.overallStatus === 'passed'
+        ? '✅'
+        : escapeJson.validations.overallStatus === 'failed'
+          ? '❌'
+          : '⚠️';
     lines.push(`${statusEmoji} **Status:** ${escapeJson.validations.overallStatus.toUpperCase()}`);
     lines.push('');
     lines.push('- **Total Validations:** ' + escapeJson.validations.totalValidations);
@@ -245,7 +283,9 @@ export class MarkdownGenerator {
       lines.push('- **Deployment URL:** ' + escapeJson.deployment.url);
     }
     if (escapeJson.deployment.deployedAt) {
-      lines.push('- **Deployment Date:** ' + new Date(escapeJson.deployment.deployedAt).toLocaleString());
+      lines.push(
+        '- **Deployment Date:** ' + new Date(escapeJson.deployment.deployedAt).toLocaleString()
+      );
     }
     lines.push('');
 
@@ -255,17 +295,31 @@ export class MarkdownGenerator {
     lines.push('### Compliance Status');
     lines.push('');
     const complianceEmoji = escapeJson.sovereignty.compliant ? '✅' : '❌';
-    lines.push(`${complianceEmoji} **Compliant:** ${escapeJson.sovereignty.compliant ? 'Yes' : 'No'}`);
+    lines.push(
+      `${complianceEmoji} **Compliant:** ${escapeJson.sovereignty.compliant ? 'Yes' : 'No'}`
+    );
     lines.push('');
     lines.push('- **Compliance Score:** ' + escapeJson.sovereignty.complianceScore + '/100');
-    lines.push('- **Last Checked:** ' + new Date(escapeJson.sovereignty.checkedAt).toLocaleString());
+    lines.push(
+      '- **Last Checked:** ' + new Date(escapeJson.sovereignty.checkedAt).toLocaleString()
+    );
     lines.push('');
     lines.push('### Self-Reliance Features');
     lines.push('');
-    lines.push('- **Chinese Mirrors:** ' + (escapeJson.sovereignty.chineseMirrors ? '✅ Enabled' : '❌ Disabled'));
-    lines.push('- **Offline Cache:** ' + (escapeJson.sovereignty.offlineCache ? '✅ Enabled' : '❌ Disabled'));
-    lines.push('- **Security Validation:** ' + (escapeJson.sovereignty.securityValidation ? '✅ Enabled' : '❌ Disabled'));
-    lines.push('- **Audit Logging:** ' + (escapeJson.sovereignty.auditLogging ? '✅ Enabled' : '❌ Disabled'));
+    lines.push(
+      '- **Chinese Mirrors:** ' +
+        (escapeJson.sovereignty.chineseMirrors ? '✅ Enabled' : '❌ Disabled')
+    );
+    lines.push(
+      '- **Offline Cache:** ' + (escapeJson.sovereignty.offlineCache ? '✅ Enabled' : '❌ Disabled')
+    );
+    lines.push(
+      '- **Security Validation:** ' +
+        (escapeJson.sovereignty.securityValidation ? '✅ Enabled' : '❌ Disabled')
+    );
+    lines.push(
+      '- **Audit Logging:** ' + (escapeJson.sovereignty.auditLogging ? '✅ Enabled' : '❌ Disabled')
+    );
     if (escapeJson.sovereignty.packageReplacements.length > 0) {
       lines.push('- **Package Replacements:**');
       for (const replacement of escapeJson.sovereignty.packageReplacements) {
@@ -300,7 +354,10 @@ export class MarkdownGenerator {
     lines.push('');
 
     // Custom Fields
-    if (escapeJson.metadata.customFields && Object.keys(escapeJson.metadata.customFields).length > 0) {
+    if (
+      escapeJson.metadata.customFields &&
+      Object.keys(escapeJson.metadata.customFields).length > 0
+    ) {
       lines.push('### Custom Fields');
       lines.push('');
       for (const [key, value] of Object.entries(escapeJson.metadata.customFields)) {
@@ -312,7 +369,9 @@ export class MarkdownGenerator {
     // Footer
     lines.push('---');
     lines.push('');
-    lines.push('*This report was generated by [EscapeKit](https://github.com/escapekit/escapekit-mcp)*');
+    lines.push(
+      '*This report was generated by [EscapeKit](https://github.com/escapekit/escapekit-mcp)*'
+    );
     lines.push('*Protocol Version: ' + escapeJson.version + '*');
 
     return lines.join('\n');

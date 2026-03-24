@@ -28,6 +28,8 @@ export interface AuditOptions {
   withCharts?: boolean;
   /** Verbose output */
   verbose?: boolean;
+  /** Show academic paper references for each issue */
+  academic?: boolean;
 }
 
 /**
@@ -60,12 +62,41 @@ export async function auditCommand(options: AuditOptions = {}): Promise<string> 
     const content = readFileSync(filePath, 'utf-8');
     escapeJson = JSON.parse(content);
   } catch (error) {
-    throw new Error(`Failed to parse escape.json: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new Error(
+      `Failed to parse escape.json: ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
   }
 
   // Validate structure (basic)
   if (!escapeJson.escapeId || !escapeJson.version) {
     throw new Error('Invalid escape.json: missing required fields (escapeId, version)');
+  }
+
+  // Task 8.3: Enrich issues with academic references if requested
+  if (options.academic) {
+    if (verbose) console.log('🔍 Loading academic knowledge base...');
+    const { KnowledgeBase } = await import('../resolvers/KnowledgeBase.js');
+    const { enrichIssues } = await import('../academic/IssueEnricher.js');
+    const kb = new KnowledgeBase();
+    await kb.loadPaperContracts('knowledge-base/registry.yaml');
+
+    if (escapeJson.analysis?.issues) {
+      const originalCount = escapeJson.analysis.issues.length;
+      // Cast to schemas.Issue[] for enrichment (structurally compatible)
+      type SchemasIssue = import('../models/schemas.js').Issue;
+      escapeJson.analysis.issues = enrichIssues(
+        escapeJson.analysis.issues as unknown as SchemasIssue[],
+        kb
+      ) as unknown as typeof escapeJson.analysis.issues;
+
+      const enrichedCount = escapeJson.analysis.issues.filter(
+        i => (i as any).academicReference
+      ).length;
+      if (verbose)
+        console.log(
+          `📚 Academic enrichment complete: ${enrichedCount}/${originalCount} issues enriched.`
+        );
+    }
   }
 
   // Generate report based on format
@@ -85,7 +116,11 @@ export async function auditCommand(options: AuditOptions = {}): Promise<string> 
       report = JSON.stringify(escapeJson, null, 2);
       break;
     case 'terminal':
-      report = generateTerminalReport(escapeJson, { includeKiwiDetails, verbose });
+      report = generateTerminalReport(escapeJson, {
+        includeKiwiDetails,
+        verbose,
+        academic: options.academic,
+      });
       break;
     default:
       throw new Error(`Unsupported format: ${format}`);
@@ -104,7 +139,10 @@ export async function auditCommand(options: AuditOptions = {}): Promise<string> 
 /**
  * Generate terminal-friendly report.
  */
-function generateTerminalReport(escapeJson: EscapeJson, options: { includeKiwiDetails?: boolean; verbose?: boolean }): string {
+function generateTerminalReport(
+  escapeJson: EscapeJson,
+  options: { includeKiwiDetails?: boolean; verbose?: boolean; academic?: boolean }
+): string {
   const lines: string[] = [];
 
   // Header
@@ -131,12 +169,31 @@ function generateTerminalReport(escapeJson: EscapeJson, options: { includeKiwiDe
   lines.push('📊 Analysis');
   lines.push(`   Issues: ${escapeJson.analysis.totalIssues}`);
   lines.push(`   Confidence Score: ${(escapeJson.analysis.confidenceScore * 100).toFixed(1)}%`);
+
   if (escapeJson.analysis.issues.length > 0) {
+    if (options.academic) {
+      lines.push(`   Academic Traceability:`);
+      for (const issue of escapeJson.analysis.issues) {
+        // Cast to schemas.Issue to access academicReference
+        type SchemasIssue = import('../models/schemas.js').Issue;
+        const issueWithRef = issue as unknown as SchemasIssue;
+        if (issueWithRef.academicReference) {
+          const ref = issueWithRef.academicReference;
+          const link = ref.doi ? `DOI: https://doi.org/${ref.doi}` : ref.url ? ref.url : '';
+          const suffix = link ? ` — ${link}` : '';
+          lines.push(
+            `      - [${issue.type}] 📄 ${ref.title} (${ref.year}) — Rule ${ref.ruleId}${suffix}`
+          );
+        }
+      }
+    }
+
     lines.push(`   Issue Types:`);
     const breakdown = escapeJson.analysis.issueBreakdown;
     if (breakdown.ghostImports > 0) lines.push(`      - Ghost Imports: ${breakdown.ghostImports}`);
     if (breakdown.mockApis > 0) lines.push(`      - Mock APIs: ${breakdown.mockApis}`);
-    if (breakdown.securityRisks > 0) lines.push(`      - Security Risks: ${breakdown.securityRisks}`);
+    if (breakdown.securityRisks > 0)
+      lines.push(`      - Security Risks: ${breakdown.securityRisks}`);
   }
   lines.push('');
 
@@ -166,7 +223,8 @@ function generateTerminalReport(escapeJson: EscapeJson, options: { includeKiwiDe
   // Deployment
   lines.push('🚀 Deployment');
   lines.push(`   Status: ${escapeJson.deployment.status}`);
-  if (escapeJson.deployment.environment) lines.push(`   Environment: ${escapeJson.deployment.environment}`);
+  if (escapeJson.deployment.environment)
+    lines.push(`   Environment: ${escapeJson.deployment.environment}`);
   if (escapeJson.deployment.url) lines.push(`   URL: ${escapeJson.deployment.url}`);
   lines.push('');
 

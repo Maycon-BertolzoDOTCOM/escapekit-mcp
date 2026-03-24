@@ -93,6 +93,7 @@ export class SlopsquatDetector {
         return {
           id: generateId('issue_slopsquat'),
           type: 'slopsquat_risk',
+          detector: 'SlopsquatDetector',
           severity: typoTarget ? 'error' : 'warning',
           location: { file: 'package.json', line: 0, column: 0 },
           message: `Package "${packageName}" flagged as potential Slopsquatting / AI Hallucination`,

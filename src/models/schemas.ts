@@ -1,6 +1,7 @@
 /**
  * Core data models and type definitions for EscapeKit MCP
  */
+import type { AcademicReference } from './academic.js';
 
 /**
  * Error severity levels
@@ -41,6 +42,10 @@ export interface Issue {
   description: string;
   suggestion?: string;
   autoFixable: boolean;
+  /** Name of the detector that produced this issue, e.g. "SlopsquatDetector" */
+  detector?: string;
+  /** Optional academic paper reference that underpins this issue's detection rule */
+  academicReference?: AcademicReference;
 }
 
 /**
