@@ -9,7 +9,7 @@ echo "🔍 Running EscapeKit Validation on $PROJECT_PATH ..."
 # Run validation and capture output, while also saving to the expected output file
 # We use cli/index.ts validate as it provides the canDeploy and confidence fields
 set +e
-OUTPUT=$(npx tsx cli/index.ts validate "$PROJECT_PATH" --level standard --json 2>&1)
+OUTPUT=$(npx tsx src/cli/index.ts validate "$PROJECT_PATH" --level standard --json 2>&1)
 EXIT_CODE=$?
 set -e
 

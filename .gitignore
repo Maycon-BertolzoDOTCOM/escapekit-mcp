@@ -41,6 +41,9 @@ escape_output/
 
 # Resultados de testes
 vitest-results.json
+test-playwright-output.json
+validation-report.json
+validation-results.json
 
 # Logs de knowledge-base (preservar apenas contratos YAML)
 knowledge-base/*.log
