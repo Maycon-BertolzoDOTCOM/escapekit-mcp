@@ -89,7 +89,7 @@ function buildGroup(messages: CompactableMessage[]): MessageGroup {
  */
 export function findSafeTruncationPoints(groups: MessageGroup[]): number[] {
   const safePoints: number[] = [];
-  let pendingToolUses = new Set<string>();
+  const pendingToolUses = new Set<string>();
 
   for (let i = 0; i < groups.length; i++) {
     for (const msg of groups[i].messages) {

@@ -126,7 +126,7 @@ export class GatewayOrchestrator {
         const metrics = provider.getMetrics();
         console.log(`  ${provider.name}: ${isHealthy ? '✅' : '❌'} ` +
                     `(${metrics.successCalls}/${metrics.totalCalls} sucessos)`);
-      } catch (error) {
+      } catch {
         console.warn(`  ${provider.name}: ❌ erro no health check`);
       }
     }

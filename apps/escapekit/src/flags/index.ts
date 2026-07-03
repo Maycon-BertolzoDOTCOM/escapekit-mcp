@@ -52,7 +52,7 @@ export type FlagValue = boolean | string | number;
 
 // ─── Flag State ────────────────────────────────────────────────────────────
 
-let envOverrides: Partial<Record<FlagName, FlagValue>> = {};
+const envOverrides: Partial<Record<FlagName, FlagValue>> = {};
 let testOverrides: Partial<Record<FlagName, FlagValue>> = {};
 let growthbookInstance: { isOn(key: string): boolean; getFeatureValue<T>(key: string, fallback: T): T } | null = null;
 
