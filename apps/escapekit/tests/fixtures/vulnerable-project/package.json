@@ -1,0 +1,8 @@
+{
+  "name": "vulnerable-project",
+  "version": "1.0.0",
+  "dependencies": {
+    "event-stream": "3.3.4",
+    "lodash": "^4.17.21"
+  }
+}

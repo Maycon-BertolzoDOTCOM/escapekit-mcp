@@ -1,0 +1,4 @@
+# file: /usr/lib/python3/dist-packages/anyio/pytest_plugin.py
+# hypothesis_version: 6.151.9
+
+['anyio', 'anyio_backend', 'hypothesis', 'markers', 'module', 'pytestmark', 'request']

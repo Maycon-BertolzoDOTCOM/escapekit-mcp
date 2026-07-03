@@ -1,0 +1,39 @@
+{
+  "name": "@escapekit/vscode-extension",
+  "displayName": "CodeMemória Governance",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "main": "./dist/extension.js",
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "dependencies": {
+    "@escapekit/core": "*",
+    "@types/vscode": "^1.85.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0",
+    "@vscode/vsce": "^2.0.0",
+    "@types/vscode": "^1.85.0",
+    "fast-check": "^3.0.0",
+    "@fast-check/vitest": "^1.0.0-alpha.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "codememoria.analyzeFile",
+        "title": "CodeMemória: Analyze File"
+      }
+    ]
+  }
+}

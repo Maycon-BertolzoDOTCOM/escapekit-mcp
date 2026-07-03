@@ -2,7 +2,7 @@
 
 ## Tasks
 
-- [ ] 1. Criar a classe `Spinner` em `src/cli/Spinner.ts`
+- [x] 1. Criar a classe `Spinner` em `src/cli/Spinner.ts`
   - Definir constantes `FRAMES`, `INTERVAL_MS = 80` e `ANSI_CLEAR = '\r\x1b[K'` no topo do arquivo
   - Implementar `start(message: string): void` que para intervalo anterior (se ativo) e inicia novo `setInterval` de 80ms
   - Implementar `stop(): void` que chama `clearInterval`, limpa `intervalId` para `null` e escreve `ANSI_CLEAR` em `process.stdout`
@@ -10,7 +10,7 @@
   - Garantir que `start()` chamado duas vezes consecutivas não cria dois intervalos simultâneos
   - Arquivo: `src/cli/Spinner.ts`
 
-- [ ] 2. Criar testes unitários para o `Spinner`
+- [x] 2. Criar testes unitários para o `Spinner`
   - Criar `tests/cli/Spinner.test.ts`
   - Usar `vi.useFakeTimers()` para controlar `setInterval` sem esperar tempo real
   - Mockar `process.stdout.write` com `vi.spyOn` para capturar output sem escrever no terminal
@@ -22,30 +22,30 @@
   - Testar: `stop()` múltiplos → `clearInterval` chamado apenas uma vez por par `start/stop`
   - Arquivo: `tests/cli/Spinner.test.ts`
 
-- [ ] 3. Escrever property-based tests para o `Spinner` (P4)
+- [x] 3. Escrever property-based tests para o `Spinner` (P4)
   - No mesmo arquivo `tests/cli/Spinner.test.ts`, adicionar testes PBT com fast-check
   - P4: para qualquer sequência de N chamadas `start()`/`stop()`, o número de chamadas a `clearInterval` é igual ao número de chamadas a `setInterval` (sem vazamento de recursos)
   - Arquivo: `tests/cli/Spinner.test.ts`
 
-- [ ] 4. Inspecionar `ValidationResult.checks` para confirmar estrutura de duração por fase
+- [x] 4. Inspecionar `ValidationResult.checks` para confirmar estrutura de duração por fase
   - Ler `src/validate/types.ts` e `src/validate/ValidationEngine.ts` para verificar se `checks` expõe `duration` por fase
   - Se `duration` por fase não existir, documentar o fallback a usar (ex.: `result.duration / Object.keys(result.checks).length`)
   - Registrar a estrutura exata de `checks` como comentário no início da seção de fases em `src/cli/index.ts`
   - Arquivos: `src/validate/types.ts`, `src/validate/ValidationEngine.ts` (leitura), `src/cli/index.ts` (comentário)
 
-- [ ] 5. Adicionar import do `Spinner` e constantes de fase ao `src/cli/index.ts`
+- [x] 5. Adicionar import do `Spinner` e constantes de fase ao `src/cli/index.ts`
   - Adicionar `import { Spinner } from './Spinner.js'` no topo do arquivo
   - Adicionar constante `PHASE_LABELS: Record<string, string>` com mapeamento de chaves de `checks` para labels legíveis
   - Adicionar função auxiliar `buildSummaryLine(result: ValidationResult): string` que calcula erros, warnings e duração
   - Arquivo: `src/cli/index.ts`
 
-- [ ] 6. Integrar spinner e mensagem inicial no action do `validate`
+- [x] 6. Integrar spinner e mensagem inicial no action do `validate`
   - Instanciar `const spinner = new Spinner()` antes do bloco `try/catch`
   - Após verificação do `projectPath` e antes da supressão de stdout, adicionar: `if (!isJsonMode) { process.stdout.write('🔍 Validating project...\n'); spinner.start('Running validation...'); }`
   - No bloco `catch`, adicionar `spinner.stop()` antes de `process.stdout.write = originalWrite`
   - Arquivo: `src/cli/index.ts`
 
-- [ ] 7. Exibir mensagens de fase e resumo após `engine.validate()`
+- [x] 7. Exibir mensagens de fase e resumo após `engine.validate()`
   - Após restaurar `process.stdout.write = originalWrite`, adicionar bloco `if (!isJsonMode)`
   - Dentro do bloco: chamar `spinner.stop()`, iterar sobre `Object.entries(result.checks)` e exibir linha de fase para cada check presente
   - Após as fases: chamar `process.stdout.write(buildSummaryLine(result))`

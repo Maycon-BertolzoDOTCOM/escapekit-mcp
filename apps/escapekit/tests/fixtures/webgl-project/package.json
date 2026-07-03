@@ -1,0 +1,7 @@
+{
+  "name": "webgl-project",
+  "version": "1.0.0",
+  "dependencies": {
+    "three": "^0.160.0"
+  }
+}

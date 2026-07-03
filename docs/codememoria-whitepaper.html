@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeMemória – AI Code Governance Platform</title>
+<style>
+  @page {
+    size: A4;
+    margin: 2cm;
+  }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    line-height: 1.6;
+    color: #1a1a2e;
+    background: #fff;
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 28px;
+    color: #0f3460;
+    border-bottom: 3px solid #e94560;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+  h2 {
+    font-size: 20px;
+    color: #16213e;
+    margin-top: 30px;
+    margin-bottom: 12px;
+    border-left: 4px solid #e94560;
+    padding-left: 12px;
+  }
+  h3 {
+    font-size: 16px;
+    color: #0f3460;
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+  p {
+    margin-bottom: 12px;
+    text-align: justify;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  th {
+    background: #16213e;
+    color: #fff;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  tr:nth-child(even) {
+    background: #f8f9fa;
+  }
+  code {
+    font-family: 'Fira Code', 'Consolas', monospace;
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  pre {
+    background: #1a1a2e;
+    color: #eee;
+    padding: 16px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 12px;
+    margin: 16px 0;
+  }
+  pre code {
+    background: none;
+    color: #eee;
+    padding: 0;
+  }
+  .diagram {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 20px;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.4;
+    margin: 16px 0;
+    white-space: pre;
+    overflow-x: auto;
+  }
+  .highlight {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .quote {
+    background: #e8f4fd;
+    border-left: 4px solid #2196f3;
+    padding: 12px 16px;
+    margin: 16px 0;
+    font-style: italic;
+    border-radius: 0 4px 4px 0;
+  }
+  ul, ol {
+    margin: 12px 0 12px 24px;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+  .footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 2px solid #e0e0e0;
+    font-size: 12px;
+    color: #888;
+    text-align: center;
+  }
+  .badge {
+    display: inline-block;
+    background: #e94560;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .badge.green { background: #27ae60; }
+  .badge.blue { background: #2196f3; }
+  .badge.orange { background: #f39c12; }
+</style>
+</head>
+<body>
+
+<h1>CodeMemória – AI Code Governance Platform</h1>
+<p class="subtitle"><strong>Versão:</strong> 1.0 &nbsp;|&nbsp; <strong>Data:</strong> Março de 2026 &nbsp;|&nbsp; <strong>Status:</strong> <span class="badge green">Produção</span></p>
+
+<h2>Visão Geral</h2>
+<p>CodeMemória é uma plataforma de governança de código gerado por IA. Ela resolve um problema crítico: quando LLMs (Copilot, Claude, Cursor, etc.) geram código, esse código pode conter problemas invisíveis que só aparecem em produção — como <strong>ghost dependencies</strong>, <strong>violações de compliance</strong>, <strong>lock-in de sandbox</strong> e <strong>vulnerabilidades de segurança</strong>.</p>
+<p>A plataforma oferece um ciclo completo de <strong>validação, memorização, comprovação e correção</strong> para garantir que código gerado por IA seja seguro, auditável e pronto para produção.</p>
+
+<h2>Ciclo de Valor em 4 Etapas</h2>
+<div class="diagram">Código gerado por IA
+        │
+        ▼
+┌───────────────────┐
+│  1. VALIDAR       │  Detecta ghost deps, mock APIs, vulnerabilidades,
+│                   │  violações LGPD/GDPR, lock-in de sandbox
+└────────┬──────────┘
+         │
+         ▼
+┌───────────────────┐
+│  2. MEMORIZAR     │  Cache O(1) via fingerprint SHA-256 +
+│                   │  memória federada compartilhada (Differential Privacy)
+└────────┬──────────┘
+         │
+         ▼
+┌───────────────────┐
+│  3. COMPROVAR     │  Audit trail imutável (hash chain) para
+│                   │  conformidade regulatória
+└────────┬──────────┘
+         │
+         ▼
+┌───────────────────┐
+│  4. CORRIGIR      │  PRs automáticos, Issues, notificações
+│                   │  via Composio (ação corretiva)
+└───────────────────┘</div>
+
+<h2>Componentes e Suas Funções</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Componente</th>
+      <th>Função</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>ValidationEngine</strong></td>
+      <td>Analisa código: detecta imports fantasmas, <code>eval()</code>, <code>process.env</code>, <code>innerHTML</code>, e outras práticas de risco.</td>
+    </tr>
+    <tr>
+      <td><strong>BrowserValidator</strong></td>
+      <td>Mesma validação 100% no browser (tier gratuito XiaoBai).</td>
+    </tr>
+    <tr>
+      <td><strong>DeterministicCache</strong></td>
+      <td>Cache O(1) — mesmo código = mesmo resultado, sem re-validar.</td>
+    </tr>
+    <tr>
+      <td><strong>FederatedMemory</strong></td>
+      <td>Compartilha padrões entre clientes sem expor código (ε-Differential Privacy).</td>
+    </tr>
+    <tr>
+      <td><strong>AuditTrail</strong></td>
+      <td>Hash chain SHA-256 imutável — prova de integridade para auditoria.</td>
+    </tr>
+    <tr>
+      <td><strong>ComplianceChecker</strong></td>
+      <td>Verifica LGPD, GDPR, OWASP contra contratos YAML gerados via Paper-to-Contract.</td>
+    </tr>
+    <tr>
+      <td><strong>ComposioAdapter</strong></td>
+      <td>Cria PRs, Issues e notificações automaticamente.</td>
+    </tr>
+    <tr>
+      <td><strong>GovernanceEngine</strong></td>
+      <td>Orquestra todos os componentes acima e gera o GovernancePassport.</td>
+    </tr>
+    <tr>
+      <td><strong>Circuit Breaker</strong></td>
+      <td>Para de chamar APIs externas quando elas falham repetidamente.</td>
+    </tr>
+    <tr>
+      <td><strong>Rate Limiter</strong></td>
+      <td>Controla concorrência e previne sobrecarga de recursos.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>GovernancePassport (Produto Final)</h2>
+<p>Cada validação gera um passaporte imutável com todas as evidências:</p>
+<pre><code>{
+  "passportId": "uuid-v4",
+  "codeFingerprint": {
+    "hash": "sha-256 do código",
+    "complexity": 7,
+    "dependencies": ["react", "axios"]
+  },
+  "validations": [{ "success": true, "issues": [] }],
+  "complianceStamps": [{ "regulationId": "LGPD", "score": 0.95 }],
+  "auditTrail": [{ "chainHash": "sha-256", "parentHash": "sha-256 anterior" }],
+  "riskLevel": "low | medium | high | critical"
+}</code></pre>
+
+<h2>Modelos de Negócio</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Tier</th>
+      <th>Nome</th>
+      <th>Onde roda</th>
+      <th>Features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="badge green">Gratuito</span></td>
+      <td>XiaoBai</td>
+      <td>100% browser (WebGPU/WASM)</td>
+      <td>Validação básica, fingerprint local</td>
+    </tr>
+    <tr>
+      <td><span class="badge blue">Edge</span></td>
+      <td>QingYun</td>
+      <td>Edge server (region-aware)</td>
+      <td>+ Cache determinístico + Compliance avançado</td>
+    </tr>
+    <tr>
+      <td><span class="badge orange">Enterprise</span></td>
+      <td>LongTeng</td>
+      <td>Appliance on-premise / air-gapped</td>
+      <td>+ FederatedMemory + Composio + Auditoria completa</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Arquitetura de Resiliência</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Padrão</th>
+      <th>Implementação</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Circuit Breaker</td>
+      <td>3 estados (CLOSED/OPEN/HALF_OPEN), recovery automático</td>
+      <td><span class="badge green">✅</span></td>
+    </tr>
+    <tr>
+      <td>Retry + Backoff</td>
+      <td>Exponencial com jitter, Retry-After header</td>
+      <td><span class="badge green">✅</span></td>
+    </tr>
+    <tr>
+      <td>Rate Limiter</td>
+      <td>Controle de concorrência, fila de espera</td>
+      <td><span class="badge green">✅</span></td>
+    </tr>
+    <tr>
+      <td>Fallback Learning</td>
+      <td>SQLite com histórico de tentativas por fonte</td>
+      <td><span class="badge green">✅</span></td>
+    </tr>
+    <tr>
+      <td>Differential Privacy</td>
+      <td>Laplace + Gaussian noise, ε-DP configurável</td>
+      <td><span class="badge green">✅</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Cobertura de Testes</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Categoria</th>
+      <th>Testes</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Confluência (Val+Cache+Federated)</td>
+      <td>10</td>
+      <td><span class="badge green">✅ 10/10</span></td>
+    </tr>
+    <tr>
+      <td>Composio + BrowserValidator</td>
+      <td>11</td>
+      <td><span class="badge green">✅ 11/11</span></td>
+    </tr>
+    <tr>
+      <td>Chaos/Resiliência</td>
+      <td>8</td>
+      <td><span class="badge green">✅ 8/8</span></td>
+    </tr>
+    <tr>
+      <td>Ciclos Viciosos</td>
+      <td>11</td>
+      <td><span class="badge green">✅ 11/11</span></td>
+    </tr>
+    <tr>
+      <td>Rate Limit Stress</td>
+      <td>5</td>
+      <td><span class="badge green">✅ 5/5</span></td>
+    </tr>
+    <tr>
+      <td>Observabilidade</td>
+      <td>10</td>
+      <td><span class="badge green">✅ 10/10</span></td>
+    </tr>
+    <tr>
+      <td><strong>Total</strong></td>
+      <td><strong>55</strong></td>
+      <td><span class="badge green"><strong>✅ 55/55</strong></span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Em Uma Frase</h2>
+<div class="quote">
+<strong>CodeMemória valida, memoriza, comprova e corrige código gerado por IA — antes que ele chegue em produção.</strong>
+</div>
+
+<h2>Próximos Passos</h2>
+<ul>
+  <li><strong>Experimente:</strong> Demonstração interativa da plataforma</li>
+  <li><strong>Seja parceiro:</strong> Programa de parceiros e afiliados</li>
+  <li><strong>Documentação técnica:</strong> Repositório GitHub com guias completos</li>
+</ul>
+
+<div class="footer">
+  <p>CodeMemória v1.0 — Governança de IA com soberania e rastreabilidade</p>
+  <p>© 2026 CodeMemória. Todos os direitos reservados.</p>
+</div>
+
+</body>
+</html>

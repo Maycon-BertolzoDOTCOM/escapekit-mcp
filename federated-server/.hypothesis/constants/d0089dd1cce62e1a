@@ -1,0 +1,4 @@
+# file: /home/vector/Documentos/RalphLoopInverso/federated-server/main.py
+# hypothesis_version: 6.151.9
+
+[0.0, 0.85, 1.0, 384, 422, '/push', '/query', 'VECTOR_STORE', 'chroma', 'embedding', 'embeddings', 'id', 'ids', 'meta', 'metadatas', 'ok', 'public_patterns', 'rule_type', 'sector', 'success_count', 'total_pushes']

@@ -1,0 +1,17 @@
+name: 'CodeMemória Compliance Check'
+description: 'Check PRs for compliance violations'
+
+inputs:
+  github-token:
+    description: 'GitHub token for API access'
+    required: true
+  config-path:
+    description: 'Path to .codememoría.yml config'
+    default: '.codememoría.yml'
+  contracts-dir:
+    description: 'Directory containing contract definitions'
+    default: 'contracts/'
+
+runs:
+  using: 'node20'
+  main: 'dist/main.js'

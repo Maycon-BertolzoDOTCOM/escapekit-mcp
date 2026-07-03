@@ -72,6 +72,35 @@ Estamos explorando integrações nativas com os principais geradores (Google AI 
 
 Não fazemos promessas de datas. Mas essa direção é clara: o EscapeKit será o **companheiro de qualidade** de qualquer código gerado por IA.
 
+## Fundamentos Acadêmicos
+
+O EscapeKit e o PisosRealView são construídos sobre princípios validados pela pesquisa acadêmica. Esta seção mapeia os papers que influenciam diretamente o código.
+
+### Papers com Aplicação Imediata
+
+**BEST-Route (ICML 2025)**
+Otimização de múltiplos objetivos para roteamento de modelos: maximizar qualidade dado um orçamento de custo. Influencia o `TaskMetrics.getScore()` e `getBestForBudget()` — a fórmula de score composto (fidelidade × latência × eficiência de custo) é derivada diretamente deste trabalho. Resultado prático: redução de custo de até 60% com menos de 1% de perda de performance.
+
+**IRT-Router — Item Response Theory Router (USTC)**
+Modela "dificuldade da tarefa" e "habilidade do modelo" como variáveis separadas, cruzando-as para roteamento ótimo. Influencia o `ProviderRouter._selectProviders()` — o `DifficultyEstimator` estima a dificuldade da tarefa, e o `TaskMetrics` estima a habilidade histórica de cada provedor para aquela dificuldade. A promoção IRT no `_selectProviders` é a implementação direta deste conceito.
+
+**Talk Less, Verify More (2026)**
+Defende arquitetura "gerador-verificador" com scores semânticos contínuos em vez de validação binária. Influencia o `validator.js` — as invariantes (sombras, geometria, objetos, perspectiva) agora retornam scores [0.0, 1.0] com thresholds configuráveis. O próximo passo é substituir os stubs por chamadas a CLIP via Replicate (~$0.001/validação vs. ~$0.05/geração).
+
+### Roadmap Acadêmico (6-18 meses)
+
+**ZeroRouter (AAAI 2026, USTC)**
+Espaço latente universal que separa caracterização da consulta do perfil dos modelos. Relevante quando o sistema tiver 10+ provedores e precisar adicionar novos sem retreinar. Hoje com 4 provedores é overhead desnecessário.
+
+**Avengers-Pro (Shanghai AI Lab)**
+Sistema de roteamento multi-modelo com clustering semântico e scoring de custo-benefício. Relevante para escala industrial com múltiplos clientes e perfis de uso distintos.
+
+**Aegaeon (Universidade de Pequim + Alibaba)**
+GPU pooling inteligente: um único GPU atende até 7 modelos com redução de hardware de 82%. Relevante quando o sistema tiver GPUs próprias para inferência local.
+
+**MoMA — Mixture of Models and Agents (China Mobile)**
+Motor de agregação que entende intenção do usuário e direciona para o executor ideal. Relevante para a evolução do ProviderRouter em um orquestrador de agentes especializados.
+
 ## Convite
 
 O EscapeKit é um projeto aberto, construído por quem acredita que a IA deve aumentar, não limitar, o desenvolvedor.

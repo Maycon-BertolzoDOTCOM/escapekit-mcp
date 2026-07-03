@@ -2,24 +2,24 @@
 
 ## Tasks
 
-- [ ] 1. Adicionar `'WEBGL_ERROR'` ao `IssueType` em `types.ts`
+- [x] 1. Adicionar `'WEBGL_ERROR'` ao `IssueType` em `types.ts`
   - Verificar se `'WEBGL_ERROR'` já existe na union type `IssueType`
   - Se não existir, adicionar `'WEBGL_ERROR'` à union type `IssueType` em `src/validate/types.ts`
   - Arquivo: `src/validate/types.ts`
 
-- [ ] 2. Importar e instanciar `WebGLValidator` no `ValidationEngine`
+- [x] 2. Importar e instanciar `WebGLValidator` no `ValidationEngine`
   - Adicionar import: `import { WebGLValidator } from './validators/WebGLValidator.js'`
   - Adicionar campo privado `private readonly webglValidator: WebGLValidator` à classe
   - Adicionar `this.webglValidator = new WebGLValidator()` no construtor, após as instanciações existentes
   - Arquivo: `src/validate/ValidationEngine.ts`
 
-- [ ] 3. Adicionar método auxiliar `extractUrlFromLogs`
+- [x] 3. Adicionar método auxiliar `extractUrlFromLogs`
   - Implementar `private extractUrlFromLogs(logs: string[]): string | null`
   - Iterar sobre `logs` e aplicar a regex `/http:\/\/(?:localhost|127\.0\.0\.1):\d+/`
   - Retornar o primeiro match encontrado ou `null`
   - Arquivo: `src/validate/ValidationEngine.ts`
 
-- [ ] 4. Invocar `WebGLValidator` no bloco de runtime do nível `'thorough'`
+- [x] 4. Invocar `WebGLValidator` no bloco de runtime do nível `'thorough'`
   - Declarar `let webglResult: WebGLCheckResult | undefined` antes do bloco de runtime
   - Dentro do bloco `if (opts.level === 'standard' || opts.level === 'thorough')`, após o `environment.test()`, adicionar bloco condicional `if (opts.level === 'thorough')`
   - Dentro do bloco `'thorough'`: extrair URL via `envResult.detectedUrl ?? this.extractUrlFromLogs(envResult.logs)`
@@ -29,12 +29,12 @@
   - Adicionar import de `WebGLCheckResult` ao bloco de imports de tipos
   - Arquivo: `src/validate/ValidationEngine.ts`
 
-- [ ] 5. Popular `result.checks.webgl` na construção do `ValidationResult`
+- [x] 5. Popular `result.checks.webgl` na construção do `ValidationResult`
   - No objeto `result.checks`, adicionar `webgl: webglResult` (será `undefined` quando não executado)
   - Garantir que a variável `webglResult` está no escopo correto (declarada antes do bloco de runtime)
   - Arquivo: `src/validate/ValidationEngine.ts`
 
-- [ ] 6. Escrever testes unitários em `ValidationEngine.webgl.test.ts`
+- [x] 6. Escrever testes unitários em `ValidationEngine.webgl.test.ts`
   - Criar `tests/validate/ValidationEngine.webgl.test.ts`
   - Mockar `WebGLValidator` para controlar o retorno de `validate()`
   - Mockar `BuildValidator`, `DependencyValidator` e `LocalEnvironment` para isolar o comportamento WebGL
@@ -61,7 +61,7 @@
     - `webglValidator.validate()` retorna `{ passed: true }` → nenhum Issue com `type: 'WEBGL_ERROR'`
   - Arquivo: `tests/validate/ValidationEngine.webgl.test.ts`
 
-- [ ] 7. Verificar diagnósticos e corrigir erros de tipo
+- [x] 7. Verificar diagnósticos e corrigir erros de tipo
   - Executar `getDiagnostics` em `src/validate/ValidationEngine.ts` e `src/validate/types.ts`
   - Garantir que o import de `WebGLCheckResult` está correto e sem conflitos
   - Verificar que `'WEBGL_ERROR'` não causa erros de tipo em outros consumidores de `IssueType`

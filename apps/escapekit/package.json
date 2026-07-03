@@ -1,0 +1,25 @@
+{
+  "name": "@escapekit/core",
+  "version": "1.0.0",
+  "description": "EscapeKit MCP — analyze AI sandbox code, detect ghost dependencies, transform and validate in real environments",
+  "type": "module",
+  "main": "dist/server.js",
+  "exports": {
+    ".": "./dist/server.js",
+    "./cli": "./dist/cli/index.js"
+  },
+  "bin": {
+    "escapekit": "./dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest --run",
+    "test:ci": "vitest --run --coverage",
+    "lint": "eslint src --ext .ts --max-warnings 0",
+    "typecheck": "tsc --noEmit"
+  },
+  "files": ["dist/", "README.md", "package.json"],
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

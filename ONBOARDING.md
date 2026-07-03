@@ -33,13 +33,13 @@ npm run build
 ### Option A: Analyze a file
 
 ```bash
-npx tsx cli/index.ts analyze examples/sample-ai-code.js
+npx tsx apps/escapekit/src/cli/index.ts analyze examples/sample-ai-code.js
 ```
 
 ### Option B: Analyze inline code
 
 ```bash
-npx tsx cli/index.ts analyze --code "import { api } from 'mockapi.io'; import * as THREE from 'three.js';"
+npx tsx apps/escapekit/src/cli/index.ts analyze --code "import { api } from 'mockapi.io'; import * as THREE from 'three.js';"
 ```
 
 You should see output like:
@@ -66,7 +66,7 @@ Issues found:
 Use the `analysis_id` from the previous output:
 
 ```bash
-npx tsx cli/index.ts generate <analysis_id> --target nextjs --output ./my-escaped-app
+npx tsx apps/escapekit/src/cli/index.ts generate <analysis_id> --target nextjs --output ./my-escaped-app
 ```
 
 This generates a complete Next.js project with real dependencies replacing ghost imports.
@@ -95,7 +95,7 @@ Then ask Claude: *"Analyze this code for sandbox dependencies"*
 ## 🏗️ Project Architecture (Quick Overview)
 
 ```
-src/
+apps/escapekit/src/
 ├── analyzers/        # Code analysis engine (Tree-sitter AST)
 ├── detectors/        # Ghost imports, Mock APIs, WebGL, Sandbox patterns
 ├── transformers/     # AST transformation (Babel + recast)
@@ -111,11 +111,11 @@ src/
 ├── logger.ts         # Structured logging
 └── server.ts         # MCP server entry point
 
-cli/
+apps/escapekit/src/cli/
 └── index.ts          # CLI entry point (Commander.js)
 
-tests/                # Vitest tests (mirroring src/ structure)
-templates/            # Handlebars templates for project generation
+apps/escapekit/tests/ # Vitest tests (mirroring src/ structure)
+apps/escapekit/templates/ # Handlebars templates for project generation
 ```
 
 ## 🧪 Run Tests

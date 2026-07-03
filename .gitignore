@@ -1,44 +1,46 @@
-# Dependencies
+# Dependências
 node_modules/
 .pnp
 .pnp.js
 
-# Build outputs
-dist/
-build/
+# Artefatos de build — cada workspace gera em seu próprio dist/
+**/dist/
+**/build/
 *.tsbuildinfo
 
-# Environment variables
+# Cobertura e logs
+**/coverage/
+**/logs/
+*.log
+.nyc_output
+
+# Temporários
+*.tmp
+*.temp
+.cache/
+
+# Ambiente
 .env
 .env.local
 .env.*.local
 
-# Testing
-coverage/
-*.log
-.nyc_output
-
-# IDE
+# IDE e OS
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-
-# OS
 .DS_Store
 Thumbs.db
 
-# Temporary files
-*.tmp
-*.temp
-.cache/
-
-# EscapeKit specific
+# EscapeKit específico
 escape_output/
 .escapekit/
 *.analysis.json
 *.escape-kit/
 
-# Paper to Contract logs (keep YAML contracts)
-knowledge-base/*.logvitest-results.json
+# Resultados de testes
+vitest-results.json
+
+# Logs de knowledge-base (preservar apenas contratos YAML)
+knowledge-base/*.log

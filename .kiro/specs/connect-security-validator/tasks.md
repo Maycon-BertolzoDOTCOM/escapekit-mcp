@@ -2,14 +2,14 @@
 
 ## Tasks
 
-- [ ] 1. Atualizar `SecurityCheckResult` em `types.ts`
+- [x] 1. Atualizar `SecurityCheckResult` em `types.ts`
   - Verificar a estrutura atual de `SecurityCheckResult` em `src/validate/types.ts`
   - Adicionar import de `SecurityValidationResult` de `'../security/SecurityValidator.js'`
   - Substituir a definição existente de `SecurityCheckResult` pela nova estrutura: `passed: boolean`, `packageResults: SecurityValidationResult[]`, `vulnerablePackages: string[]`, `deprecatedPackages: string[]`, `licenseIssues: string[]`
   - Verificar que `ValidationResult.checks.security?: SecurityCheckResult` já existe (não requer alteração)
   - Arquivo: `src/validate/types.ts`
 
-- [ ] 2. Importar e instanciar `SecurityValidator` no `ValidationEngine`
+- [x] 2. Importar e instanciar `SecurityValidator` no `ValidationEngine`
   - Adicionar import: `import { SecurityValidator } from '../security/SecurityValidator.js'`
   - Adicionar import de `SecurityCheckResult` e `SecurityValidationResult` ao bloco de imports de tipos
   - Adicionar campo privado `private readonly securityValidator: SecurityValidator` à classe
@@ -17,7 +17,7 @@
   - Adicionar imports de `path` e `fs/promises` se ainda não presentes
   - Arquivo: `src/validate/ValidationEngine.ts`
 
-- [ ] 3. Implementar método auxiliar `collectPackageNames`
+- [x] 3. Implementar método auxiliar `collectPackageNames`
   - Implementar `private async collectPackageNames(projectPath: string, dependencyResult: DependencyCheckResult): Promise<string[]>`
   - Ler `package.json` via `fs.readFile(path.join(projectPath, 'package.json'), 'utf-8')`
   - Extrair chaves de `dependencies` e `devDependencies` para um `Set<string>`
@@ -26,7 +26,7 @@
   - Retornar `Array.from(names)`
   - Arquivo: `src/validate/ValidationEngine.ts`
 
-- [ ] 4. Invocar `SecurityValidator` após o bloco do `DependencyValidator`
+- [x] 4. Invocar `SecurityValidator` após o bloco do `DependencyValidator`
   - Declarar `const securityPackageResults: SecurityValidationResult[] = []` após o bloco do `DependencyValidator`
   - Chamar `await this.collectPackageNames(projectPath, dependencyResult)` para obter a lista de pacotes
   - Iterar sobre os pacotes com `for...of`, chamando `await this.securityValidator.validate(packageName)` dentro de try/catch
@@ -35,7 +35,7 @@
   - Capturar exceções por pacote com log `warn` sem propagar
   - Arquivo: `src/validate/ValidationEngine.ts`
 
-- [ ] 5. Construir `SecurityCheckResult` e popular `result.checks.security`
+- [x] 5. Construir `SecurityCheckResult` e popular `result.checks.security`
   - Após o loop de pacotes, construir `securityResult: SecurityCheckResult` com:
     - `passed`: `securityPackageResults.every(r => r.safe)`
     - `packageResults`: `securityPackageResults`
@@ -46,7 +46,7 @@
   - Garantir que `securityResult` está no escopo correto (declarado antes do bloco de runtime)
   - Arquivo: `src/validate/ValidationEngine.ts`
 
-- [ ] 6. Escrever testes unitários em `ValidationEngine.security.test.ts`
+- [x] 6. Escrever testes unitários em `ValidationEngine.security.test.ts`
   - Criar `tests/validate/ValidationEngine.security.test.ts`
   - Mockar `SecurityValidator` para controlar o retorno de `validate()`
   - Mockar `BuildValidator`, `DependencyValidator` e `fs/promises` para isolar o comportamento de segurança
@@ -80,7 +80,7 @@
     - Mock retornando `{ safe: true, licenseCompatible: false, warnings: ['License "GPL-3.0" may not be compatible'], ... }` → `checks.security.licenseIssues` contém o pacote
   - Arquivo: `tests/validate/ValidationEngine.security.test.ts`
 
-- [ ] 7. Verificar diagnósticos e corrigir erros de tipo
+- [x] 7. Verificar diagnósticos e corrigir erros de tipo
   - Executar `getDiagnostics` em `src/validate/types.ts` e `src/validate/ValidationEngine.ts`
   - Garantir que o import circular entre `types.ts` e `SecurityValidator.ts` não existe (usar import direto de `SecurityValidator.ts` em `types.ts`)
   - Verificar que `SecurityCheckResult` atualizado não quebra outros consumidores do tipo (ex: `CLIReporter`)

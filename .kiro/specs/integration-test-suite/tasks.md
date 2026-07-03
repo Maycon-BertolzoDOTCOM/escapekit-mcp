@@ -2,31 +2,31 @@
 
 ## Tasks
 
-- [ ] 1. Criar fixture `ghost-import-project`
+- [x] 1. Criar fixture `ghost-import-project`
   - Criar `tests/fixtures/ghost-import-project/package.json` com `lodash` e `axios` em `dependencies`, sem `fake-api` nem `mock-fetch`
   - Criar `tests/fixtures/ghost-import-project/src/index.ts` com `import { foo } from 'fake-api'` e `import { bar } from 'mock-fetch'` — ambos correspondem aos padrões `fake-` e `mock-` do `DependencyValidator`
   - Verificar que o `DependencyValidator.checkGhostPackages()` detecta os imports ao processar o arquivo `src/index.ts`
   - Arquivos: `tests/fixtures/ghost-import-project/package.json`, `tests/fixtures/ghost-import-project/src/index.ts`
 
-- [ ] 2. Criar fixture `webgl-project`
+- [x] 2. Criar fixture `webgl-project`
   - Criar `tests/fixtures/webgl-project/package.json` com `three: "^0.160.0"` em `dependencies`
   - Criar `tests/fixtures/webgl-project/src/main.ts` com código Three.js básico (`Scene`, `PerspectiveCamera`, `WebGLRenderer`)
   - Garantir que o diretório `src/utils/` NÃO existe no fixture (o `FallbackGenerator` precisa criá-lo)
   - Verificar que o `FallbackGenerator.detectWebGLLibrary()` retorna `'three'` ao ler o `package.json`
   - Arquivos: `tests/fixtures/webgl-project/package.json`, `tests/fixtures/webgl-project/src/main.ts`
 
-- [ ] 3. Criar fixture `vulnerable-project`
+- [x] 3. Criar fixture `vulnerable-project`
   - Criar `tests/fixtures/vulnerable-project/package.json` com `event-stream: "3.3.4"` e `lodash` em `dependencies`
   - Criar `tests/fixtures/vulnerable-project/src/index.ts` com `import eventStream from 'event-stream'`
   - Arquivos: `tests/fixtures/vulnerable-project/package.json`, `tests/fixtures/vulnerable-project/src/index.ts`
 
-- [ ] 4. Criar fixture `clean-project`
+- [x] 4. Criar fixture `clean-project`
   - Criar `tests/fixtures/clean-project/package.json` com `lodash` e `axios` em `dependencies`
   - Criar `tests/fixtures/clean-project/src/index.ts` com imports apenas de `lodash` e `axios` — sem ghost patterns, sem pacotes vulneráveis
   - Verificar que nenhum import no arquivo corresponde aos padrões `fake-`, `mock-`, `sandbox-`, `claude-`, `replit-`
   - Arquivos: `tests/fixtures/clean-project/package.json`, `tests/fixtures/clean-project/src/index.ts`
 
-- [ ] 5. Criar arquivo de testes de integração — estrutura e helpers
+- [x] 5. Criar arquivo de testes de integração — estrutura e helpers
   - Criar `tests/integration/ValidationEngine.integration.test.ts`
   - Adicionar imports: `ValidationEngine`, `FallbackGenerator`, `join`, `cp`, `rm`, `access`, `tmpdir`, `randomUUID`
   - Implementar helper `copyFixture(fixtureName: string): Promise<string>` que copia o fixture para `tmpdir()/<uuid>` e retorna o caminho

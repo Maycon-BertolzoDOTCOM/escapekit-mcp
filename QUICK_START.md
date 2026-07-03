@@ -20,48 +20,48 @@ npm run build
 
 ```bash
 # 分析本地文件
-npx tsx cli/index.ts analyze path/to/your/code.js
+npx tsx apps/escapekit/src/cli/index.ts analyze path/to/your/code.js
 
 # 分析代码字符串
-npx tsx cli/index.ts analyze --code "import { mockApi } from 'mockapi.io';"
+npx tsx apps/escapekit/src/cli/index.ts analyze --code "import { mockApi } from 'mockapi.io';"
 
 # 指定源沙箱类型
-npx tsx cli/index.ts analyze code.js --from ai-studio
+npx tsx apps/escapekit/src/cli/index.ts analyze code.js --from ai-studio
 
 # 输出 JSON 格式
-npx tsx cli/index.ts analyze code.js --json > analysis.json
+npx tsx apps/escapekit/src/cli/index.ts analyze code.js --json > analysis.json
 ```
 
 ### 2. 生成可移植项目（开发中）
 
 ```bash
 # 基于分析结果生成项目
-npx tsx cli/index.ts generate analysis-1234567890-abc123
+npx tsx apps/escapekit/src/cli/index.ts generate analysis-1234567890-abc123
 
 # 指定目标平台
-npx tsx cli/index.ts generate analysis-id --target nextjs
+npx tsx apps/escapekit/src/cli/index.ts generate analysis-id --target nextjs
 
 # 指定输出目录
-npx tsx cli/index.ts generate analysis-id --output ./my-app
+npx tsx apps/escapekit/src/cli/index.ts generate analysis-id --output ./my-app
 
 # 包含 Docker 支持
-npx tsx cli/index.ts generate analysis-id --include-docker
+npx tsx apps/escapekit/src/cli/index.ts generate analysis-id --include-docker
 
 # 包含 CI/CD 配置
-npx tsx cli/index.ts generate analysis-id --include-ci
+npx tsx apps/escapekit/src/cli/index.ts generate analysis-id --include-ci
 ```
 
 ### 3. 验证代码（开发中）
 
 ```bash
 # 本地验证
-npx tsx cli/index.ts validate ./my-app --env local
+npx tsx apps/escapekit/src/cli/index.ts validate ./my-app --env local
 
 # Docker 环境验证
-npx tsx cli/index.ts validate ./my-app --env docker
+npx tsx apps/escapekit/src/cli/index.ts validate ./my-app --env docker
 
 # 深度验证
-npx tsx cli/index.ts validate ./my-app --level thorough
+npx tsx apps/escapekit/src/cli/index.ts validate ./my-app --level thorough
 ```
 
 ## 📝 示例代码
@@ -176,11 +176,11 @@ npm run dev
 ## 📊 项目结构
 
 ```
-RalphLoopInverso/
-├── cli/                 # CLI 入口
-│   └── index.ts        # 主程序
+apps/escapekit/
 ├── src/
 │   ├── analyzers/      # 分析器
+│   ├── cli/
+│   │   └── index.ts   # CLI 入口 (主程序)
 │   ├── models/         # 数据模型
 │   ├── services/       # 服务层
 │   ├── server.ts       # MCP 服务器
@@ -223,7 +223,7 @@ RalphLoopInverso/
 ```bash
 # 解决方案：使用 tsx 代替 ts-node
 npm install -g tsx
-npx tsx cli/index.ts analyze code.js
+npx tsx apps/escapekit/src/cli/index.ts analyze code.js
 ```
 
 ### 问题：NPM 查询失败
@@ -265,12 +265,12 @@ npm run build
 
 ```bash
 # 查看帮助信息
-npx tsx cli/index.ts --help
+npx tsx apps/escapekit/src/cli/index.ts --help
 
 # 查看具体命令帮助
-npx tsx cli/index.ts analyze --help
-npx tsx cli/index.ts generate --help
-npx tsx cli/index.ts validate --help
+npx tsx apps/escapekit/src/cli/index.ts analyze --help
+npx tsx apps/escapekit/src/cli/index.ts generate --help
+npx tsx apps/escapekit/src/cli/index.ts validate --help
 ```
 
 ---
