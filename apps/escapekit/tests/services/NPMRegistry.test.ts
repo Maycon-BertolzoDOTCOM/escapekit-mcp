@@ -42,7 +42,8 @@ describe('NPMRegistry', () => {
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.useRealTimers();
+    vi.resetAllMocks();
   });
 
   describe('packageExists', () => {

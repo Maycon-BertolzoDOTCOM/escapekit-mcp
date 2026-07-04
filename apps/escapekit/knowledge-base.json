@@ -1,0 +1,75 @@
+{
+  "mappings": {
+    "three.js": {
+      "realPackage": "three",
+      "additionalPackages": ["@types/three"],
+      "confidence": 1.0,
+      "reason": "Mapeamento direto: three.js é um ghost import do pacote three"
+    },
+    "mockapi.io": {
+      "realPackage": "axios",
+      "confidence": 0.9,
+      "reason": "mockapi.io é frequentemente usado como substituto de axios em sandboxes"
+    },
+    "fake-api-client": {
+      "realPackage": "axios",
+      "confidence": 0.95,
+      "reason": "fake-api-client simula chamadas HTTP, equivalente a axios"
+    },
+    "mock-database": {
+      "realPackage": "better-sqlite3",
+      "confidence": 0.85,
+      "reason": "mock-database simula banco de dados SQL"
+    },
+    "sandbox-canvas": {
+      "realPackage": "canvas",
+      "confidence": 0.9,
+      "reason": "sandbox-canvas é usado em ambientes que exigem renderização gráfica"
+    },
+    "test-utils": {
+      "realPackage": "@testing-library/react",
+      "confidence": 0.8,
+      "reason": "test-utils normalmente referencia utilitários de teste React"
+    },
+    "fake-fetch": {
+      "realPackage": "node-fetch",
+      "confidence": 0.9,
+      "reason": "fake-fetch simula a API fetch do Node.js"
+    },
+    "mock-websocket": {
+      "realPackage": "ws",
+      "confidence": 0.9,
+      "reason": "mock-websocket é usado para simular conexões WebSocket"
+    },
+    "sandbox-crypto": {
+      "realPackage": "crypto-js",
+      "confidence": 0.85,
+      "reason": "sandbox-crypto provê funções criptográficas em sandbox"
+    },
+    "fake-storage": {
+      "realPackage": "node-localstorage",
+      "confidence": 0.85,
+      "reason": "fake-storage simula armazenamento local"
+    },
+    "mock-auth": {
+      "realPackage": "jsonwebtoken",
+      "confidence": 0.9,
+      "reason": "mock-auth simula autenticação JWT"
+    },
+    "sandbox-dom": {
+      "realPackage": "jsdom",
+      "confidence": 0.9,
+      "reason": "sandbox-dom simula o DOM do navegador"
+    },
+    "fake-router": {
+      "realPackage": "express",
+      "confidence": 0.85,
+      "reason": "fake-router simula rotas HTTP"
+    },
+    "mock-logger": {
+      "realPackage": "winston",
+      "confidence": 0.85,
+      "reason": "mock-logger simula logging estruturado"
+    }
+  }
+}
