@@ -533,7 +533,7 @@ describe('EscapeJsonWriter', () => {
       fc.record({
         analysisResult: fc.record({
           analysisId: fc.uuid(),
-          timestamp: fc.date().map(d => d.toISOString()),
+          timestamp: fc.integer({min: 0, max: 4102444800000}).map(t => new Date(t).toISOString()),
           language: fc.constant('typescript'),
           summary: fc.record({
             totalIssues: fc.nat({ max: 100 }),
@@ -570,7 +570,7 @@ describe('EscapeJsonWriter', () => {
               }),
               { maxLength: 5 }
             ),
-            timestamp: fc.date({min: new Date(0), max: new Date('2100-01-01')}).map(d => d.toISOString()),
+            timestamp: fc.integer({min: 0, max: 4102444800000}).map(t => new Date(t).toISOString()),
           }),
           { maxLength: 10 }
         ),
