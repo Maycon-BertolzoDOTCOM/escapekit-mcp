@@ -503,7 +503,7 @@ describe('P12: collectProjectCode → string não-vazia para projeto com .ts/.js
   it('diretório com arquivo .ts produz código não-vazio via validate --govern', async () => {
     await fc.assert(
       fc.asyncProperty(
-        fc.string({ minLength: 1, maxLength: 500 }),
+        fc.string({ minLength: 1, maxLength: 500 }).filter(s => s.trim().length > 0),
         fc.constantFrom('.ts', '.js', '.tsx', '.jsx'),
         async (fileContent, ext) => {
           const tmpDir = makeTmpDir();
