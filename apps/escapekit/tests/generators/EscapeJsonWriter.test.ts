@@ -570,7 +570,7 @@ describe('EscapeJsonWriter', () => {
               }),
               { maxLength: 5 }
             ),
-            timestamp: fc.date().map(d => d.toISOString()),
+            timestamp: fc.date({min: new Date(0), max: new Date('2100-01-01')}).map(d => d.toISOString()),
           }),
           { maxLength: 10 }
         ),
