@@ -411,11 +411,10 @@ describe('NPMRegistry', () => {
 
       const promise = registry.packageExists('retry-package');
       
-      // First attempt fails immediately, waits 100ms
-      await vi.advanceTimersByTimeAsync(100);
-      
-      // Second attempt fails, waits 200ms
+      // Advance enough to cover jittered delays (baseDelay=100, jitterFactor=0.25)
+      // Max first delay: 125ms. Max second delay: 250ms
       await vi.advanceTimersByTimeAsync(200);
+      await vi.advanceTimersByTimeAsync(400);
       
       const result = await promise;
       
